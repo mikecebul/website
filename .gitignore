@@ -1,0 +1,36 @@
+# Allow Claude to see hidden files
+!.*
+
+# beginning of the file
+build
+dist / media
+node_modules
+.DS_Store
+.env
+.next
+.vercel
+
+# Payload default media upload directory
+public/media/
+public/files
+public/landscapes
+public/cards
+public/portraits
+public/avatars
+public/meta
+
+# sqlite db
+payload.db
+
+# mailpit
+/data
+
+# dumps
+.dumps/
+tsconfig.tsbuildinfo
+
+# Sentry Config File
+.env.sentry-build-plugin
+
+# Mailpit
+data/
