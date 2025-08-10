@@ -48,7 +48,11 @@ export const TwoColumnLayoutBlock = async ({
       'max-w-7xl mx-auto': profileSvg,
     })}>
       <div
-        className={cn('grid grid-cols-1 gap-12', `${breakpoint}:grid-cols-2`, {
+        className={cn('grid grid-cols-1 gap-12', {
+          'sm:grid-cols-2': breakpoint === 'sm',
+          'md:grid-cols-2': breakpoint === 'md', 
+          'lg:grid-cols-2': breakpoint === 'lg',
+          'xl:grid-cols-2': breakpoint === 'xl',
           'xl:items-start': sticky,
         })}
         >
