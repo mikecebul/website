@@ -9,8 +9,7 @@ import { RichText } from '@/components/RichText'
 import { RenderBlocks } from '../RenderBlocks'
 import RichTextCarousel from '../RichText/RichTextCarousel'
 import { imagesAsMedia } from '@/utilities/imagesAsMedia'
-import { HeroSVG } from '@/components/Hero'
-import Image from 'next/image'
+import { Dots, Profile } from '@/components/Hero/Profile'
 import Link from 'next/link'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { buttonVariants } from '@/components/ui/button'
@@ -36,7 +35,7 @@ export const TwoColumnLayoutBlock = async ({
     images,
     priority,
     sticky = false,
-    svg = false,
+    profileSvg = false,
   } = columnTwo ?? {}
   const validImages = imagesAsMedia(images)
 
@@ -45,12 +44,15 @@ export const TwoColumnLayoutBlock = async ({
   const cleanedPhone = contact?.phone ? contact.phone.replace(/\D/g, '') : null
 
   return (
-    <Container className="xl:overflow-visible">
+    <Container className={cn("xl:overflow-visible relative", {
+      'max-w-7xl mx-auto': profileSvg,
+    })}>
       <div
         className={cn('grid grid-cols-1 gap-12', `${breakpoint}:grid-cols-2`, {
           'xl:items-start': sticky,
         })}
-      >
+        >
+        {profileSvg && <Dots />}
         <div
           className={cn('order-1 flex flex-col justify-center gap-4 lg:gap-6 ', {
             'justify-center': verticalAlignment === 'center',
@@ -73,7 +75,7 @@ export const TwoColumnLayoutBlock = async ({
               {title && <Title text={title} heading={heading ?? 'h2'} />}
               {description && <Description text={description} />}
               {links && (
-                <CTALinks links={links} className={mobileHeroLinks ? 'hidden lg:flex' : ''} />
+                <CTALinks links={links} className={mobileHeroLinks ? 'hidden lg:flex w-full' : ''} />
               )}
               {/* Mobile Links */}
               {mobileHeroLinks ? (
@@ -109,7 +111,7 @@ export const TwoColumnLayoutBlock = async ({
           className={cn('order-2', {
             'flex flex-col items-center justify-center': !sticky,
             'sticky xl:top-20 xl:pt-2': sticky,
-            relative: svg,
+            relative: profileSvg,
             'sm:order-1': direction === 'rtl' && breakpoint === 'sm',
             'md:order-1': direction === 'rtl' && breakpoint === 'md',
             'lg:order-1': direction === 'rtl' && breakpoint === 'lg',
@@ -120,18 +122,24 @@ export const TwoColumnLayoutBlock = async ({
             form && <RenderBlocks blocks={form} nested />
           ) : validImages.length > 1 ? (
             <div className="relative">
-              <RichTextCarousel images={validImages} priority={priority ?? false} />
-              {svg && <HeroSVG direction={direction} />}
+              {profileSvg ? (
+                <Profile images={images} priority={priority ?? false} />
+              ) : (
+                <RichTextCarousel images={validImages} priority={priority ?? false} />
+              )}
             </div>
           ) : images?.[0] && typeof images[0] === 'object' ? (
             <div className="relative">
-              <Media
-                className="relative"
-                imgClassName="rounded-lg shadow-lg ring-1 ring-gray-400/10"
-                resource={validImages[0] ?? '/women-laptop.webp'}
-                priority={priority ?? false}
-              />
-              {svg && <HeroSVG direction={direction} />}
+              {profileSvg ? (
+                <Profile images={images} priority={priority ?? false} />
+              ) : (
+                <Media
+                  className="relative"
+                  imgClassName="rounded-lg shadow-lg ring-1 ring-gray-400/10"
+                  resource={validImages[0] ?? '/women-laptop.webp'}
+                  priority={priority ?? false}
+                />
+              )}
             </div>
           ) : null}
         </div>

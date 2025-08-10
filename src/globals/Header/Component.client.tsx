@@ -47,16 +47,6 @@ export const HeaderClient = ({
         <MainNav navItems={navItems} />
         <MobileNav navItems={navItems} />
         <div className="flex flex-col items-end gap-2 ml-auto">
-          <Link
-            href={googleMapLink ?? '#'}
-            className={cn(
-              buttonVariants({ variant: 'outline' }),
-              'hidden xl:inline-flex text-lg text-brand hover:text-brand/90',
-            )}
-          >
-            <Icons.navigation className="mr-2" size={20} />
-            {street} | {cityStateZip}
-          </Link>
           <div className={cn(buttonVariants({ variant: 'text' }), 'text-lg hidden xl:inline-flex')}>
             <Icons.phone className="mr-2" size={20} />
             {phone}

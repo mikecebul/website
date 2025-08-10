@@ -22,32 +22,6 @@ const contactInfo: ContactGroupType = ({ overrides = {} } = {}) => {
             defaultValue: '(231) 547-1144',
             admin: { width: '45%' },
           },
-          {
-            name: 'fax',
-            label: 'Fax',
-            type: 'text',
-            defaultValue: '(231) 547-4970',
-            admin: { width: '45%' },
-          },
-        ],
-      },
-      {
-        type: 'row',
-        fields: [
-          {
-            name: 'address',
-            label: 'Address',
-            type: 'text',
-            defaultValue: '101 M-66 | Charlevoix, MI',
-            admin: { width: '45%' },
-          },
-          {
-            name: 'googleMapLink',
-            type: 'text',
-            label: 'Google Map Link',
-            defaultValue: 'https://goo.gl/maps/X956fmf511Fef9Pr7',
-            admin: { width: '45%' },
-          },
         ],
       },
       {
@@ -57,7 +31,7 @@ const contactInfo: ContactGroupType = ({ overrides = {} } = {}) => {
             name: 'email',
             label: 'Email',
             type: 'text',
-            defaultValue: 'info@basesmi.org',
+            defaultValue: 'mike@mikecebul.com',
             admin: { width: '45%' },
           },
         ],

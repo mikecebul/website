@@ -17,8 +17,6 @@ export const GoogleMap = ({ contact }: { contact: CompanyInfo['contact'] }) => {
       <div className="h-[350px] bg-gray-100 flex items-center justify-center flex-col gap-2">
         <div className="text-sm text-gray-500">
           <p>{name}</p>
-          <p>{street}</p>
-          <p>{cityStateZip}</p>
         </div>
       </div>
     )
@@ -40,8 +38,6 @@ export const GoogleMap = ({ contact }: { contact: CompanyInfo['contact'] }) => {
             }
           >
             <div className="flex flex-col pt-2">
-              <p className="text-sm text-gray-500">{street}</p>
-              <p className="text-sm text-gray-500">{cityStateZip}</p>
             </div>
           </InfoWindow>
         </Map>

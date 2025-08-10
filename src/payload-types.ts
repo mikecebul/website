@@ -832,7 +832,7 @@ export interface TwoColumnLayoutBlock {
      * Images will follow as user scrolls
      */
     sticky?: boolean | null;
-    svg?: boolean | null;
+    profileSvg?: boolean | null;
     images?: (string | Media)[] | null;
     form?: FormBlock[] | null;
   };
@@ -1216,7 +1216,7 @@ export interface TwoColumnLayoutBlockSelect<T extends boolean = true> {
         contentType?: T;
         priority?: T;
         sticky?: T;
-        svg?: T;
+        profileSvg?: T;
         images?: T;
         form?:
           | T
@@ -1700,7 +1700,7 @@ export interface CompanyInfo {
     phone?: string | null;
     fax?: string | null;
     physicalAddress: {
-      street: string;
+      street?: string | null;
       cityStateZip: string;
       /**
        * Enter the full URL to the Google Map location

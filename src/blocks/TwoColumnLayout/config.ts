@@ -117,10 +117,10 @@ export const TwoColumnLayout: Block = {
           },
         },
         {
-          name: 'svg',
+          name: 'profileSvg',
           type: 'checkbox',
           defaultValue: false,
-          label: 'Show SVG',
+          label: 'Show Profile SVG',
           admin: {
             condition: (_, siblingData) => Boolean(siblingData.contentType === 'image'),
           },

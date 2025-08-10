@@ -29,20 +29,13 @@ import {
   Baby,
   PersonStanding,
   Clock,
+  CodeXml,
 } from 'lucide-react'
 import { ReactNode } from 'react'
-import { cn } from '@/utilities/cn'
 
 export const Icons = {
   logo: ({ className }: { className: string }) => (
-    <Image
-      src="/bases-logo.png"
-      width={1024}
-      height={252}
-      className={className}
-      alt="BASES Logo"
-      priority
-    />
+    <p className='text-2xl font-bold text-primary uppercase'>MikeCebul, llc</p>
   ),
   carf: ({ className }: { className: string }) => (
     <Image
@@ -81,6 +74,7 @@ export const Icons = {
   baby: Baby,
   kid: PersonStanding,
   clock: Clock,
+  code: CodeXml,
 }
 
 export type LucideIconsType = (typeof lucideIcons)[number]
@@ -111,6 +105,7 @@ export const lucideIcons = [
   { component: Check, label: 'Check', value: 'Check' },
   { component: ChevronsUpDown, label: 'Up Down', value: 'ChevronsUpDown' },
   { component: PlusCircle, label: 'Plus Circle', value: 'PlusCircle' },
+  { component: CodeXml, label: 'Code', value: 'CodeXml' },
 ]
 
 export const iconMapping = lucideIcons.reduce<Record<string, LucideIcon>>((acc, icon) => {

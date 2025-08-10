@@ -50,7 +50,7 @@ export async function Footer() {
             <div className="flex flex-col col-span-1">
               <p className="text-lg font-bold">Contact</p>
               <Separator className="my-4" />
-              <ul className="flex flex-col mb-8 space-y-4 text-gray-500 ">
+              <ul className="flex flex-col mb-8 space-y-4 text-muted-foreground ">
                 {typeof contact?.phone === 'string' && (
                   <li key={contact.phone} className="group">
                     <a
@@ -66,17 +66,18 @@ export async function Footer() {
                   </li>
                 )}
                 {typeof contact?.physicalAddress === 'object' && (
-                  <li key={contact.physicalAddress.street} className="group">
-                    <a
-                      href={contact.physicalAddress.googleMapLink ?? '#'}
+                  <li key={contact.physicalAddress.street} >
+                    <div
                       className={cn(
                         buttonVariants({ variant: 'ghost' }),
-                        'flex justify-start group-hover:text-primary',
+                        'flex justify-start cursor-default',
                       )}
                     >
                       <Navigation className="shrink-0 mr-2" size={20} />
-                      {contact.physicalAddress.street} | {contact.physicalAddress.cityStateZip}
-                    </a>
+                      <p>{contact.physicalAddress.street
+                        ? `${contact.physicalAddress.street} | ${contact.physicalAddress.cityStateZip}`
+                        : contact.physicalAddress.cityStateZip}</p>
+                    </div>
                   </li>
                 )}
                 {typeof contact?.email === 'string' && (
@@ -91,14 +92,6 @@ export async function Footer() {
                       <Mail className="shrink-0 mr-2" size={20} />
                       {contact.email}
                     </a>
-                  </li>
-                )}
-                {typeof contact?.fax === 'string' && (
-                  <li key={contact.fax} className="group">
-                    <div className={cn(buttonVariants({ variant: 'text' }), 'text-gray-500')}>
-                      <Printer className="mr-2" size={20} />
-                      {contact.fax}
-                    </div>
                   </li>
                 )}
                 {/* Social Links */}
@@ -162,7 +155,7 @@ export async function Footer() {
           <span className="block text-sm text-center text-gray-500">
             © {new Date().getFullYear()}{' '}
             <Link href="/" className={cn(buttonVariants({ variant: 'ghost' }), 'p-0')}>
-              BASES
+              MIKECEBUL, LLC
             </Link>
             . All Rights Reserved.
           </span>

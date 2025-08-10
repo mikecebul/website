@@ -79,9 +79,7 @@ export const CompanyInfo: GlobalConfig = {
                   name: 'street',
                   label: 'Street Address',
                   type: 'text',
-                  required: true,
                   admin: { width: '50%' },
-                  defaultValue: '101 M-66 N',
                 },
                 {
                   name: 'cityStateZip',
