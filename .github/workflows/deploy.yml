@@ -26,7 +26,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            mikecebul/bases:latest
+            mikecebul/mikecebul:latest
           platforms: linux/amd64
           secrets: |
             DATABASE_URI=${{ secrets.DATABASE_URI }}
