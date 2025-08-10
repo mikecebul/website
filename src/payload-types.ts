@@ -192,7 +192,6 @@ export interface Page {
     | RichTextBlock
     | ServicesBlock
     | CarfBlock
-    | DonateBlock
     | TeamBlock
     | AboutUsBlock
     | LinksBlock
@@ -361,24 +360,6 @@ export interface CarfBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'carf';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "DonateBlock".
- */
-export interface DonateBlock {
-  subtitle?: string | null;
-  title?: string | null;
-  description?: string | null;
-  programs?:
-    | {
-        title?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'donate';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1027,7 +1008,6 @@ export interface PagesSelect<T extends boolean = true> {
         richText?: T | RichTextBlockSelect<T>;
         services?: T | ServicesBlockSelect<T>;
         carf?: T | CarfBlockSelect<T>;
-        donate?: T | DonateBlockSelect<T>;
         team?: T | TeamBlockSelect<T>;
         aboutUs?: T | AboutUsBlockSelect<T>;
         linksBlock?: T | LinksBlockSelect<T>;
@@ -1134,23 +1114,6 @@ export interface CarfBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   image?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "DonateBlock_select".
- */
-export interface DonateBlockSelect<T extends boolean = true> {
-  subtitle?: T;
-  title?: T;
-  description?: T;
-  programs?:
-    | T
-    | {
-        title?: T;
-        id?: T;
-      };
   id?: T;
   blockName?: T;
 }

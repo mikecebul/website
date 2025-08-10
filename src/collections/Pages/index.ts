@@ -15,7 +15,6 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { Donate } from '@/blocks/Donate/config'
 import { Team } from '@/blocks/Team/config'
 import { AboutUs } from '@/blocks/AboutUs/config'
 import { Links } from '@/blocks/Links/config'
@@ -75,7 +74,6 @@ export const Pages: CollectionConfig = {
                 RichText,
                 Services,
                 Carf,
-                Donate,
                 Team,
                 AboutUs,
                 Links,

@@ -5,7 +5,6 @@ import type { Page } from '@/payload-types'
 import { HeroBlock } from '@/blocks/Hero/Component'
 import { ServicesBlock } from './Services/Component'
 import { CarfBlock } from './Carf/Component'
-import DonateBlock from './Donate/Component'
 import { TeamBlock } from './Team/Component'
 import { TeamMemberBlock } from './TeamMember/Component'
 import { AboutUsBlock } from './AboutUs/Component'
@@ -21,7 +20,6 @@ const blockComponents = {
   richText: RichTextBlock,
   services: ServicesBlock,
   carf: CarfBlock,
-  donate: DonateBlock,
   team: TeamBlock,
   teamMember: TeamMemberBlock,
   aboutUs: AboutUsBlock,
