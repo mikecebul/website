@@ -15,9 +15,9 @@ const nextConfig = {
         baseUrl,
         'https://images.unsplash.com',
         'https://maps.googleapis.com',
-        'https://basesmi.org',
-        'https://www.basesmi.org',
-        'https://media-bases.mikecebul.com',
+        'https://mikecebul.com',
+        'https://www.mikecebul.com',
+        'https://media.mikecebul.com',
       ].map((item) => {
         const url = new URL(item)
         return {
@@ -29,21 +29,13 @@ const nextConfig = {
   },
   reactStrictMode: true,
   redirects,
-  async rewrites() {
-    return [
-      {
-        source: '/RDFK',
-        destination: '/rdfk',
-      },
-    ]
-  },
 }
 
 // Sentry Configuration
 const sentryConfig = {
   org: 'mikecebul',
-  project: 'cvx-jr-golf',
-  sentryUrl: 'https://monitor.mikecebul.dev/',
+  project: 'mikecebul-website',
+  sentryUrl: 'https://monitor.mikecebul.com/',
   authToken: process.env.SENTRY_AUTH_TOKEN,
   silent: !process.env.CI,
   widenClientFileUpload: true,
