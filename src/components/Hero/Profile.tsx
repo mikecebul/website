@@ -11,13 +11,13 @@ export const Profile = ({ images, priority = false }: ProfileProps) => {
   const validImages = imagesAsMedia(images)
   return (
     <div className="flex flex-col justify-center items-center relative">
-      <svg
+      {/* <svg
         id="visual"
         viewBox="0 0 900 600"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
         version="1.1"
-        className="w-full h-auto max-w-full scale-190 sm:scale-200"
+        className="w-full h-auto max-w-full"
       >
         <g transform="translate(450 300) scale(0.9)">
           <path
@@ -26,11 +26,11 @@ export const Profile = ({ images, priority = false }: ProfileProps) => {
             className="text-primary/20"
           ></path>
         </g>
-      </svg>
+      </svg> */}
       <div className="absolute inset-0 flex items-center justify-center">
         <Media
           className="relative"
-          imgClassName="rounded-full z-10 w-32 w-64"
+          imgClassName="rounded-full z-10"
           resource={validImages[0] ?? '/profile_pic.jpg'}
           priority={priority}
         />
@@ -40,24 +40,23 @@ export const Profile = ({ images, priority = false }: ProfileProps) => {
 }
 
 export const Dots = () => (
-    <svg
-      id="dots"
-      viewBox="0 0 900 600"
-      width="900"
-      height="600"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-      version="1.1"
-      className="w-11/12 h-full absolute -z-10"
-    >
-      <g fill="currentColor" className="text-yellow-400/10"
->
-        <circle r="78" cx="216" cy="124"></circle>
-        <circle r="34" cx="102" cy="334"></circle>
-        <circle r="69" cx="251" cy="445"></circle>
-        <circle r="39" cx="410" cy="286"></circle>
-        <circle r="62" cx="633" cy="269"></circle>
-        <circle r="76" cx="753" cy="488"></circle>
-      </g>
-    </svg>
-  );
+  <svg
+    id="dots"
+    viewBox="0 0 900 600"
+    width="900"
+    height="600"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    version="1.1"
+    className="w-11/12 h-full absolute -z-10"
+  >
+    <g fill="currentColor" className="text-yellow-400/10">
+      <circle r="78" cx="216" cy="124"></circle>
+      <circle r="34" cx="102" cy="334"></circle>
+      <circle r="69" cx="251" cy="445"></circle>
+      <circle r="39" cx="410" cy="286"></circle>
+      <circle r="62" cx="633" cy="269"></circle>
+      <circle r="76" cx="753" cy="488"></circle>
+    </g>
+  </svg>
+)

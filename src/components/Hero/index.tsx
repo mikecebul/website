@@ -6,6 +6,8 @@ import { cn } from '@/utilities/cn'
 import type { CompanyInfo, Hero as HeroType } from '@/payload-types'
 import { CMSLink } from '../Link'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { Dots, Profile } from './Profile'
+import { Media } from '../Media'
 
 type Props = NonNullable<HeroType['highImpact']>
 
@@ -15,7 +17,8 @@ export async function Hero({ title, description, image, links, svg }: Props) {
 
   return (
     <section className="grid lg:gap-8 lg:grid-cols-12 2xl:px-0 2xl:container gap-12">
-      <div className="flex flex-col mr-auto lg:col-span-6">
+      <Dots />
+      <div className="flex flex-col mr-auto lg:col-span-6 ">
         <h1 className="max-w-2xl pb-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:pb-8 xl:text-6xl 2xl:text-7xl">
           {title}
         </h1>
@@ -25,22 +28,12 @@ export async function Hero({ title, description, image, links, svg }: Props) {
           <Link
             href={cleanedPhone ? `tel:${cleanedPhone}` : '#'}
             className={cn(
-              buttonVariants({ variant: 'brand', size: 'xl' }),
-              'xl:hidden min-w-full lg:min-w-64',
+              buttonVariants({ variant: 'default', size: 'xl' }),
+              'md:hidden min-w-full lg:min-w-64',
             )}
           >
             <Icons.phone className="mr-2" />
             Call Now
-          </Link>
-          <Link
-            href={contact?.physicalAddress.googleMapLink ?? '#'}
-            className={cn(
-              buttonVariants({ variant: 'brandOutline', size: 'xl' }),
-              'xl:hidden min-w-full lg:min-w-64',
-            )}
-          >
-            <Icons.navigation className="mr-2" />
-            Directions to our Building
           </Link>
           {/* Desktop Links */}
           {links != null &&
@@ -49,25 +42,20 @@ export async function Hero({ title, description, image, links, svg }: Props) {
                 key={id}
                 {...link}
                 size="xl"
-                appearance={index === 0 ? 'brand' : link.appearance}
-                className="hidden rounded-lg xl:flex lg:min-w-64"
+                appearance={index === 0 ? 'default' : link.appearance}
+                className="hidden rounded-lg md:flex lg:min-w-64"
               />
             ))}
         </div>
       </div>
-      <div className="relative">
+      <div className="flex flex-col items-center justify-center lg:col-span-6">
         {image != null && typeof image === 'object' && (
-          <>
-            <Image
-              src={image.url ?? '/woman-laptop.webp'}
-              alt={image.alt ?? 'Woman using telehealth services from home.'}
-              className="object-cover w-full max-w-3xl rounded-lg shadow-lg ring-1 ring-gray-400/10 max-h-96"
-              width={image.width ?? 0}
-              height={image.height ?? 0}
-              priority
-            />
-            <HeroSVG />
-          </>
+          <Media
+            className="relative"
+            imgClassName="rounded-full z-10 w-64 lg:w-80 xl:w-96"
+            resource={image ?? '/profile_pic.jpg'}
+            priority={true}
+          />
         )}
       </div>
     </section>

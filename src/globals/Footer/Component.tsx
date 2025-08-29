@@ -1,11 +1,10 @@
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 
-import type { CompanyInfo, Footer } from '@/payload-types'
+import type { Footer } from '@/payload-types'
 import { cn } from '@/utilities/cn'
 import { buttonVariants } from '@/components/ui/button'
-import { Clock, Facebook, Mail, Navigation, Phone, Printer } from 'lucide-react'
-import Image from 'next/image'
+import { Clock, Facebook, Mail, Navigation, Phone } from 'lucide-react'
 import Container from '@/components/Container'
 import { CMSLink } from '@/components/Link'
 import payloadConfig from '@payload-config'
@@ -66,7 +65,7 @@ export async function Footer() {
                   </li>
                 )}
                 {typeof contact?.physicalAddress === 'object' && (
-                  <li key={contact.physicalAddress.street} >
+                  <li key={contact.physicalAddress.cityState}>
                     <div
                       className={cn(
                         buttonVariants({ variant: 'ghost' }),
@@ -74,9 +73,7 @@ export async function Footer() {
                       )}
                     >
                       <Navigation className="shrink-0 mr-2" size={20} />
-                      <p>{contact.physicalAddress.street
-                        ? `${contact.physicalAddress.street} | ${contact.physicalAddress.cityStateZip}`
-                        : contact.physicalAddress.cityStateZip}</p>
+                      <p>{contact.physicalAddress.cityState}</p>
                     </div>
                   </li>
                 )}
@@ -139,15 +136,6 @@ export async function Footer() {
               </ul>
             </div>
           )}
-
-          {/* Map Section */}
-          {showGoogleMap && (
-            <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-              <p className="text-lg font-bold">Location</p>
-              <Separator className="my-4" />
-              <GoogleMap contact={contact} />
-            </div>
-          )}
         </div>
 
         <Separator />
@@ -155,7 +143,7 @@ export async function Footer() {
           <span className="block text-sm text-center text-gray-500">
             © {new Date().getFullYear()}{' '}
             <Link href="/" className={cn(buttonVariants({ variant: 'ghost' }), 'p-0')}>
-              MIKECEBUL, LLC
+              {contact.name ?? 'MIKECEBUL, LLC'}
             </Link>
             . All Rights Reserved.
           </span>

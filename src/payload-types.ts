@@ -1698,21 +1698,8 @@ export interface CompanyInfo {
     name?: string | null;
     email?: string | null;
     phone?: string | null;
-    fax?: string | null;
     physicalAddress: {
-      street?: string | null;
-      cityStateZip: string;
-      /**
-       * Enter the full URL to the Google Map location
-       */
-      googleMapLink?: string | null;
-      /**
-       * Select the exact location on Google Maps
-       *
-       * @minItems 2
-       * @maxItems 2
-       */
-      coordinates?: [number, number] | null;
+      cityState: string;
     };
   };
   social?:
@@ -1807,14 +1794,10 @@ export interface CompanyInfoSelect<T extends boolean = true> {
         name?: T;
         email?: T;
         phone?: T;
-        fax?: T;
         physicalAddress?:
           | T
           | {
-              street?: T;
-              cityStateZip?: T;
-              googleMapLink?: T;
-              coordinates?: T;
+              cityState?: T;
             };
       };
   social?:

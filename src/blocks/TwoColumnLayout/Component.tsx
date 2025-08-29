@@ -44,18 +44,20 @@ export const TwoColumnLayoutBlock = async ({
   const cleanedPhone = contact?.phone ? contact.phone.replace(/\D/g, '') : null
 
   return (
-    <Container className={cn("xl:overflow-visible relative", {
-      'max-w-7xl mx-auto': profileSvg,
-    })}>
+    <Container
+      className={cn('xl:overflow-visible relative', {
+        'max-w-7xl mx-auto': profileSvg,
+      })}
+    >
       <div
         className={cn('grid grid-cols-1 gap-12', {
           'sm:grid-cols-2': breakpoint === 'sm',
-          'md:grid-cols-2': breakpoint === 'md', 
+          'md:grid-cols-2': breakpoint === 'md',
           'lg:grid-cols-2': breakpoint === 'lg',
           'xl:grid-cols-2': breakpoint === 'xl',
           'xl:items-start': sticky,
         })}
-        >
+      >
         {profileSvg && <Dots />}
         <div
           className={cn('order-1 flex flex-col justify-center gap-4 lg:gap-6 ', {
@@ -79,7 +81,10 @@ export const TwoColumnLayoutBlock = async ({
               {title && <Title text={title} heading={heading ?? 'h2'} />}
               {description && <Description text={description} />}
               {links && (
-                <CTALinks links={links} className={mobileHeroLinks ? 'hidden lg:flex w-full' : ''} />
+                <CTALinks
+                  links={links}
+                  className={mobileHeroLinks ? 'hidden lg:flex w-full' : ''}
+                />
               )}
               {/* Mobile Links */}
               {mobileHeroLinks ? (
@@ -93,16 +98,6 @@ export const TwoColumnLayoutBlock = async ({
                   >
                     <Icons.phone className="mr-2" />
                     Call Now
-                  </Link>
-                  <Link
-                    href={contact?.physicalAddress.googleMapLink ?? '#'}
-                    className={cn(
-                      buttonVariants({ variant: 'brandOutline', size: 'xl' }),
-                      'xl:hidden min-w-full lg:min-w-64',
-                    )}
-                  >
-                    <Icons.navigation className="mr-2" />
-                    Directions to our Building
                   </Link>
                 </div>
               ) : null}

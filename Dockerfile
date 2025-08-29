@@ -23,56 +23,6 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Create .env.production from Docker secrets (build-time only)
-RUN --mount=type=secret,id=DATABASE_URI \
-  --mount=type=secret,id=NEXT_PUBLIC_SERVER_URL \
-  --mount=type=secret,id=PAYLOAD_SECRET \
-  --mount=type=secret,id=S3_ENABLED \
-  --mount=type=secret,id=SENTRY_AUTH_TOKEN \
-  --mount=type=secret,id=NEXT_PUBLIC_IS_LIVE \
-  --mount=type=secret,id=NEXT_PUBLIC_GOOGLE_MAPS_API_KEY \
-  --mount=type=secret,id=NEXT_PUBLIC_UPLOAD_PREFIX \
-  --mount=type=secret,id=NEXT_PUBLIC_USAEPAY_KEY \
-  --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN \
-  --mount=type=secret,id=EMAIL_HOST \
-  --mount=type=secret,id=EMAIL_PORT \
-  --mount=type=secret,id=EMAIL_USER \
-  --mount=type=secret,id=EMAIL_PASSWORD \
-  --mount=type=secret,id=PREVIEW_SECRET \
-  --mount=type=secret,id=RESEND_API_KEY \
-  --mount=type=secret,id=S3_ACCESS_KEY_ID \
-  --mount=type=secret,id=S3_SECRET_ACCESS_KEY \
-  --mount=type=secret,id=S3_REGION \
-  --mount=type=secret,id=S3_ENDPOINT \
-  --mount=type=secret,id=S3_BUCKET \
-  --mount=type=secret,id=NEXT_PUBLIC_S3_HOSTNAME \
-  --mount=type=secret,id=UNSPLASH_ACCESS_KEY \
-  sh -c '( \
-  echo "DATABASE_URI=$(cat /run/secrets/DATABASE_URI)" && \
-  echo "NEXT_PUBLIC_SERVER_URL=$(cat /run/secrets/NEXT_PUBLIC_SERVER_URL)" && \
-  echo "PAYLOAD_SECRET=$(cat /run/secrets/PAYLOAD_SECRET)" && \
-  echo "S3_ENABLED=$(cat /run/secrets/S3_ENABLED)" && \
-  echo "SENTRY_AUTH_TOKEN=$(cat /run/secrets/SENTRY_AUTH_TOKEN)" && \
-  echo "NEXT_PUBLIC_IS_LIVE=$(cat /run/secrets/NEXT_PUBLIC_IS_LIVE)" && \
-  echo "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=$(cat /run/secrets/NEXT_PUBLIC_GOOGLE_MAPS_API_KEY)" && \
-  echo "NEXT_PUBLIC_UPLOAD_PREFIX=$(cat /run/secrets/NEXT_PUBLIC_UPLOAD_PREFIX)" && \
-  echo "NEXT_PUBLIC_USAEPAY_KEY=$(cat /run/secrets/NEXT_PUBLIC_USAEPAY_KEY)" && \
-  echo "NEXT_PUBLIC_SENTRY_DSN=$(cat /run/secrets/NEXT_PUBLIC_SENTRY_DSN)" && \
-  echo "EMAIL_HOST=$(cat /run/secrets/EMAIL_HOST)" && \
-  echo "EMAIL_PORT=$(cat /run/secrets/EMAIL_PORT)" && \
-  echo "EMAIL_USER=$(cat /run/secrets/EMAIL_USER)" && \
-  echo "EMAIL_PASSWORD=$(cat /run/secrets/EMAIL_PASSWORD)" && \
-  echo "PREVIEW_SECRET=$(cat /run/secrets/PREVIEW_SECRET)" && \
-  echo "RESEND_API_KEY=$(cat /run/secrets/RESEND_API_KEY)" && \
-  echo "S3_ACCESS_KEY_ID=$(cat /run/secrets/S3_ACCESS_KEY_ID)" && \
-  echo "S3_SECRET_ACCESS_KEY=$(cat /run/secrets/S3_SECRET_ACCESS_KEY)" && \
-  echo "S3_REGION=$(cat /run/secrets/S3_REGION)" && \
-  echo "S3_ENDPOINT=$(cat /run/secrets/S3_ENDPOINT)" && \
-  echo "S3_BUCKET=$(cat /run/secrets/S3_BUCKET)" && \
-  echo "NEXT_PUBLIC_S3_HOSTNAME=$(cat /run/secrets/NEXT_PUBLIC_S3_HOSTNAME)" && \
-  echo "UNSPLASH_ACCESS_KEY=$(cat /run/secrets/UNSPLASH_ACCESS_KEY)" \
-  ) > .env.production'
-
 ENV SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING=1
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_OUTPUT=standalone
@@ -80,8 +30,32 @@ ENV NEXT_OUTPUT=standalone
 # Update and enable Corepack
 RUN npm install -g corepack@latest
 
+# Build with secrets as environment variables
 RUN \
-  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && set -a && . ./.env.production && set +a && pnpm run build; \
+  --mount=type=secret,id=DATABASE_URI,env=DATABASE_URI \
+  --mount=type=secret,id=NEXT_PUBLIC_SERVER_URL,env=NEXT_PUBLIC_SERVER_URL \
+  --mount=type=secret,id=PAYLOAD_SECRET,env=PAYLOAD_SECRET \
+  --mount=type=secret,id=S3_ENABLED,env=S3_ENABLED \
+  --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN \
+  --mount=type=secret,id=NEXT_PUBLIC_IS_LIVE,env=NEXT_PUBLIC_IS_LIVE \
+  --mount=type=secret,id=NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,env=NEXT_PUBLIC_GOOGLE_MAPS_API_KEY \
+  --mount=type=secret,id=NEXT_PUBLIC_UPLOAD_PREFIX,env=NEXT_PUBLIC_UPLOAD_PREFIX \
+  --mount=type=secret,id=NEXT_PUBLIC_USAEPAY_KEY,env=NEXT_PUBLIC_USAEPAY_KEY \
+  --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN,env=NEXT_PUBLIC_SENTRY_DSN \
+  --mount=type=secret,id=EMAIL_HOST,env=EMAIL_HOST \
+  --mount=type=secret,id=EMAIL_PORT,env=EMAIL_PORT \
+  --mount=type=secret,id=EMAIL_USER,env=EMAIL_USER \
+  --mount=type=secret,id=EMAIL_PASSWORD,env=EMAIL_PASSWORD \
+  --mount=type=secret,id=PREVIEW_SECRET,env=PREVIEW_SECRET \
+  --mount=type=secret,id=RESEND_API_KEY,env=RESEND_API_KEY \
+  --mount=type=secret,id=S3_ACCESS_KEY_ID,env=S3_ACCESS_KEY_ID \
+  --mount=type=secret,id=S3_SECRET_ACCESS_KEY,env=S3_SECRET_ACCESS_KEY \
+  --mount=type=secret,id=S3_REGION,env=S3_REGION \
+  --mount=type=secret,id=S3_ENDPOINT,env=S3_ENDPOINT \
+  --mount=type=secret,id=S3_BUCKET,env=S3_BUCKET \
+  --mount=type=secret,id=NEXT_PUBLIC_S3_HOSTNAME,env=NEXT_PUBLIC_S3_HOSTNAME \
+  --mount=type=secret,id=UNSPLASH_ACCESS_KEY,env=UNSPLASH_ACCESS_KEY \
+  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
