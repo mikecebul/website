@@ -1,7 +1,7 @@
 {
-  "name": "basesmi",
-  "version": "3.1.0",
-  "description": "BASESmi.org website.",
+  "name": "mikecebul-website",
+  "version": "0.0.1",
+  "description": "MIKECEBUL, LLC website.",
   "license": "MIT",
   "type": "module",
   "scripts": {

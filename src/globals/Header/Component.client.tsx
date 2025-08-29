@@ -22,7 +22,7 @@ export const HeaderClient = ({
   const navItems = header?.navItems || []
   const {
     phone,
-    physicalAddress: { cityStateZip, street, googleMapLink },
+    physicalAddress: { cityState },
   } = contact || {}
 
   return (

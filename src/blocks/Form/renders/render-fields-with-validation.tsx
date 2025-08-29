@@ -109,35 +109,37 @@ export const RenderFields = ({
           key={field.id}
           name={field.name}
           validators={{
-            onChange: (() => {
-              // Start with base schema for coercing to number
-              let schema = z.coerce.number()
-
-              // Add min validation if field.min is defined
-              if (field.min !== undefined && field.min !== null) {
-                schema = schema.min(
-                  field.min,
-                  field.minError || `${field.label || field.name} must be at least ${field.min}`,
-                )
+            onChange: ({ value }) => {
+              // Handle empty value for optional fields
+              if (!field.required && (value === '' || value === undefined || value === null)) {
+                return undefined
               }
 
-              // Add max validation if field.max is defined
-              if (field.max !== undefined && field.max !== null) {
-                schema = schema.max(
-                  field.max,
-                  field.maxError || `${field.label || field.name} must not exceed ${field.max}`,
-                )
+              // Convert to number
+              const numValue = Number(value)
+
+              // Check if value is a valid number
+              if (isNaN(numValue)) {
+                return `${field.label || field.name} must be a number`
               }
 
-              // Handle required vs optional
-              if (field.required) {
-                return schema
-              } else {
-                // For optional fields, allow empty values
-                // This handles empty string ('') which coerces to 0
-                return z.union([schema, z.literal('').transform(() => undefined), z.undefined()])
+              // Check required
+              if (field.required && (value === '' || value === undefined || value === null)) {
+                return `${field.label || field.name} is required`
               }
-            })(),
+
+              // Check min
+              if (field.min !== undefined && field.min !== null && numValue < field.min) {
+                return field.minError || `${field.label || field.name} must be at least ${field.min}`
+              }
+
+              // Check max
+              if (field.max !== undefined && field.max !== null && numValue > field.max) {
+                return field.maxError || `${field.label || field.name} must not exceed ${field.max}`
+              }
+
+              return undefined
+            },
           }}
         >
           {(formField) => <formField.NumberField {...field} />}

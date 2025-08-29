@@ -9,7 +9,6 @@ import Container from '@/components/Container'
 import { CMSLink } from '@/components/Link'
 import payloadConfig from '@payload-config'
 import { getPayload } from 'payload'
-import { GoogleMap } from './GoogleMap'
 
 export async function Footer() {
   const payload = await getPayload({ config: payloadConfig })
