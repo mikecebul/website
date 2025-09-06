@@ -44,7 +44,7 @@ export default function Page() {
           Click the button below, and view the sample error on the Sentry{' '}
           <a
             target="_blank"
-            href="https://monitor.mikecebul.dev/organizations/mikecebul/issues/?project=2"
+            href="https://monitor.mikecebul.com/organizations/mikecebul/issues/?project=4"
           >
             Issues Page
           </a>

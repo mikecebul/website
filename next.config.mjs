@@ -14,7 +14,6 @@ const nextConfig = {
       ...[
         baseUrl,
         'https://images.unsplash.com',
-        'https://maps.googleapis.com',
         'https://mikecebul.com',
         'https://www.mikecebul.com',
         'https://media.mikecebul.com',
@@ -45,7 +44,7 @@ const sentryConfig = {
   tunnelRoute: '/monitoring',
   hideSourceMaps: true,
   disableLogger: true,
-  automaticVercelMonitors: true,
+  automaticVercelMonitors: false,
 }
 
 export default withSentryConfig(
