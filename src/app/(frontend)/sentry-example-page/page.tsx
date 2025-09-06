@@ -44,7 +44,7 @@ export default function Page() {
           Click the button below, and view the sample error on the Sentry{' '}
           <a
             target="_blank"
-            href="https://monitor.mikecebul.com/organizations/mikecebul/issues/?project=4"
+            href="https://monitor.mikecebul.com/organizations/mikecebul/issues/?project=5"
           >
             Issues Page
           </a>
@@ -81,12 +81,11 @@ export default function Page() {
         <button
           type="button"
           onClick={() => {
-            throw Error("Generic Error Message");
+            throw Error('Generic Error Message')
           }}
         >
           <span>Generic Error Message</span>
         </button>
-        
 
         {hasSentError ? (
           <p className="success">Sample error was sent to Sentry.</p>

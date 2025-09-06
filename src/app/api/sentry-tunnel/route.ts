@@ -2,12 +2,12 @@ export async function POST(request: Request) {
   const body = await request.text()
   
   // Extract project ID and key from your DSN
-  // DSN format: https://9c880f7160a4463db3cdd151bb2b3a91@monitor.mikecebul.com/4
-  const projectId = '4'
-  const secretKey = '9c880f7160a4463db3cdd151bb2b3a91'
+  // DSN format: https://ea4573e4db2a42c2900fa3328187fc98@monitor.mikecebul.com/5
+  const projectId = '5'
+  const secretKey = 'ea4573e4db2a42c2900fa3328187fc98'
   const serverInstance = 'https://monitor.mikecebul.com'
   
-  const url = `${serverInstance}/api/${projectId}/envelope/?sentry_version=7&sentry_key=${secretKey}&sentry_client=sentry.javascript.nextjs%2F10.10.0`
+  const url = `${serverInstance}/api/${projectId}/envelope/?sentry_version=7&sentry_key=${secretKey}&sentry_client=sentry.javascript.nextjs%2F9.34.0`
 
   try {
     const response = await fetch(url, {

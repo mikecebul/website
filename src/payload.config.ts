@@ -193,12 +193,13 @@ export default buildConfig({
               pass: process.env.EMAIL_PASSWORD || 'password',
             },
           },
+          skipVerify: true,
         }),
   plugins: [
     sentryPlugin({
-      enabled: process.env.NODE_ENV === 'production',
+      // enabled: process.env.NODE_ENV === 'production',
       options: {
-        captureErrors: [400, 401, 403],
+        captureErrors: [500, 400, 401, 403],
         context: ({ defaultContext, req }) => {
           return {
             ...defaultContext,
