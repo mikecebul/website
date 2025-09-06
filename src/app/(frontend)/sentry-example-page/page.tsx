@@ -78,6 +78,16 @@ export default function Page() {
           <span>Throw Sample Error</span>
         </button>
 
+        <button
+          type="button"
+          onClick={() => {
+            throw Error("Generic Error Message");
+          }}
+        >
+          <span>Generic Error Message</span>
+        </button>
+        
+
         {hasSentError ? (
           <p className="success">Sample error was sent to Sentry.</p>
         ) : !isConnected ? (
