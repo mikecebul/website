@@ -24,8 +24,8 @@ export default function AboutUsCarousel({ images }: { images: Media[] }) {
           <CarouselItem key={image.id}>
             <Image
               className="object-cover w-full max-w-3xl rounded-lg shadow-lg ring-1 ring-gray-400/10 max-h-96"
-              src={image.url ?? ''}
-              alt="BASES Sign"
+              src={image.url || ''}
+              alt={image.alt || ''}
               width={960}
               height={640}
               priority

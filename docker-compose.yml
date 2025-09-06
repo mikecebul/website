@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    image: mikecebul/bases:latest
+    image: mikecebul/website:latest
     ports:
       - '3000:3000'
     environment:
@@ -13,10 +13,7 @@ services:
       - NEXT_PUBLIC_UPLOAD_PREFIX=${NEXT_PUBLIC_UPLOAD_PREFIX}
       - NEXT_PUBLIC_USAEPAY_KEY=${NEXT_PUBLIC_USAEPAY_KEY}
       - NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN}
-      - EMAIL_HOST=${EMAIL_HOST}
-      - EMAIL_PORT=${EMAIL_PORT}
-      - EMAIL_USER=${EMAIL_USER}
-      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - RESEND_API_KEY=${EMAIL_PASSWORD}
       - S3_ACCESS_KEY_ID=${S3_ACCESS_KEY_ID}
       - S3_SECRET_ACCESS_KEY=${S3_SECRET_ACCESS_KEY}
       - S3_REGION=${S3_REGION}

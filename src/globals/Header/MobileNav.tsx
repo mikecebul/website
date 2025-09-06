@@ -34,7 +34,7 @@ export function MobileNav({ navItems }: { navItems: NavItem[] }) {
         </SheetTrigger>
         <SheetContent side="right" className="w-72 sm:w-1/2">
           <SheetTitle>
-            <p className="sr-only">BASES mobile navigation</p>
+            <p className="sr-only">MIKECEBUL mobile navigation</p>
           </SheetTitle>
           <div className="flex justify-center mt-16">
             <Icons.logo className="w-40" />

@@ -4,14 +4,14 @@ import { baseUrl } from './baseUrl'
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
   url: baseUrl,
-  title: 'Substance Use and Mental Health Counseling.',
-  description: 'Outpatient substance use and mental health counseling in Charlevoix, MI.',
+  title: 'MIKECEBUL - Technology Consultant',
+  description: 'Full-stack software engineer and consultant specializing in modern web development, React, Next.js, and cloud solutions.',
   images: [
     {
       url: `${baseUrl}/flowers-sign-meta.webp`,
     },
   ],
-  siteName: 'BASESmi',
+  siteName: 'MIKECEBUL',
 }
 
 export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {

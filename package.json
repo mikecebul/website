@@ -1,7 +1,7 @@
 {
   "name": "mikecebul-website",
   "version": "0.0.1",
-  "description": "MIKECEBUL, LLC website.",
+  "description": "Mike Cebul - Software Engineering Consultant and Full-Stack Developer website.",
   "license": "MIT",
   "type": "module",
   "scripts": {

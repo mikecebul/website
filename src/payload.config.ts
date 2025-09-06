@@ -51,9 +51,9 @@ const dirname = path.dirname(filename)
 
 const generateTitle: GenerateTitle<TeamType | Page> = ({ doc }) => {
   if ('name' in doc) {
-    return doc.name ? `${doc.name} | BASES` : 'BASES'
+    return doc.name ? `${doc.name} | MIKECEBUL` : 'MIKECEBUL'
   }
-  return doc?.title ? `${doc.title} | BASES` : 'BASES'
+  return doc?.title ? `${doc.title} | MIKECEBUL` : 'MIKECEBUL'
 }
 
 const generateURL: GenerateURL<TeamType | Page> = ({ doc }) => {
@@ -92,7 +92,7 @@ export default buildConfig({
     },
     meta: {
       icons: [{ url: '/favicon.ico' }],
-      titleSuffix: ' - BASES',
+      titleSuffix: ' - MIKECEBUL',
     },
     user: Users.slug,
     livePreview: {
@@ -183,8 +183,8 @@ export default buildConfig({
           defaultFromName: 'MIKECEBUL, LLC',
         })
       : nodemailerAdapter({
-          defaultFromAddress: 'bases-website@mikecebul.dev',
-          defaultFromName: 'BASES Website',
+          defaultFromAddress: 'website@mikecebul.com',
+          defaultFromName: 'MIKECEBUL, LLC',
           transportOptions: {
             host: process.env.EMAIL_HOST || 'localhost',
             port: process.env.EMAIL_PORT || 1025,
