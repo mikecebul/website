@@ -3,10 +3,6 @@ import React, { Fragment } from 'react'
 import type { Page } from '@/payload-types'
 
 import { HeroBlock } from '@/blocks/Hero/Component'
-import { ServicesBlock } from './Services/Component'
-import { CarfBlock } from './Carf/Component'
-import { TeamBlock } from './Team/Component'
-import { TeamMemberBlock } from './TeamMember/Component'
 import { AboutUsBlock } from './AboutUs/Component'
 import { LinksBlock } from './Links/Component'
 import { FormBlockRouter } from './Form/Component'
@@ -18,10 +14,6 @@ import { cn } from '@/utilities/cn'
 const blockComponents = {
   hero: HeroBlock,
   richText: RichTextBlock,
-  services: ServicesBlock,
-  carf: CarfBlock,
-  team: TeamBlock,
-  teamMember: TeamMemberBlock,
   aboutUs: AboutUsBlock,
   linksBlock: LinksBlock,
   formBlock: FormBlockRouter,

@@ -35,43 +35,41 @@ import { Footer } from './globals/Footer/config'
 import { Header } from './globals/Header/config'
 import { revalidateRedirects } from './hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL, GenerateImage } from '@payloadcms/plugin-seo/types'
-import { Page, Team as TeamType } from 'src/payload-types'
 import { CompanyInfo } from './globals/CompanyInfo/config'
-import { Services } from './collections/Services'
-import { Team } from './collections/Team'
 import { superAdmin } from './access/superAdmin'
 import { MediaBlock } from './blocks/MediaBlock/config'
 import { Media } from './collections/Media'
 import { baseUrl } from './utilities/baseUrl'
 import { Forms } from './collections/Forms'
 import { FormSubmissions } from './collections/FormSubmissions'
+import type { Page } from './payload-types'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const generateTitle: GenerateTitle<TeamType | Page> = ({ doc }) => {
+const generateTitle: GenerateTitle<Page> = ({ doc }) => {
   if ('name' in doc) {
     return doc.name ? `${doc.name} | MIKECEBUL` : 'MIKECEBUL'
   }
   return doc?.title ? `${doc.title} | MIKECEBUL` : 'MIKECEBUL'
 }
 
-const generateURL: GenerateURL<TeamType | Page> = ({ doc }) => {
+const generateURL: GenerateURL<Page> = ({ doc }) => {
   if (!doc.slug) return baseUrl
-  if ('memberType' in doc) return `${baseUrl}/team/${doc.slug}`
   return `${baseUrl}/${doc.slug}`
 }
-const generateImage: GenerateImage<TeamType | Page> = ({ doc }) => {
+const generateImage: GenerateImage<Page> = ({ doc }) => {
   if (
     typeof doc.meta?.metadata?.image === 'object' &&
     doc.meta?.metadata?.image?.sizes?.meta?.url
   ) {
-    return doc.meta.metadata.image.sizes.meta.url || '/flowers-sign.webp'
+    return doc.meta.metadata.image.sizes.meta.url || '/mike-profile.jpg'
   }
   return '/flowers-sign.webp'
 }
 
 export default buildConfig({
+  serverURL: baseUrl,
   admin: {
     avatar: 'default',
     components: {
@@ -171,7 +169,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
-  collections: [Pages, Services, Team, Media, Users, Forms, FormSubmissions],
+  collections: [Pages, Media, Users, Forms, FormSubmissions],
   globals: [Header, Footer, CompanyInfo],
   cors: [baseUrl || ''].filter(Boolean),
   csrf: [baseUrl || ''].filter(Boolean),
@@ -197,7 +195,6 @@ export default buildConfig({
         }),
   plugins: [
     sentryPlugin({
-      // enabled: process.env.NODE_ENV === 'production',
       options: {
         captureErrors: [400, 401, 403],
         context: ({ defaultContext, req }) => {
@@ -213,7 +210,7 @@ export default buildConfig({
       Sentry,
     }),
     redirectsPlugin({
-      collections: ['pages', 'team'],
+      collections: ['pages'],
       overrides: {
         access: {
           admin: superAdmin,

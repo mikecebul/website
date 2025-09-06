@@ -1,8 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Hero } from '@/blocks/Hero/config'
-import { Services } from '@/blocks/Services/config'
-import { Carf } from '@/blocks/Carf/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
@@ -15,7 +13,6 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { Team } from '@/blocks/Team/config'
 import { AboutUs } from '@/blocks/AboutUs/config'
 import { Links } from '@/blocks/Links/config'
 import { superAdmin } from '@/access/superAdmin'
@@ -69,17 +66,7 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [
-                Hero,
-                RichText,
-                Services,
-                Carf,
-                Team,
-                AboutUs,
-                Links,
-                Form,
-                TwoColumnLayout,
-              ],
+              blocks: [Hero, RichText, AboutUs, Links, Form, TwoColumnLayout],
               required: true,
             },
           ],

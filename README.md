@@ -12,8 +12,6 @@ This project was built with [PayloadCMS](https://payloadcms.com/) and [Next.js 1
   - [🏃‍♂️ Running the Application](#running-the-application)
 - [🎨 Creating Content](#creating-content)
   - [💁‍♂️ Create Pages](#create-pages)
-  - [🛠️ Create Services](#create-services)
-  - [👥 Create Team Members](#create-team-members)
   - [📚 Create Resources](#create-resources)
   - [ℹ️ Create About Us](#create-about-us)
   - [🔗 Create Links](#create-links)
@@ -26,8 +24,6 @@ This project was built with [PayloadCMS](https://payloadcms.com/) and [Next.js 1
 ## Pages
 
 - **Home**: Introduction to the services.
-- **Services**: Detailed information about the counseling services.
-- **Team**: Dynamic listing of board members and staff members. URLs follow the pattern "/team/staff/[slug]".
 - **About Us**: Information about the organization.
 - **Resources**: A collection of links and videos.
 
@@ -98,20 +94,10 @@ Before running the application, you need to set up the following services:
 You'll most likely want to create the Home page first. When adding blocks you'll notice you need other pages to link to on your header's call to action. This template has blocks to make the following pages:
 
 - Home
-- Services
-- Team
 - About Us
 - Resources (Lists of Links/Videos)
 
 I didn't create a contact page/form as my boss prefers customers call, so that's the primary CTA on mobile. I may add a form later.
-
-### Create Services
-
-This one is easy as you can simply click the "Seed Services" that is only shown when the there are no services in the database. This has a custom select field to select a matching icon.
-
-### Create Team Members
-
-This one is also easy as you can simply click the "Seed Team" that is only shown when the there are no team members in the database. This can take 20-30 seconds to complete on Vercel on the free plan, so increase your function length to at least 30 seconds. This also has SEO fields for each team member. The layout of those pages uses the TeamMemberBlock automatically.
 
 ### Create Resources
 

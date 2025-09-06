@@ -23,25 +23,15 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     },
     limit: 1000,
   })
-  const { docs: teamMembers } = await payload.find({
-    collection: 'team',
-    where: {
-      'meta.hideFromSearchEngines': {
-        equals: true,
-      },
-    },
-    limit: 1000,
-  })
 
   // Map the slugs of the pages you want to disallow in robots.txt
   const disallowedPages = pages.map((page) => `/${page.slug}`)
-  const disallowedTeamPages = teamMembers.map((page) => `/team/${page.slug}`)
 
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin', ...disallowedPages, ...disallowedTeamPages],
+      disallow: ['/admin', ...disallowedPages],
     },
     sitemap: `${baseUrl}/sitemap.xml`,
   }

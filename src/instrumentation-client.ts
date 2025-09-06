@@ -14,7 +14,7 @@ Sentry.init({
   debug: false,
 
   // Use tunnel to bypass ad blockers and routing issues
-  tunnel: '/api/sentry-tunnel',
+  // tunnel: '/api/sentry-tunnel',
 })
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart

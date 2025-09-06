@@ -38,8 +38,6 @@ The application follows a hybrid architecture:
 
 **Collections**:
 - `Pages` - Dynamic pages with block-based layouts
-- `Team` - Team member profiles with SEO fields  
-- `Services` - Service offerings with icon selection
 - `Forms` - Custom form builder with field validation
 - `FormSubmissions` - Form submission data with email handling
 - `Media` - File uploads with blurhash generation
@@ -54,15 +52,10 @@ The application follows a hybrid architecture:
 
 The site uses a flexible block-based content system:
 - `Hero` - Hero sections with CTAs
-- `Services` - Service listings with icons
-- `Team` - Team member grids
-- `AboutUs` - Rich text with image carousels
 - `Links` - Link collections with auto-generated images
 - `Form` - Dynamic form builder
 - `RichText` - Rich text content with carousel support
-- `TwoColumnLayout` - Two-column layouts
-- `Donate` - Donation forms
-- `Carf` - CARF-specific content blocks
+- `TwoColumnLayout` - Two-column layouts\
 
 ### Access Control
 
@@ -97,9 +90,7 @@ Role-based permissions:
 ### Development Notes
 
 - Use `S3_ENABLED=false` for local development (images stored locally)
-- The project includes seed data functions for Services, Team, and Links
 - Form submissions generate email notifications with Lexical content conversion
-- Team member pages auto-generate with SEO-optimized URLs (`/team/[slug]`)
 - Database migrations run automatically on build
 - All images are processed with blurhash for smooth loading
 - Use concise commit messages without generated attribution text

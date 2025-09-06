@@ -28,23 +28,6 @@ const getSitemap = unstable_cache(
       },
     })
 
-    const { docs: teamPages } = await payload.find({
-      collection: 'team',
-      draft: false,
-      limit: 1000,
-      overrideAccess: true,
-      pagination: false,
-      where: {
-        _status: {
-          equals: 'published',
-        },
-      },
-      select: {
-        slug: true,
-        updatedAt: true,
-      },
-    })
-
     const dateFallback = new Date().toISOString()
 
     const pageSitemap = pages
@@ -53,15 +36,8 @@ const getSitemap = unstable_cache(
         loc: `${baseUrl}${page.slug === 'home' ? '' : `/${page.slug}`}`,
         lastmod: page.updatedAt || dateFallback,
       }))
-
-    const teamSitemap = teamPages
-      .filter((person) => Boolean(person.slug))
-      .map((person) => ({
-        loc: `${baseUrl}/team/${person.slug}`,
-        lastmod: person.updatedAt || dateFallback,
-      }))
-
-    return [...pageSitemap, ...teamSitemap]
+      
+    return [...pageSitemap]
   },
   ['sitemap'],
   {

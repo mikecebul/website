@@ -73,7 +73,7 @@ export default function Page() {
                 if (!res.ok) {
                   setHasSentError(true)
                   throw new SentryExampleFrontendError(
-                    'This error is raised on the frontend of the example page.',
+                    'Updated: This error is raised on the frontend of the example page.',
                   )
                 }
               },

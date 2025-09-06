@@ -115,8 +115,6 @@ export interface Config {
   blocks: {};
   collections: {
     pages: Page;
-    services: Service;
-    team: Team;
     media: Media;
     users: User;
     forms: Form;
@@ -129,8 +127,6 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
-    services: ServicesSelect<false> | ServicesSelect<true>;
-    team: TeamSelect<false> | TeamSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -187,17 +183,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
-  layout: (
-    | Hero
-    | RichTextBlock
-    | ServicesBlock
-    | CarfBlock
-    | TeamBlock
-    | AboutUsBlock
-    | LinksBlock
-    | FormBlock
-    | TwoColumnLayoutBlock
-  )[];
+  layout: (Hero | RichTextBlock | AboutUsBlock | LinksBlock | FormBlock | TwoColumnLayoutBlock)[];
   meta?: {
     hideFromSearchEngines?: boolean | null;
     metadata?: {
@@ -311,115 +297,6 @@ export interface RichTextBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'richText';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ServicesBlock".
- */
-export interface ServicesBlock {
-  subtitle: string;
-  title: string;
-  heading: 'h1' | 'h2';
-  description: string;
-  gridSVG: boolean;
-  howMany: 'topThreeServices' | 'allServices';
-  /**
-   * Select and sort the top 3 services
-   */
-  topThreeServices?: (string | Service)[] | null;
-  /**
-   * Select and sort all your available services
-   */
-  allServices?: (string | Service)[] | null;
-  links?: LinkGroup;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'services';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "services".
- */
-export interface Service {
-  id: string;
-  title: string;
-  desc: string;
-  icon?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CarfBlock".
- */
-export interface CarfBlock {
-  subtitle?: string | null;
-  title?: string | null;
-  description?: string | null;
-  image?: (string | null) | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'carf';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TeamBlock".
- */
-export interface TeamBlock {
-  memberType?: ('staff' | 'board') | null;
-  title?: string | null;
-  description?: string | null;
-  teamMembers?: (string | Team)[] | null;
-  reverse?: boolean | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'team';
-}
-/**
- * A collection of staff and board members.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team".
- */
-export interface Team {
-  id: string;
-  memberType?: ('staff' | 'board') | null;
-  name: string;
-  image: string | Media;
-  role: string;
-  qualifications?: string | null;
-  bio: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  meta?: {
-    hideFromSearchEngines?: boolean | null;
-    metadata?: {
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Media;
-      description?: string | null;
-    };
-  };
-  publishedAt?: string | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -900,15 +777,10 @@ export interface Redirect {
   from: string;
   to?: {
     type?: ('reference' | 'custom') | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'team';
-          value: string | Team;
-        } | null);
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
     url?: string | null;
   };
   updatedAt: string;
@@ -924,14 +796,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: string | Page;
-      } | null)
-    | ({
-        relationTo: 'services';
-        value: string | Service;
-      } | null)
-    | ({
-        relationTo: 'team';
-        value: string | Team;
       } | null)
     | ({
         relationTo: 'media';
@@ -1006,9 +870,6 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         hero?: T | HeroSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
-        services?: T | ServicesBlockSelect<T>;
-        carf?: T | CarfBlockSelect<T>;
-        team?: T | TeamBlockSelect<T>;
         aboutUs?: T | AboutUsBlockSelect<T>;
         linksBlock?: T | LinksBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
@@ -1085,48 +946,6 @@ export interface RichTextBlockSelect<T extends boolean = true> {
   subtitle?: T;
   richContent?: T;
   images?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ServicesBlock_select".
- */
-export interface ServicesBlockSelect<T extends boolean = true> {
-  subtitle?: T;
-  title?: T;
-  heading?: T;
-  description?: T;
-  gridSVG?: T;
-  howMany?: T;
-  topThreeServices?: T;
-  allServices?: T;
-  links?: T | LinkGroupSelect<T>;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CarfBlock_select".
- */
-export interface CarfBlockSelect<T extends boolean = true> {
-  subtitle?: T;
-  title?: T;
-  description?: T;
-  image?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TeamBlock_select".
- */
-export interface TeamBlockSelect<T extends boolean = true> {
-  memberType?: T;
-  title?: T;
-  description?: T;
-  teamMembers?: T;
-  reverse?: T;
   id?: T;
   blockName?: T;
 }
@@ -1226,47 +1045,6 @@ export interface TwoColumnLayoutBlockSelect<T extends boolean = true> {
       };
   id?: T;
   blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "services_select".
- */
-export interface ServicesSelect<T extends boolean = true> {
-  title?: T;
-  desc?: T;
-  icon?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team_select".
- */
-export interface TeamSelect<T extends boolean = true> {
-  memberType?: T;
-  name?: T;
-  image?: T;
-  role?: T;
-  qualifications?: T;
-  bio?: T;
-  meta?:
-    | T
-    | {
-        hideFromSearchEngines?: T;
-        metadata?:
-          | T
-          | {
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  publishedAt?: T;
-  slug?: T;
-  slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
