@@ -179,8 +179,8 @@ export default buildConfig({
     process.env.NODE_ENV === 'production'
       ? resendAdapter({
           apiKey: process.env.RESEND_API_KEY || '',
-          defaultFromAddress: 'bases-website@mikecebul.dev',
-          defaultFromName: 'BASES Website',
+          defaultFromAddress: 'website@mikecebul.com',
+          defaultFromName: 'MIKECEBUL, LLC',
         })
       : nodemailerAdapter({
           defaultFromAddress: 'bases-website@mikecebul.dev',
