@@ -10,6 +10,7 @@ export async function POST(request: Request) {
   const url = `${serverInstance}/api/${projectId}/envelope/?sentry_version=7&sentry_key=${secretKey}&sentry_client=sentry.javascript.nextjs%2F9.34.0`
 
   try {
+    console.log('Sending to GlitchTip:', url)
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -21,8 +22,9 @@ export async function POST(request: Request) {
     
     if (!response.ok) {
       const errorText = await response.text()
+      return Response.json({ status: 'error', glitchtip_error: errorText }, { status: response.status })
     }
-
+    
     return Response.json({ status: 'ok' })
   } catch (error) {
     return Response.json(

@@ -17,8 +17,16 @@ export default function Page() {
 
   useEffect(() => {
     async function checkConnectivity() {
-      const result = await Sentry.diagnoseSdkConnectivity()
-      setIsConnected(result !== 'sentry-unreachable')
+      try {
+        // Test connectivity to your self-hosted Sentry instance
+        await fetch('https://monitor.mikecebul.com/', {
+          method: 'GET',
+          mode: 'no-cors',
+        })
+        setIsConnected(true)
+      } catch (error) {
+        setIsConnected(false)
+      }
     }
     checkConnectivity()
   }, [])
@@ -42,10 +50,7 @@ export default function Page() {
 
         <p className="description">
           Click the button below, and view the sample error on the Sentry{' '}
-          <a
-            target="_blank"
-            href="https://monitor.mikecebul.com/organizations/mikecebul/issues/?project=5"
-          >
+          <a target="_blank" href="https://monitor.mikecebul.com/mikecebul/issues/?project=5">
             Issues Page
           </a>
           . For more details about setting up Sentry,{' '}
