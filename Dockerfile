@@ -40,7 +40,6 @@ RUN \
   --mount=type=secret,id=NEXT_PUBLIC_IS_LIVE,env=NEXT_PUBLIC_IS_LIVE \
   --mount=type=secret,id=NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,env=NEXT_PUBLIC_GOOGLE_MAPS_API_KEY \
   --mount=type=secret,id=NEXT_PUBLIC_UPLOAD_PREFIX,env=NEXT_PUBLIC_UPLOAD_PREFIX \
-  --mount=type=secret,id=NEXT_PUBLIC_USAEPAY_KEY,env=NEXT_PUBLIC_USAEPAY_KEY \
   --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN,env=NEXT_PUBLIC_SENTRY_DSN \
   --mount=type=secret,id=PREVIEW_SECRET,env=PREVIEW_SECRET \
   --mount=type=secret,id=S3_ACCESS_KEY_ID,env=S3_ACCESS_KEY_ID \
