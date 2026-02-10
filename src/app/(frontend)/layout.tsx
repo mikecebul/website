@@ -29,8 +29,13 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           strategy="lazyOnload"
         />
       </head>
-      <body className="flex flex-col min-h-dvh">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <body className="flex flex-col min-h-dvh bg-background lg:px-4">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <Header />
           <div className="flex flex-col grow">{children}</div>
           <Footer />
