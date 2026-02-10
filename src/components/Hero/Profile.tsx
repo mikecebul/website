@@ -10,14 +10,14 @@ interface ProfileProps {
 export const Profile = ({ images, priority = false }: ProfileProps) => {
   const validImages = imagesAsMedia(images)
   return (
-    <div className="flex flex-col justify-center items-center relative">
-      {/* <svg
+    <div className="relative mx-auto w-full max-w-[34rem]">
+      <svg
         id="visual"
         viewBox="0 0 900 600"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
         version="1.1"
-        className="w-full h-auto max-w-full"
+        className="h-auto w-full max-w-full scale-165 sm:scale-175 md:scale-195 lg:scale-195"
       >
         <g transform="translate(450 300) scale(0.9)">
           <path
@@ -26,11 +26,11 @@ export const Profile = ({ images, priority = false }: ProfileProps) => {
             className="text-primary/20"
           ></path>
         </g>
-      </svg> */}
+      </svg>
       <div className="absolute inset-0 flex items-center justify-center">
         <Media
           className="relative"
-          imgClassName="rounded-full z-10"
+          imgClassName="z-10 w-44 rounded-full object-cover sm:w-56 lg:w-64"
           resource={validImages[0] ?? '/profile_pic.jpg'}
           priority={priority}
         />

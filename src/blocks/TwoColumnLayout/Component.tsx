@@ -38,6 +38,7 @@ export const TwoColumnLayoutBlock = async ({
     profileSvg = false,
   } = columnTwo ?? {}
   const validImages = imagesAsMedia(images)
+  const hasImages = Array.isArray(images) && images.length > 0
 
   const companyInfo = (await getCachedGlobal('company-info')()) as CompanyInfo
   const { contact } = companyInfo
@@ -79,7 +80,7 @@ export const TwoColumnLayoutBlock = async ({
                 </Badge>
               )}
               {title && <Title text={title} heading={heading ?? 'h2'} />}
-              {description && <Description text={description} />}
+              {description && <Description text={description} className="max-w-[42rem]" />}
               {links && (
                 <CTALinks
                   links={links}
@@ -127,7 +128,7 @@ export const TwoColumnLayoutBlock = async ({
                 <RichTextCarousel images={validImages} priority={priority ?? false} />
               )}
             </div>
-          ) : images?.[0] && typeof images[0] === 'object' ? (
+          ) : hasImages ? (
             <div className="relative">
               {profileSvg ? (
                 <Profile images={images} priority={priority ?? false} />
