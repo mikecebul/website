@@ -78,7 +78,7 @@ Role-based permissions:
 ### Environment Configuration
 
 **Required**:
-- `MONGODB_URI` - MongoDB connection string
+- `DATABASE_URI` - MongoDB connection string
 - `PAYLOAD_SECRET` - PayloadCMS secret key
 
 **Optional**:

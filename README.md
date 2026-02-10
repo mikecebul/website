@@ -57,7 +57,7 @@ Before running the application, you need to set up the following services:
 1. **MongoDB Database**
 
    - Create a new database
-   - Add the connection string to `MONGODB_URI` in your `.env` file
+   - Add the connection string to `DATABASE_URI` in your `.env` file
 
 2. **S3 Compatible Storage (Cloudflare R2)**
    - Set `S3_ENABLED=true` for production
@@ -221,6 +221,6 @@ This project is deployed on a VPS (Virtual Private Server) with Hetzner using [D
 Update your production `.env` file with MongoDB connection details:
 
 ```bash
-MONGODB_URI=mongodb://username:password@localhost:27017/database
+DATABASE_URI=mongodb://username:password@localhost:27017/database
 # ... other existing env vars ...
 ```
