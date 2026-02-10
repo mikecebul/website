@@ -5,21 +5,17 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from '@/components/ui/select'
+import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import React, { useEffect, useState } from 'react'
+
+type ThemeOption = 'light' | 'dark' | 'system'
 
 export const ThemeSelector = () => {
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
-  const [value, setValue] = useState(theme)
-  const onThemeChange = (themeToSet: 'light' | 'dark' | 'system') => {
-    setTheme(themeToSet)
-    setValue(themeToSet)
-  }
 
-  // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -29,14 +25,19 @@ export const ThemeSelector = () => {
   }
 
   return (
-    <Select onValueChange={onThemeChange} value={value}>
-      <SelectTrigger className="w-auto bg-transparent gap-2 pl-0 md:pl-3 border-none">
-        <SelectValue placeholder="Theme" />
+    <Select onValueChange={(value) => setTheme(value as ThemeOption)} value={theme ?? 'system'}>
+      <SelectTrigger
+        aria-label="Toggle theme"
+        className="relative size-9 rounded-lg border border-border bg-background p-0 [&>svg:last-child]:hidden"
+      >
+        <Sun className="size-5 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+        <Moon className="absolute size-5 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        <span className="sr-only">Toggle theme</span>
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="system">Auto</SelectItem>
         <SelectItem value="light">Light</SelectItem>
         <SelectItem value="dark">Dark</SelectItem>
+        <SelectItem value="system">System</SelectItem>
       </SelectContent>
     </Select>
   )

@@ -7,6 +7,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { Clock, Facebook, Mail, Navigation, Phone } from 'lucide-react'
 import Container from '@/components/Container'
 import { CMSLink } from '@/components/Link'
+import { ThemeSelector } from '@/globals/Footer/ThemeSelector'
 import payloadConfig from '@payload-config'
 import { getPayload } from 'payload'
 
@@ -138,14 +139,15 @@ export async function Footer() {
         </div>
 
         <Separator />
-        <div className="flex items-center justify-center">
-          <span className="block text-sm text-center text-gray-500">
+        <div className="flex flex-col items-center justify-between gap-2 py-3 sm:flex-row">
+          <span className="block text-sm text-center text-gray-500 sm:text-left">
             © {new Date().getFullYear()}{' '}
             <Link href="/" className={cn(buttonVariants({ variant: 'ghost' }), 'p-0')}>
               {contact.name ?? 'MIKECEBUL, LLC'}
             </Link>
             . All Rights Reserved.
           </span>
+          <ThemeSelector />
         </div>
       </Container>
     </footer>

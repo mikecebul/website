@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         />
       </head>
       <body className="flex flex-col min-h-dvh">
-        <ThemeProvider forcedTheme="light">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Header />
           <div className="flex flex-col grow">{children}</div>
           <Footer />
