@@ -205,7 +205,7 @@ export default buildConfig({
             },
           }
         },
-        debug: true,
+        debug: false,
       },
       Sentry,
     }),

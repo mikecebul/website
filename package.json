@@ -45,7 +45,7 @@
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
-    "@sentry/nextjs": "9.34.0",
+    "@sentry/nextjs": "10.10.0",
     "@tanstack/react-form": "1.19.0",
     "@vis.gl/react-google-maps": "^1.5.4",
     "class-variance-authority": "^0.7.1",

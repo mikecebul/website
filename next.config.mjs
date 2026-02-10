@@ -33,21 +33,19 @@ const nextConfig = {
 // Sentry Configuration
 const sentryConfig = {
   org: 'mikecebul',
-  project: 'mikecebul-website',
-  sentryUrl: 'https://monitor.mikecebul.com/',
+  project: 'website',
+  sentryUrl: 'https://monitor.mikecebul.com',
   authToken: process.env.SENTRY_AUTH_TOKEN,
   silent: !process.env.CI,
   widenClientFileUpload: true,
   reactComponentAnnotation: {
     enabled: true,
   },
-  tunnelRoute: '/monitoring',
   hideSourceMaps: true,
   disableLogger: true,
   automaticVercelMonitors: false,
 }
 
-export default withSentryConfig(
-  withPayload(nextConfig, { devBundleServerPackages: false }),
+export default withSentryConfig(withPayload(nextConfig, { devBundleServerPackages: false }), {
   sentryConfig,
-)
+})

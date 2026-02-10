@@ -3,6 +3,7 @@
 import Head from 'next/head'
 import * as Sentry from '@sentry/nextjs'
 import { useState, useEffect } from 'react'
+import { checkSentryConnectivity } from './actions'
 
 class SentryExampleFrontendError extends Error {
   constructor(message: string | undefined) {
@@ -17,20 +18,13 @@ export default function Page() {
 
   useEffect(() => {
     async function checkConnectivity() {
-      try {
-        // Test connectivity to your self-hosted Sentry instance
-        await fetch('https://monitor.mikecebul.com/', {
-          method: 'GET',
-          mode: 'no-cors',
-        })
-        setIsConnected(true)
-      } catch (error) {
-        setIsConnected(false)
-      }
+      const isConnected = await checkSentryConnectivity()
+      setIsConnected(isConnected)
     }
     checkConnectivity()
   }, [])
 
+  console.log('is connected to sentry:', isConnected)
   return (
     <div>
       <Head>
@@ -50,7 +44,7 @@ export default function Page() {
 
         <p className="description">
           Click the button below, and view the sample error on the Sentry{' '}
-          <a target="_blank" href="https://monitor.mikecebul.com/mikecebul/issues/?project=5">
+          <a target="_blank" href="https://monitor.mikecebul.com/mikecebul/issues/?project=1">
             Issues Page
           </a>
           . For more details about setting up Sentry,{' '}
@@ -65,47 +59,32 @@ export default function Page() {
           onClick={async () => {
             await Sentry.startSpan(
               {
-                name: 'Example Frontend Span',
+                name: 'Example Frontend/Backend Span',
                 op: 'test',
               },
               async () => {
                 const res = await fetch('/api/sentry-example-api')
                 if (!res.ok) {
                   setHasSentError(true)
-                  throw new SentryExampleFrontendError(
-                    'Updated: This error is raised on the frontend of the example page.',
-                  )
                 }
               },
             )
+            throw new SentryExampleFrontendError(
+              'This error is raised on the frontend of the example page.',
+            )
           }}
+          disabled={!isConnected}
         >
           <span>Throw Sample Error</span>
         </button>
 
-        <button
-          type="button"
-          onClick={() => {
-            throw Error('Generic Error Message')
-          }}
-        >
-          <span>Generic Error Message</span>
-        </button>
-
         {hasSentError ? (
-          <p className="success">Sample error was sent to Sentry.</p>
+          <p className="success">Error sent to Sentry.</p>
         ) : !isConnected ? (
           <div className="connectivity-error">
             <p>
-              The Sentry SDK is not able to reach Sentry right now - this may be due to an
-              adblocker. For more information, see{' '}
-              <a
-                target="_blank"
-                href="https://docs.sentry.io/platforms/javascript/guides/nextjs/troubleshooting/#the-sdk-is-not-sending-any-data"
-              >
-                the troubleshooting guide
-              </a>
-              .
+              It looks like network requests to Sentry are being blocked, which will prevent errors
+              from being captured. Try disabling your ad-blocker to complete the test.
             </p>
           </div>
         ) : (
@@ -113,8 +92,6 @@ export default function Page() {
         )}
 
         <div className="flex-spacer" />
-
-        <p className="description">Adblockers will prevent errors from being sent to Sentry.</p>
       </main>
 
       <style>{`
@@ -181,6 +158,16 @@ export default function Page() {
           &:active > span {
             transform: translateY(0);
           }
+
+          &:disabled {
+	            cursor: not-allowed;
+	            opacity: 0.6;
+	
+	            & > span {
+	              transform: translateY(0);
+	              border: none
+	            }
+	          }
         }
 
         .description {
