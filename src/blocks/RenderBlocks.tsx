@@ -8,7 +8,7 @@ import { LinksBlock } from './Links/Component'
 import { FormBlockRouter } from './Form/Component'
 import { RichTextBlock } from './RichText/Component'
 import { TwoColumnLayoutBlock } from './TwoColumnLayout/Component'
-import { cn } from '@/utilities/cn'
+import { ProjectsBlock } from './Projects/Component'
 // import { MediaBlock } from './MediaBlock/Component'
 
 const blockComponents = {
@@ -18,6 +18,7 @@ const blockComponents = {
   linksBlock: LinksBlock,
   formBlock: FormBlockRouter,
   twoColumnLayout: TwoColumnLayoutBlock,
+  projects: ProjectsBlock,
   // mediaBlock: MediaBlock,
 }
 

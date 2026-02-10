@@ -7,6 +7,8 @@
  */
 
 /**
+ * Add up to two links (for example: View Code and Live Site).
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "LinkGroup".
  */
@@ -183,7 +185,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
-  layout: (Hero | RichTextBlock | AboutUsBlock | LinksBlock | FormBlock | TwoColumnLayoutBlock)[];
+  layout: (Hero | RichTextBlock | AboutUsBlock | LinksBlock | FormBlock | TwoColumnLayoutBlock | ProjectsBlock)[];
   meta?: {
     hideFromSearchEngines?: boolean | null;
     metadata?: {
@@ -719,6 +721,32 @@ export interface TwoColumnLayoutBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectsBlock".
+ */
+export interface ProjectsBlock {
+  title: string;
+  description?: string | null;
+  cards?:
+    | {
+        title: string;
+        description: string;
+        image: string | Media;
+        pills?:
+          | {
+              label: string;
+              id?: string | null;
+            }[]
+          | null;
+        links?: LinkGroup;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projects';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -874,6 +902,7 @@ export interface PagesSelect<T extends boolean = true> {
         linksBlock?: T | LinksBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
+        projects?: T | ProjectsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1042,6 +1071,31 @@ export interface TwoColumnLayoutBlockSelect<T extends boolean = true> {
           | {
               formBlock?: T | FormBlockSelect<T>;
             };
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectsBlock_select".
+ */
+export interface ProjectsBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  cards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        pills?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+        links?: T | LinkGroupSelect<T>;
+        id?: T;
       };
   id?: T;
   blockName?: T;
