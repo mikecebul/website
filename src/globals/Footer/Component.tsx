@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import type { Footer } from '@/payload-types'
 import { cn } from '@/utilities/cn'
-import { buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Clock, Facebook, Mail, Navigation, Phone } from 'lucide-react'
 import Container from '@/components/Container'
 import { CMSLink } from '@/components/Link'

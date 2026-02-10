@@ -12,7 +12,7 @@ import { imagesAsMedia } from '@/utilities/imagesAsMedia'
 import { Dots, Profile } from '@/components/Hero/Profile'
 import Link from 'next/link'
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import { buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Icons } from '@/components/Icons'
 import { Media } from '@/components/Media'
 
@@ -38,7 +38,6 @@ export const TwoColumnLayoutBlock = async ({
     profileSvg = false,
   } = columnTwo ?? {}
   const validImages = imagesAsMedia(images)
-  const hasImages = Array.isArray(images) && images.length > 0
 
   const companyInfo = (await getCachedGlobal('company-info')()) as CompanyInfo
   const { contact } = companyInfo
@@ -120,26 +119,22 @@ export const TwoColumnLayoutBlock = async ({
         >
           {columnTwoType === 'form' ? (
             form && <RenderBlocks blocks={form} nested />
+          ) : profileSvg ? (
+            <div className="relative">
+              <Profile images={images} priority={priority ?? false} />
+            </div>
           ) : validImages.length > 1 ? (
             <div className="relative">
-              {profileSvg ? (
-                <Profile images={images} priority={priority ?? false} />
-              ) : (
-                <RichTextCarousel images={validImages} priority={priority ?? false} />
-              )}
+              <RichTextCarousel images={validImages} priority={priority ?? false} />
             </div>
-          ) : hasImages ? (
+          ) : validImages.length === 1 ? (
             <div className="relative">
-              {profileSvg ? (
-                <Profile images={images} priority={priority ?? false} />
-              ) : (
-                <Media
-                  className="relative"
-                  imgClassName="rounded-lg shadow-lg ring-1 ring-gray-400/10"
-                  resource={validImages[0] ?? '/women-laptop.webp'}
-                  priority={priority ?? false}
-                />
-              )}
+              <Media
+                className="relative"
+                imgClassName="rounded-lg shadow-lg ring-1 ring-gray-400/10"
+                resource={validImages[0] ?? '/woman-laptop.webp'}
+                priority={priority ?? false}
+              />
             </div>
           ) : null}
         </div>

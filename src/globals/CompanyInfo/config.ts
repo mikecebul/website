@@ -19,7 +19,7 @@ export const CompanyInfo: GlobalConfig = {
     afterChange: [
       ({ req }) => {
         if (req.headers['X-Payload-Migration'] !== 'true') {
-          revalidateTag('global-company-info')
+          revalidateTag('global-company-info', 'max')
         }
       },
     ],

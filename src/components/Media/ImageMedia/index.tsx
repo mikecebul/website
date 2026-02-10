@@ -36,23 +36,33 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let src: StaticImageData | string = srcFromProps || ''
   let blurhash: string | undefined
 
+  if (!src && typeof resource === 'string') {
+    // Allow plain string media sources (e.g. static fallback paths)
+    src = resource.startsWith('/') || resource.startsWith('http') ? resource : ''
+  }
+
   if (!src && resource && typeof resource === 'object') {
     const {
       alt: altFromResource,
       blurhash: blurhasFromResource,
+      filename,
       height: fullHeight,
       url,
       width: fullWidth,
     } = resource
 
-    width = fullWidth!
-    height = fullHeight!
+    width = fullWidth ?? 1200
+    height = fullHeight ?? 800
     alt = altFromResource || ''
     blurhash = blurhasFromResource || undefined
 
     const cacheTag = resource.updatedAt
 
     src = getMediaUrl(url, cacheTag)
+
+    if (!src && typeof filename === 'string' && filename.length > 0) {
+      src = getMediaUrl(`/media/${filename}`, cacheTag)
+    }
   }
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
@@ -74,7 +84,6 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         placeholder="blur"
         blurDataURL={blurhash ?? placeholderBlurFallback}
         priority={priority}
-        quality={100}
         loading={loading}
         sizes={sizes}
         src={src}

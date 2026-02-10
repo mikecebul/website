@@ -11,7 +11,6 @@ export type ContactFormType = {
   name: string
   phone: string
   email: string
-  confirmEmail: string
   services: string[]
   message: string
 }
@@ -35,7 +34,6 @@ export const useContactFormOpts = ({
       name: '',
       phone: '',
       email: '',
-      confirmEmail: '',
       services: [],
       message: '',
     } as ContactFormType,

@@ -20,17 +20,12 @@ export function MobileNav({ navItems }: { navItems: NavItem[] }) {
   return (
     <div className="md:hidden flex items-center">
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
-          <Button
-            className="w-8 h-8 p-0 bg-secondary text-primary hover:bg-muted-foreground/20"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? (
-              <Icons.closeMenu className="h-8 w-8" />
-            ) : (
-              <Icons.openMenu className="h-8 w-8" />
-            )}
-          </Button>
+        <SheetTrigger
+          render={
+            <Button className="w-8 h-8 p-0 bg-secondary text-primary hover:bg-muted-foreground/20" />
+          }
+        >
+          {open ? <Icons.closeMenu className="h-8 w-8" /> : <Icons.openMenu className="h-8 w-8" />}
         </SheetTrigger>
         <SheetContent side="right" className="w-72 sm:w-1/2">
           <SheetTitle>

@@ -35,7 +35,7 @@ import { ReactNode } from 'react'
 
 export const Icons = {
   logo: ({ className }: { className: string }) => (
-    <p className='text-2xl font-bold text-primary uppercase'>MikeCebul, llc</p>
+    <p className='text-2xl font-bold text-primary uppercase'>MikeCebul llc</p>
   ),
   carf: ({ className }: { className: string }) => (
     <Image

@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import type { CompanyInfo, Header } from '@/payload-types'
 import { cn } from '@/utilities/cn'
-import { buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Icons } from '@/components/Icons'
 import { MainNav } from './MainNav'
 import { MobileNav } from './MobileNav'

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Icons } from '@/components/Icons'
 import Link from 'next/link'
 import { cn } from '@/utilities/cn'
@@ -53,7 +53,7 @@ export async function Hero({ title, description, image, links, svg }: Props) {
           <Media
             className="relative"
             imgClassName="rounded-full z-10 w-64 lg:w-80 xl:w-96"
-            resource={image ?? '/profile_pic.jpg'}
+            resource={image ?? '/mike-profile.jpg'}
             priority={true}
           />
         )}

@@ -15,7 +15,7 @@ export const revalidatePage: CollectionAfterChangeHook<Page> = ({
     payload.logger.info(`Revalidating page at path: ${path}`)
 
     revalidatePath(path)
-    revalidateTag('sitemap')
+    revalidateTag('sitemap', 'max')
   }
 
   // If the page was previously published, we need to revalidate the old path
@@ -25,7 +25,7 @@ export const revalidatePage: CollectionAfterChangeHook<Page> = ({
     payload.logger.info(`Revalidating old page at path: ${oldPath}`)
 
     revalidatePath(oldPath)
-    revalidateTag('sitemap')
+    revalidateTag('sitemap', 'max')
   }
 
   return doc

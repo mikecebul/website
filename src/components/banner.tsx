@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Button, buttonVariants } from './ui/button'
+import { Button } from './ui/button'
+import { buttonVariants } from './ui/button-variants'
 import { cn } from '@/utilities/cn'
 import { Icons } from './Icons'
 

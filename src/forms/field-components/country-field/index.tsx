@@ -2,9 +2,9 @@
 
 import { useStore } from '@tanstack/react-form'
 import { useFieldContext } from '../../hooks/form-context'
-import { Label } from '@/components/ui/label'
-import { cn } from '@/utilities/cn' 
+import { cn } from '@/utilities/cn'
 import { CountryFormField } from '@/payload-types'
+import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import {
   Select,
   SelectContent,
@@ -13,17 +13,22 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { countryOptions } from './options'
+import { normalizeFieldErrors } from '../normalize-field-errors'
 
 export default function CountryField({ id, label, name, colSpan = '2' }: CountryFormField) {
   const field = useFieldContext<string>()
   const errors = useStore(field.store, (state) => state.meta.errors)
+  const normalizedErrors = normalizeFieldErrors(errors as unknown[])
 
   return (
-    <div className={cn('col-span-2 w-full', { '@lg:col-span-1': colSpan === '1' })}>
-      <div className={cn('grid gap-2 w-full')}>
-        <Label htmlFor={id ?? name}>{label}</Label>
-        <Select onValueChange={(e) => field.handleChange(e)}>
-          <SelectTrigger id={id ?? name}>
+    <div className={cn('col-span-2 w-full @container/field-group', { '@lg:col-span-1': colSpan === '1' })}>
+      <Field data-invalid={normalizedErrors.length > 0 || undefined}>
+        <FieldLabel htmlFor={id ?? name}>{label}</FieldLabel>
+        <Select
+          value={field.state.value ?? ''}
+          onValueChange={(value) => field.handleChange(String(value ?? ''))}
+        >
+          <SelectTrigger id={id ?? name} aria-invalid={normalizedErrors.length > 0}>
             <SelectValue placeholder="Pick a country" />
           </SelectTrigger>
           <SelectContent>
@@ -36,10 +41,8 @@ export default function CountryField({ id, label, name, colSpan = '2' }: Country
             })}
           </SelectContent>
         </Select>
-      </div>
-      <div>
-        {errors && <em className="text-sm text-destructive first:mt-1">{errors[0]?.message}</em>}
-      </div>
+        <FieldError errors={normalizedErrors} />
+      </Field>
     </div>
   )
 }

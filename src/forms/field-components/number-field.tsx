@@ -2,30 +2,31 @@
 
 import { useStore } from '@tanstack/react-form'
 import { useFieldContext } from '../hooks/form-context'
-import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/utilities/cn'
+import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { NumberFormField } from '@/payload-types'
+import { normalizeFieldErrors } from './normalize-field-errors'
 
 export default function NumberField({ id, label, name, colSpan = '2' }: NumberFormField) {
   const field = useFieldContext<string>()
   const errors = useStore(field.store, (state) => state.meta.errors)
+  const normalizedErrors = normalizeFieldErrors(errors as unknown[])
 
   return (
-    <div className={cn('col-span-2 w-full', { '@lg:col-span-1': colSpan === '1' })}>
-      <div className={cn('grid gap-2 w-full')}>
-        <Label htmlFor={id ?? name}>{label}</Label>
+    <div className={cn('col-span-2 w-full @container/field-group', { '@lg:col-span-1': colSpan === '1' })}>
+      <Field data-invalid={normalizedErrors.length > 0 || undefined}>
+        <FieldLabel htmlFor={id ?? name}>{label}</FieldLabel>
         <Input
           id={id ?? name}
           type="number"
           value={field.state.value ?? ''}
           onBlur={() => field.handleBlur()}
           onChange={(e) => field.handleChange(e.target.value)}
+          aria-invalid={normalizedErrors.length > 0}
         />
-      </div>
-      <div>
-        {errors && <em className="text-destructive first:mt-1 text-sm">{errors[0]?.message}</em>}
-      </div>
+        <FieldError errors={normalizedErrors} />
+      </Field>
     </div>
   )
 }

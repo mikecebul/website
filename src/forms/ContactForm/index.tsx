@@ -10,6 +10,8 @@ import { useAppForm } from '../hooks/form'
 import { PostError } from '../Component'
 import { useContactFormOpts } from './use-contact-form-opts'
 
+const CONTACT_SERVICE_OPTIONS = ['Website', 'Zoom Room', 'IT', 'Automation']
+
 export const ContactForm = ({ form: payloadForm, enableIntro, introContent }: FormBlock) => {
   const { confirmationMessage, confirmationType } =
     typeof payloadForm === 'object' ? payloadForm : {}
@@ -102,28 +104,6 @@ export const ContactForm = ({ form: payloadForm, enableIntro, introContent }: Fo
                   )}
                 </form.AppField>
                 <form.AppField
-                  name="confirmEmail"
-                  validators={{
-                    onChangeListenTo: ['email'],
-                    onChange: ({ value, fieldApi }) => {
-                      if (value !== fieldApi.form.getFieldValue('email')) {
-                        return { message: 'Emails do not match' }
-                      }
-                      return undefined
-                    },
-                  }}
-                >
-                  {(formField) => (
-                    <formField.EmailField
-                      name="confirmEmail"
-                      label="Confirm Email"
-                      colSpan="2"
-                      blockType="email"
-                      required
-                    />
-                  )}
-                </form.AppField>
-                <form.AppField
                   name="services"
                   mode="array"
                   validators={{
@@ -138,6 +118,7 @@ export const ContactForm = ({ form: payloadForm, enableIntro, introContent }: Fo
                       name="services"
                       label="Services of Interest"
                       colSpan="2"
+                      options={CONTACT_SERVICE_OPTIONS}
                     />
                   )}
                 </form.AppField>

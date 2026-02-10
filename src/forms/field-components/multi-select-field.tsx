@@ -2,9 +2,10 @@
 
 import { useStore } from '@tanstack/react-form'
 import { useFieldContext } from '../hooks/form-context'
-import { Label } from '@/components/ui/label'
 import { cn } from '@/utilities/cn'
 import { CheckCircleIcon } from 'lucide-react'
+import { Field, FieldError, FieldTitle } from '@/components/ui/field'
+import { normalizeFieldErrors } from './normalize-field-errors'
 
 const OPTIONS = [
   'Assessment',
@@ -14,9 +15,22 @@ const OPTIONS = [
   'Narcan kits',
 ]
 
-export default function MultiSelectField({ label, name, colSpan = '2', options = OPTIONS }) {
+type MultiSelectFieldProps = {
+  label: string
+  name: string
+  colSpan?: '1' | '2'
+  options?: string[]
+}
+
+export default function MultiSelectField({
+  label,
+  name,
+  colSpan = '2',
+  options = OPTIONS,
+}: MultiSelectFieldProps) {
   const field = useFieldContext<string[]>()
   const errors = useStore(field.store, (state) => state.meta.errors)
+  const normalizedErrors = normalizeFieldErrors(errors as unknown[])
   const value: string[] = Array.isArray(field.state.value) ? field.state.value : []
 
   function toggleOption(option: string) {
@@ -28,9 +42,9 @@ export default function MultiSelectField({ label, name, colSpan = '2', options =
   }
 
   return (
-    <div className={cn('col-span-2 w-full', { '@lg:col-span-1': colSpan === '1' })}>
-      <div className={cn('grid gap-2 w-full')}>
-        <Label htmlFor={name}>{label}</Label>
+    <div className={cn('col-span-2 w-full @container/field-group', { '@lg:col-span-1': colSpan === '1' })}>
+      <Field data-invalid={normalizedErrors.length > 0 || undefined}>
+        <FieldTitle>{label}</FieldTitle>
         <div className="flex flex-wrap gap-2">
           {options.map((option) => {
             const selected = value.includes(option)
@@ -53,12 +67,8 @@ export default function MultiSelectField({ label, name, colSpan = '2', options =
             )
           })}
         </div>
-      </div>
-      <div>
-        {errors && (
-          <em className="text-sm text-destructive first:mt-1">{errors[0]?.message || errors[0]}</em>
-        )}
-      </div>
+        <FieldError errors={normalizedErrors} />
+      </Field>
     </div>
   )
 }

@@ -6,14 +6,18 @@ export type SanitizedImage = {
 }
 
 export const imagesAsMedia = (images: RichTextBlock['images']): Media[] => {
-  const isLandscape = (item: any): item is Media => {
-    return typeof item === 'object' && item !== null && 'url' in item
+  const isMediaObject = (item: unknown): item is Media => {
+    if (typeof item !== 'object' || item === null) return false
+
+    if (!('url' in item) && !('filename' in item)) return false
+
+    const media = item as Partial<Media>
+    return typeof media.url === 'string' || typeof media.filename === 'string'
   }
 
   if (Array.isArray(images)) {
-    return images.filter(isLandscape)
+    return images.filter(isMediaObject)
   }
 
   return []
 }
-

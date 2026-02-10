@@ -31,7 +31,7 @@ export const Profile = ({ images, priority = false }: ProfileProps) => {
         <Media
           className="relative"
           imgClassName="z-10 w-44 rounded-full object-cover sm:w-56 lg:w-64"
-          resource={validImages[0] ?? '/profile_pic.jpg'}
+          resource={validImages[0] ?? '/mike-profile.jpg'}
           priority={priority}
         />
       </div>
