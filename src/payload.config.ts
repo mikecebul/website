@@ -42,6 +42,7 @@ import { Media } from './collections/Media'
 import { baseUrl } from './utilities/baseUrl'
 import { Forms } from './collections/Forms'
 import { FormSubmissions } from './collections/FormSubmissions'
+import { Blogs } from './collections/Blogs'
 import type { Page } from './payload-types'
 
 const filename = fileURLToPath(import.meta.url)
@@ -133,7 +134,7 @@ export default buildConfig({
           blocks: [MediaBlock],
         }),
         LinkFeature({
-          enabledCollections: ['pages'],
+          enabledCollections: ['pages', 'blogs'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
               if ('name' in field && field.name === 'url') return false
@@ -169,7 +170,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
-  collections: [Pages, Media, Users, Forms, FormSubmissions],
+  collections: [Pages, Blogs, Media, Users, Forms, FormSubmissions],
   globals: [Header, Footer, CompanyInfo],
   cors: [baseUrl || ''].filter(Boolean),
   csrf: [baseUrl || ''].filter(Boolean),

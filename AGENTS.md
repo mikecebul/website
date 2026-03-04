@@ -29,7 +29,6 @@ Project instructions for coding agents in `/Users/mikecebul/Code/website`.
 Read only what is needed for the task, in this order:
 
 1. `README.md` for product and deployment context.
-2. `CLAUDE.md` for project workflow and conventions.
 3. `package.json` for active scripts and tooling.
 4. `src/payload.config.ts` for CMS/plugins/runtime behavior.
 5. `src/forms/` for form runtime behavior and field rendering.
