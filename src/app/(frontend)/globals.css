@@ -120,6 +120,7 @@
 }
 
 @theme inline {
+  --color-brand: var(--brand);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -182,4 +183,3 @@
 body {
   letter-spacing: var(--tracking-normal);
 }
-

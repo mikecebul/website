@@ -53,10 +53,15 @@ export function MobileNav({ navItems }: { navItems: NavItem[] }) {
                       key={i}
                       {...link}
                       appearance="nav"
-                      className={cn('text-lg', {
-                        'border-b-2 border-b-brand border-opacity-100 rounded-br-lg rounded-bl-lg text-brand':
-                          isActiveRoute(currentPathName as string, slug),
-                      })}
+                      className={cn(
+                        "text-lg relative pb-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:bg-brand after:transition-transform after:duration-300 after:ease-out",
+                        {
+                          'text-brand after:scale-x-100': isActiveRoute(
+                            currentPathName as string,
+                            slug,
+                          ),
+                        },
+                      )}
                       onClick={() => {
                         setOpen(false)
                       }}
