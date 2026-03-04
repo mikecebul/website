@@ -38,6 +38,7 @@ import { GenerateTitle, GenerateURL, GenerateImage } from '@payloadcms/plugin-se
 import { CompanyInfo } from './globals/CompanyInfo/config'
 import { superAdmin } from './access/superAdmin'
 import { MediaBlock } from './blocks/MediaBlock/config'
+import { Code } from './blocks/Code/config'
 import { Media } from './collections/Media'
 import { baseUrl } from './utilities/baseUrl'
 import { Forms } from './collections/Forms'
@@ -131,7 +132,7 @@ export default buildConfig({
         UnorderedListFeature(),
         OrderedListFeature(),
         BlocksFeature({
-          blocks: [MediaBlock],
+          blocks: [MediaBlock, Code],
         }),
         LinkFeature({
           enabledCollections: ['pages', 'blogs'],

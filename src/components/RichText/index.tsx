@@ -1,3 +1,4 @@
+import { CodeBlock, type CodeBlockProps } from '@/blocks/Code/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import {
   DefaultNodeTypes,
@@ -16,7 +17,10 @@ import Link from 'next/link'
 import { addHTTPS } from '@/utilities/addHTTPS'
 import { randomUUID } from 'crypto'
 
-type NodeTypes = DefaultNodeTypes | SerializedBlockNode<MediaBlockProps>
+type NodeTypes =
+  | DefaultNodeTypes
+  | SerializedBlockNode<MediaBlockProps>
+  | SerializedBlockNode<CodeBlockProps>
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
@@ -190,6 +194,7 @@ const jsxConverters = (paragraphClassName?: string): JSXConvertersFunction<NodeT
             disableInnerContainer={true}
           />
         ),
+        code: ({ node }) => <CodeBlock className="max-w-prose pb-6" {...node.fields} />,
       },
     }
   }
