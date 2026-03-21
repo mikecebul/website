@@ -36,6 +36,10 @@ export const HeaderClient = ({
           logo: 'ml-8 text-white',
         }}
         className="static!"
+        logoutProps={{
+          rel: undefined,
+          target: '_self',
+        }}
       />
       <div className="flex items-center w-full px-4 py-3 md:px-8 2xl:px-0 2xl:container 2xl:mx-auto">
         <Link

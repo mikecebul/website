@@ -81,6 +81,9 @@ export default buildConfig({
         Logo: '@/graphics/Logo',
       },
       views: {
+        login: {
+          Component: '@/components/views/Login',
+        },
         CustomRootView: {
           Component: '@/components/views/Analytics',
           path: '/analytics',
