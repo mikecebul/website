@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 import { contactFormSchema } from '@/lib/contact'
 import { websiteContent } from '@/lib/website-content'
 import { normalizeFieldErrors } from '@/forms/field-components/normalize-field-errors'

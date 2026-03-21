@@ -1,6 +1,6 @@
 import type { Field } from 'payload'
 
-import deepMerge from '@/utilities/deepMerge'
+import deepMerge from '@/lib/deepMerge'
 import { addHTTPS } from '@/hooks/addHTTPS'
 
 export type LinkAppearances = 'default' | 'outline'

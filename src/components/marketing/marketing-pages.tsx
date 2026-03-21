@@ -20,7 +20,7 @@ import { motion } from 'motion/react'
 import { useState, type ReactNode } from 'react'
 
 import { MarketingContactForm } from '@/components/marketing/contact-form'
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Drawer, DrawerClose, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer'

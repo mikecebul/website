@@ -13,7 +13,7 @@
   "rtl": false,
   "aliases": {
     "components": "@/components",
-    "utils": "@/utilities/cn"
+    "utils": "@/lib/utils"
   },
   "menuColor": "default",
   "menuAccent": "subtle",

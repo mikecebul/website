@@ -30,7 +30,7 @@ import Users from './collections/Users'
 import { MediaBlock } from './blocks/MediaBlock/config'
 import { Code } from './blocks/Code/config'
 import { Media } from './collections/Media'
-import { baseUrl } from './utilities/baseUrl'
+import { baseUrl } from './lib/baseUrl'
 import { Blogs } from './collections/Blogs'
 import { Contacts } from './collections/Contacts'
 

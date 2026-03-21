@@ -11,9 +11,9 @@ import {
   RichText as ConvertRichText,
 } from '@payloadcms/richtext-lexical/react'
 
-import { cn } from '@/utilities/cn'
+import { cn } from '@/lib/utils'
 import Link from 'next/link'
-import { addHTTPS } from '@/utilities/addHTTPS'
+import { addHTTPS } from '@/lib/addHTTPS'
 import { randomUUID } from 'crypto'
 
 type MediaBlockProps = {

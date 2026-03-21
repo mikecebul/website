@@ -12,7 +12,7 @@ import {
 import { MarketingBlogIntro, MarketingBlogNewsletterCard } from '@/components/marketing/marketing-pages'
 import { createMarketingMetadata } from '@/lib/marketing-metadata'
 import { websiteContent } from '@/lib/website-content'
-import { formatDateTime } from '@/utilities/formatDateTime'
+import { formatDateTime } from '@/lib/formatDateTime'
 import { getPayload } from 'payload'
 import { redirect } from 'next/navigation'
 

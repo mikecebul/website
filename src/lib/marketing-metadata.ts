@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
-import { baseUrl } from '@/utilities/baseUrl'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { baseUrl } from '@/lib/baseUrl'
+import { mergeOpenGraph } from '@/lib/mergeOpenGraph'
 import { websiteContent } from '@/lib/website-content'
 
 type MetadataInput = {

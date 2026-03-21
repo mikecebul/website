@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { z } from 'zod'
 
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 import { getPayloadSdk } from '@/lib/payload-sdk'
 import { Button } from '@/components/ui/button'
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'

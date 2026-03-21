@@ -1,7 +1,7 @@
 import { getServerSideSitemap } from 'next-sitemap'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { baseUrl } from '@/utilities/baseUrl'
+import { baseUrl } from '@/lib/baseUrl'
 import { websiteContent } from '@/lib/website-content'
 import { unstable_cache } from 'next/cache'
 

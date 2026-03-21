@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from './ui/button'
 import { buttonVariants } from './ui/button-variants'
-import { cn } from '@/utilities/cn'
+import { cn } from '@/lib/utils'
 import { Icons } from './Icons'
 
 export default function Banner() {

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 
 type ShadcnWrapperProps = {
   children: ReactNode

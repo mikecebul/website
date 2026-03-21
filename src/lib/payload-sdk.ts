@@ -1,7 +1,7 @@
 import { PayloadSDK } from '@payloadcms/sdk'
 
 import type { Config } from '@/payload-types'
-import { getClientSideURL } from '@/utilities/getURL'
+import { getClientSideURL } from '@/lib/getURL'
 
 let sdk: PayloadSDK<Config> | undefined
 

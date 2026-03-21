@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 
 const ErrorPage01 = ({ fullscreen = false }: { fullscreen?: boolean }) => {
   return (

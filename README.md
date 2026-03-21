@@ -113,7 +113,7 @@ This one is pretty easy as you can simply click the "Seed Links" that is only sh
 
 ### Navigation
 
-You add menu items to the header and footer. in the footer you can also add the company info and a google map by simply clicking a checkbox. The encypt and decrypt utilities are in the utilities folder as I was going to have a field for the API key, but later changed my mind.
+You add menu items to the header and footer. in the footer you can also add the company info and a google map by simply clicking a checkbox. The encypt and decrypt utilities are in the lib folder as I was going to have a field for the API key, but later changed my mind.
 
 ## Images
 
