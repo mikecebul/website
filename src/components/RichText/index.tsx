@@ -11,11 +11,16 @@ import {
   RichText as ConvertRichText,
 } from '@payloadcms/richtext-lexical/react'
 
-import type { MediaBlock as MediaBlockProps } from '@/payload-types'
 import { cn } from '@/utilities/cn'
 import Link from 'next/link'
 import { addHTTPS } from '@/utilities/addHTTPS'
 import { randomUUID } from 'crypto'
+
+type MediaBlockProps = {
+  blockType?: 'mediaBlock'
+  media?: unknown
+  position?: 'default' | 'fullscreen'
+}
 
 type NodeTypes =
   | DefaultNodeTypes

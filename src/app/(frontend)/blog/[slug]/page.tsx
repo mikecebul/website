@@ -1,10 +1,8 @@
 import configPromise from '@payload-config'
-import Container from '@/components/Container'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RichText } from '@/components/RichText'
-import { baseUrl } from '@/utilities/baseUrl'
+import { createMarketingMetadata } from '@/lib/marketing-metadata'
 import { formatDateTime } from '@/utilities/formatDateTime'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { draftMode } from 'next/headers'
@@ -57,25 +55,31 @@ export default async function BlogPostPage({ params }: Args) {
   const publishedAt = post.firstPublishedAt || post.createdAt
 
   return (
-    <Container className="py-16 md:py-20">
+    <main className="pt-8 pb-24 sm:pt-10 lg:pt-14 lg:pb-32">
       {draft ? <LivePreviewListener /> : null}
 
-      <article className="container mx-auto max-w-3xl">
-        <Link className="text-muted-foreground text-sm hover:underline" href="/blog">
+      <section className="mx-auto max-w-[1220px] px-4 pt-6 sm:px-6 lg:px-12">
+        <Link className="text-sm text-(--marketing-copy) transition-colors hover:text-(--marketing-gold)" href="/blog">
           Back to blog
         </Link>
 
         {publishedAt ? (
-          <p className="text-muted-foreground pt-6 text-sm">{formatDateTime(publishedAt)}</p>
+          <p className="pt-6 text-sm uppercase tracking-[0.28em] text-(--marketing-sky)">
+            {formatDateTime(publishedAt)}
+          </p>
         ) : null}
 
-        <h1 className="pt-2 text-4xl font-bold tracking-tight md:text-5xl">{post.title}</h1>
+        <h1 className="mt-3 max-w-4xl font-heading text-5xl leading-[0.94] tracking-[-0.07em] text-(--marketing-heading) sm:text-6xl">
+          {post.title}
+        </h1>
+      </section>
 
+      <article className="mx-auto mt-16 max-w-[860px] rounded-[34px] border border-white/8 bg-[rgba(19,27,46,0.82)] px-6 py-8 shadow-[0_26px_70px_rgba(0,0,0,0.28)] sm:px-10 sm:py-10">
         {post.content ? (
-          <RichText className="pt-8" data={post.content} enableGutter={false} />
+          <RichText className="marketing-richtext" data={post.content} enableGutter={false} />
         ) : null}
       </article>
-    </Container>
+    </main>
   )
 }
 
@@ -92,15 +96,11 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const title = `${post.title} | MIKECEBUL`
   const description = `Read ${post.title} on the MIKECEBUL blog.`
 
-  return {
+  return createMarketingMetadata({
     description,
-    openGraph: mergeOpenGraph({
-      description,
-      title,
-      url: `${baseUrl}/blog/${post.slug}`,
-    }),
+    pathname: `/blog/${post.slug}`,
     title,
-  }
+  })
 }
 
 const queryBlogBySlug = cache(async ({ slug }: { slug: string }) => {

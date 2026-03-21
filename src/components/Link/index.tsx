@@ -3,7 +3,7 @@ import { cn } from 'src/utilities/cn'
 import Link from 'next/link'
 import React from 'react'
 
-import type { Media, Page } from '@/payload-types'
+import type { Blog, Media } from '@/payload-types'
 
 type CMSLinkType = {
   appearance?: 'inline' | ButtonProps['variant']
@@ -13,8 +13,8 @@ type CMSLinkType = {
   newTab?: boolean | null
   onClick?: React.MouseEventHandler<HTMLAnchorElement> | React.MouseEventHandler<HTMLButtonElement>
   reference?: {
-    relationTo: 'pages' | 'media'
-    value: Page | Media | string | number
+    relationTo: 'blogs' | 'media'
+    value: Blog | Media | string | number
   } | null
   size?: ButtonProps['size'] | null
   type?: 'custom' | 'reference' | null
@@ -39,8 +39,8 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     type === 'reference' && typeof reference?.value === 'object'
       ? reference?.relationTo === 'media' && 'url' in reference.value
         ? reference.value.url // Use the URL from the Media object
-        : reference?.relationTo === 'pages' && 'slug' in reference.value
-          ? `/${reference.value.slug}` // Use the slug from the Page object
+        : reference?.relationTo === 'blogs' && 'slug' in reference.value
+          ? `/blog/${reference.value.slug}`
           : null
       : url
 

@@ -4,17 +4,20 @@ import { cn } from 'src/utilities/cn'
 import React from 'react'
 import { RichText } from '@/components/RichText'
 
-import type { MediaBlock as MediaBlockType } from '@/payload-types'
+import type { Media as MediaResource } from '@/payload-types'
 
 import { Media } from '../../components/Media'
 
-type Props = MediaBlockType & {
+type Props = {
+  blockType?: 'mediaBlock'
   breakout?: boolean
   captionClassName?: string
   className?: string
   enableGutter?: boolean
   id?: string
   imgClassName?: string
+  media?: MediaResource | string | number | null
+  position?: 'default' | 'fullscreen'
   staticImage?: StaticImageData
   disableInnerContainer?: boolean
 }

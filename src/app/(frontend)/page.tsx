@@ -1,5 +1,13 @@
-import PageTemplate, { generateMetadata } from './[slug]/page'
+import { MarketingHomePage } from '@/components/marketing/marketing-pages'
+import { createMarketingMetadata } from '@/lib/marketing-metadata'
+import { websiteContent } from '@/lib/website-content'
 
-export default PageTemplate
+export const metadata = createMarketingMetadata({
+  description: websiteContent.seo.home.description,
+  pathname: '/',
+  title: websiteContent.seo.home.title,
+})
 
-export { generateMetadata }
+export default function HomePage() {
+  return <MarketingHomePage />
+}
