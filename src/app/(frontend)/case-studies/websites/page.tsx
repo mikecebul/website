@@ -1,8 +1,6 @@
-import { MarketingCaseStudyPage } from '@/components/marketing/marketing-pages'
+import { StitchWebPortfolioPage } from '@/components/marketing/stitch-web-portfolio-page'
 import { createMarketingMetadata } from '@/lib/marketing-metadata'
-import { getCaseStudyBySlug, websiteContent } from '@/lib/website-content'
-
-const caseStudy = getCaseStudyBySlug('websites')
+import { websiteContent } from '@/lib/website-content'
 
 export const metadata = createMarketingMetadata({
   description: websiteContent.seo.caseStudies.websites.description,
@@ -11,9 +9,5 @@ export const metadata = createMarketingMetadata({
 })
 
 export default function WebsitesCaseStudyPage() {
-  if (!caseStudy) {
-    return null
-  }
-
-  return <MarketingCaseStudyPage caseStudy={caseStudy} />
+  return <StitchWebPortfolioPage />
 }

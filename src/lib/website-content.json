@@ -154,19 +154,19 @@
     {
       "eyebrow": "Websites",
       "headline": "Business websites",
-      "title": "A sharper digital presence without the agency overhead.",
-      "description": "Marketing sites and web experiences designed to look polished, load fast, and stay easy to evolve.",
+      "title": "A sharper digital presence to stand out from the rest.",
+      "description": "Websites built around business-specific logic, reliable integrations, and polished delivery.",
       "price": "$2400",
       "priceSuffix": "setup",
       "priceDetail": {
         "amount": "+$100/mo",
-        "label": "hosting + unlimited edits"
+        "label": "hosting, analytics + unlimited edits"
       },
       "featured": true,
       "bullets": [
-        "Custom design",
-        "SEO foundations",
-        "Ongoing content support"
+        "Error monitoring + viewer analytics",
+        "Portable deployment",
+        "Fast AI-assisted delivery"
       ],
       "ctaLabel": "View Portfolio",
       "ctaHref": "/case-studies/websites"
