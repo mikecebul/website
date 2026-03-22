@@ -24,6 +24,12 @@ const galleryItemSchema = z.object({
   title: z.string(),
 })
 
+const seoEntrySchema = z.object({
+  description: z.string(),
+  keywords: z.array(z.string()).min(1),
+  title: z.string(),
+})
+
 const websiteContentSchema = z.object({
   site: z.object({
     coordinates: z.string(),
@@ -60,14 +66,14 @@ const websiteContentSchema = z.object({
   }),
   seo: z.object({
     defaultOgImage: z.string(),
-    home: z.object({ description: z.string(), title: z.string() }),
-    services: z.object({ description: z.string(), title: z.string() }),
-    about: z.object({ description: z.string(), title: z.string() }),
-    contact: z.object({ description: z.string(), title: z.string() }),
-    blogIndex: z.object({ description: z.string(), title: z.string() }),
+    home: seoEntrySchema,
+    services: seoEntrySchema,
+    about: seoEntrySchema,
+    contact: seoEntrySchema,
+    blogIndex: seoEntrySchema,
     caseStudies: z.object({
-      hybridMeetingSolutions: z.object({ description: z.string(), title: z.string() }),
-      websites: z.object({ description: z.string(), title: z.string() }),
+      hybridMeetingSolutions: seoEntrySchema,
+      websites: seoEntrySchema,
     }),
   }),
   home: z.object({

@@ -8,7 +8,7 @@
     "coordinates": "45.3181° N, 85.2584° W"
   },
   "images": {
-    "hero": "/marketing/lighthouse.jpg",
+    "hero": "/marketing/lighthouse.webp",
     "office": "/marketing/modern-office.jpg",
     "dataVisualization": "/marketing/data-visualization.jpg",
     "profile": "/marketing/me-full.jpg"
@@ -85,35 +85,84 @@
     ]
   },
   "seo": {
-    "defaultOgImage": "/marketing/lighthouse.jpg",
+    "defaultOgImage": "/marketing/login-og.jpg",
     "home": {
       "title": "Mike Cebulski | Northern Michigan Technical Consulting",
-      "description": "Technical consulting, marketing websites, and automation support for Northern Michigan businesses that want modern systems with a human touch."
+      "description": "Technical consulting, marketing websites, and automation support for Northern Michigan businesses that want modern systems with a human touch.",
+      "keywords": [
+        "northern michigan technical consulting",
+        "charlevoix web design",
+        "small business automation",
+        "hybrid meeting systems",
+        "mike cebulski"
+      ]
     },
     "services": {
       "title": "Services | Mike Cebulski",
-      "description": "Consulting, websites, and hybrid meeting systems for Northern Michigan businesses that need practical technical execution."
+      "description": "Consulting, websites, and hybrid meeting systems for Northern Michigan businesses that need practical technical execution.",
+      "keywords": [
+        "technical consulting services",
+        "business website development",
+        "ai automation consulting",
+        "hybrid meeting solutions",
+        "northern michigan consultant"
+      ]
     },
     "about": {
       "title": "About | Mike Cebulski",
-      "description": "Learn more about Mike Cebulski's approach to websites, hybrid meeting systems, and practical technical execution in Northern Michigan."
+      "description": "Learn more about Mike Cebulski's approach to websites, hybrid meeting systems, and practical technical execution in Northern Michigan.",
+      "keywords": [
+        "about mike cebulski",
+        "charlevoix technology consultant",
+        "northern michigan web consultant",
+        "local technical partner",
+        "website and automation specialist"
+      ]
     },
     "contact": {
       "title": "Contact | Mike Cebulski",
-      "description": "Get in touch about marketing websites, hybrid meeting solutions, and AI automation consulting."
+      "description": "Get in touch about marketing websites, hybrid meeting solutions, and AI automation consulting.",
+      "keywords": [
+        "contact mike cebulski",
+        "charlevoix web consultant contact",
+        "automation consulting inquiry",
+        "hybrid meeting consultation",
+        "website project inquiry"
+      ]
     },
     "blogIndex": {
       "title": "Blog | Mike Cebulski",
-      "description": "Insights on modern web systems, hybrid meeting spaces, and practical automation for small businesses and local teams."
+      "description": "Insights on modern web systems, hybrid meeting spaces, and practical automation for small businesses and local teams.",
+      "keywords": [
+        "technical consulting blog",
+        "website strategy insights",
+        "small business automation blog",
+        "hybrid meeting tips",
+        "mike cebulski blog"
+      ]
     },
     "caseStudies": {
       "hybridMeetingSolutions": {
         "title": "Hybrid Meeting Solutions Case Study | Mike Cebulski",
-        "description": "A case study in designing a hybrid meeting environment that feels professional, clear, and dependable."
+        "description": "A case study in designing a hybrid meeting environment that feels professional, clear, and dependable.",
+        "keywords": [
+          "hybrid meeting case study",
+          "boardroom av consultant",
+          "conference room technology project",
+          "remote meeting system design",
+          "hybrid collaboration solution"
+        ]
       },
       "websites": {
         "title": "Website Case Study | Mike Cebulski",
-        "description": "A case study in building a website system that improves clarity, credibility, and ongoing maintainability."
+        "description": "A case study in building a website system that improves clarity, credibility, and ongoing maintainability.",
+        "keywords": [
+          "website case study",
+          "small business website portfolio",
+          "marketing website consultant",
+          "next.js website case study",
+          "northern michigan website project"
+        ]
       }
     }
   },
@@ -340,7 +389,7 @@
         {
           "title": "Built to evolve",
           "body": "The final system balanced presentation quality with a content structure that could stay useful over time.",
-          "imageSrc": "/marketing/lighthouse.jpg",
+          "imageSrc": "/marketing/lighthouse.webp",
           "imageAlt": "Lighthouse by the water"
         }
       ]
@@ -400,7 +449,7 @@
         {
           "title": "Simple control flow",
           "body": "Control logic and equipment placement were organized around how the room is used, not just how the products are marketed.",
-          "imageSrc": "/marketing/lighthouse.jpg",
+          "imageSrc": "/marketing/lighthouse.webp",
           "imageAlt": "Lighthouse at dusk"
         },
         {

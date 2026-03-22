@@ -15,14 +15,9 @@ import { websiteContent } from '@/lib/website-content'
 import { formatDateTime } from '@/lib/formatDateTime'
 import { getPayload } from 'payload'
 import { redirect } from 'next/navigation'
+import type { Metadata } from 'next'
 
 const BLOGS_PER_PAGE = 10
-
-export const metadata = createMarketingMetadata({
-  description: websiteContent.seo.blogIndex.description,
-  pathname: '/blog',
-  title: websiteContent.seo.blogIndex.title,
-})
 
 type PageProps = {
   searchParams: Promise<{
@@ -48,6 +43,28 @@ const getPageHref = (page: number) => {
   if (page <= 1) return '/blog'
 
   return `/blog?page=${page}`
+}
+
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const { page } = await searchParams
+  const requestedPage = getRequestedPage(page)
+  const pathname = getPageHref(requestedPage)
+
+  if (requestedPage <= 1) {
+    return createMarketingMetadata({
+      description: websiteContent.seo.blogIndex.description,
+      keywords: websiteContent.seo.blogIndex.keywords,
+      pathname,
+      title: websiteContent.seo.blogIndex.title,
+    })
+  }
+
+  return createMarketingMetadata({
+    description: `Page ${requestedPage} of articles on websites, automation, and hybrid collaboration systems.`,
+    keywords: websiteContent.seo.blogIndex.keywords,
+    pathname,
+    title: `Blog Page ${requestedPage} | Mike Cebulski`,
+  })
 }
 
 const getPageItems = (currentPage: number, totalPages: number): PageItem[] => {

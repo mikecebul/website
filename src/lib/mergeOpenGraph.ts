@@ -1,17 +1,19 @@
 import type { Metadata } from 'next'
+
 import { baseUrl } from './baseUrl'
+import { websiteContent } from './website-content'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
   url: baseUrl,
-  title: 'MIKECEBUL - Technology Consultant',
-  description: 'Full-stack software engineer and consultant specializing in modern web development, React, Next.js, and cloud solutions.',
+  title: websiteContent.site.name,
+  description: websiteContent.site.description,
   images: [
     {
-      url: `${baseUrl}/flowers-sign-meta.webp`,
+      url: new URL(websiteContent.seo.defaultOgImage, baseUrl).toString(),
     },
   ],
-  siteName: 'MIKECEBUL',
+  siteName: websiteContent.site.legalName,
 }
 
 export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {

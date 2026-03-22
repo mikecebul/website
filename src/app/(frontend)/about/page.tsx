@@ -4,6 +4,7 @@ import { websiteContent } from '@/lib/website-content'
 
 export const metadata = createMarketingMetadata({
   description: websiteContent.seo.about.description,
+  keywords: websiteContent.seo.about.keywords,
   pathname: '/about',
   title: websiteContent.seo.about.title,
 })
