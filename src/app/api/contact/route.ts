@@ -1,17 +1,12 @@
 import { NextResponse } from 'next/server'
+import React from 'react'
 import { getPayload } from 'payload'
+import { render } from '@react-email/components'
 
 import configPromise from '@payload-config'
 import { contactFormSchema } from '@/lib/contact'
 import { websiteContent } from '@/lib/website-content'
-
-const escapeHtml = (value: string) =>
-  value
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#39;')
+import ContactEmail from '@/emails/ContactEmail'
 
 export async function POST(request: Request) {
   let payload: Awaited<ReturnType<typeof getPayload>> | undefined
@@ -46,19 +41,15 @@ export async function POST(request: Request) {
 
     const subject = `New contact inquiry: ${data.inquiryType} from ${data.name}`
     const companyName = websiteContent.site.name
-    const html = `
-      <div style="background:#0c1221;padding:24px 12px;font-family:Arial,sans-serif;color:#f5f7fb;">
-        <div style="max-width:640px;margin:0 auto;background:#131b2e;border:1px solid #22304f;border-radius:18px;padding:28px;">
-          <h1 style="font-size:24px;line-height:1.3;margin:0 0 20px;">New Contact Form Submission</h1>
-          <p style="margin:0 0 12px;"><strong style="color:#c7a157;">Name:</strong> ${escapeHtml(data.name)}</p>
-          <p style="margin:0 0 12px;"><strong style="color:#c7a157;">Email:</strong> ${escapeHtml(data.email)}</p>
-          <p style="margin:0 0 12px;"><strong style="color:#c7a157;">Phone:</strong> ${escapeHtml(data.phone)}</p>
-          <p style="margin:0 0 12px;"><strong style="color:#c7a157;">Inquiry Type:</strong> ${escapeHtml(data.inquiryType)}</p>
-          <p style="margin:20px 0 8px;"><strong style="color:#c7a157;">Message:</strong></p>
-          <p style="white-space:pre-line;margin:0;">${escapeHtml(data.message)}</p>
-        </div>
-      </div>
-    `
+    const html = await render(
+      React.createElement(ContactEmail, {
+        inquiryType: data.inquiryType,
+        message: data.message,
+        name: data.name,
+        phone: data.phone,
+        replyTo: data.email,
+      }),
+    )
 
     await payload.sendEmail({
       from: payload.email.defaultFromAddress || `website@${request.headers.get('host') || 'localhost'}`,

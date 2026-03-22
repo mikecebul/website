@@ -8,18 +8,21 @@ import { formatAdminURL, getSafeRedirect } from 'payload/shared'
 
 import BackToWebsiteLink from '@/components/BackToWebsiteLink'
 import ShadcnWrapper from '@/components/ShadcnWrapper'
-import { LoginForm } from '@/components/login-form'
+import { CreateFirstUserForm } from '@/components/create-first-user-form'
 
-export default async function LoginView({ initPageResult, searchParams }: AdminViewServerProps) {
+export default async function CreateFirstUserView({
+  initPageResult,
+  searchParams,
+}: AdminViewServerProps) {
   const {
     req: {
       payload: { config },
     },
   } = initPageResult
 
-  const forgotPasswordHref = formatAdminURL({
+  const loginHref = formatAdminURL({
     adminRoute: config.routes.admin,
-    path: config.admin.routes.forgot,
+    path: config.admin.routes.login,
   })
   const requestedRedirect =
     typeof searchParams?.redirect === 'string' ? searchParams.redirect : ''
@@ -45,12 +48,13 @@ export default async function LoginView({ initPageResult, searchParams }: AdminV
 
           <div className="flex flex-1 items-center justify-center">
             <div className="w-full max-w-sm">
-              <LoginForm
-                forgotPasswordHref={forgotPasswordHref}
-                footerText={null}
-                heading="Login to your account"
+              <CreateFirstUserForm
+                authCollectionSlug={config.admin.user}
+                description="Create the first admin account to unlock the Payload dashboard."
+                heading="Create the first admin user"
+                loginHref={loginHref}
                 redirectTo={redirectTo}
-                submitLabel="Login"
+                submitLabel="Create admin account"
               />
             </div>
           </div>
@@ -59,7 +63,7 @@ export default async function LoginView({ initPageResult, searchParams }: AdminV
         <div className="relative hidden bg-muted lg:block">
           <Image
             src="/login.png"
-            alt="Login"
+            alt="Admin setup"
             fill
             priority
             sizes="(min-width: 1024px) 50vw, 100vw"

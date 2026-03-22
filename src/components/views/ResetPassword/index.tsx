@@ -8,18 +8,22 @@ import { formatAdminURL, getSafeRedirect } from 'payload/shared'
 
 import BackToWebsiteLink from '@/components/BackToWebsiteLink'
 import ShadcnWrapper from '@/components/ShadcnWrapper'
-import { LoginForm } from '@/components/login-form'
+import { ResetPasswordForm } from '@/components/reset-password-form'
 
-export default async function LoginView({ initPageResult, searchParams }: AdminViewServerProps) {
+export default async function ResetPasswordView({
+  initPageResult,
+  params,
+  searchParams,
+}: AdminViewServerProps) {
   const {
     req: {
       payload: { config },
     },
   } = initPageResult
 
-  const forgotPasswordHref = formatAdminURL({
+  const loginHref = formatAdminURL({
     adminRoute: config.routes.admin,
-    path: config.admin.routes.forgot,
+    path: config.admin.routes.login,
   })
   const requestedRedirect =
     typeof searchParams?.redirect === 'string' ? searchParams.redirect : ''
@@ -27,6 +31,7 @@ export default async function LoginView({ initPageResult, searchParams }: AdminV
     fallbackTo: config.routes.admin,
     redirectTo: requestedRedirect,
   })
+  const token = params?.segments?.[1] ?? ''
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
@@ -45,12 +50,10 @@ export default async function LoginView({ initPageResult, searchParams }: AdminV
 
           <div className="flex flex-1 items-center justify-center">
             <div className="w-full max-w-sm">
-              <LoginForm
-                forgotPasswordHref={forgotPasswordHref}
-                footerText={null}
-                heading="Login to your account"
-                redirectTo={redirectTo}
-                submitLabel="Login"
+              <ResetPasswordForm
+                loginHref={loginHref}
+                successHref={config.routes.admin}
+                token={token}
               />
             </div>
           </div>
@@ -59,7 +62,7 @@ export default async function LoginView({ initPageResult, searchParams }: AdminV
         <div className="relative hidden bg-muted lg:block">
           <Image
             src="/login.png"
-            alt="Login"
+            alt="Reset password"
             fill
             priority
             sizes="(min-width: 1024px) 50vw, 100vw"

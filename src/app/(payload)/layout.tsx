@@ -3,6 +3,7 @@ import type { ServerFunctionClient } from 'payload'
 import configPromise from '@payload-config'
 import '@payloadcms/next/css'
 import { handleServerFunctions, RootLayout } from '@payloadcms/next/layouts'
+import { DM_Sans, Geist } from 'next/font/google'
 /* DO NOT MODIFY IT BECAUSE IT COULD BE REWRITTEN AT ANY TIME. */
 import React from 'react'
 
@@ -12,6 +13,16 @@ import { importMap } from './admin/importMap'
 type Args = {
   children: React.ReactNode
 }
+
+const geist = Geist({
+  subsets: ['latin'],
+  variable: '--font-sans',
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-heading',
+})
 
 const serverFunctions: ServerFunctionClient = async function (args) {
   'use server'
@@ -23,7 +34,12 @@ const serverFunctions: ServerFunctionClient = async function (args) {
 }
 
 const Layout = ({ children }: Args) => (
-  <RootLayout importMap={importMap} config={configPromise} serverFunction={serverFunctions}>
+  <RootLayout
+    config={configPromise}
+    htmlProps={{ className: `${geist.variable} ${dmSans.variable}` }}
+    importMap={importMap}
+    serverFunction={serverFunctions}
+  >
     {children}
   </RootLayout>
 )

@@ -20,14 +20,18 @@ const dmSans = DM_Sans({
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html className={`${geist.variable} ${dmSans.variable}`} data-scroll-behavior="smooth" lang="en">
+    <html
+      className={`${geist.variable} ${dmSans.variable}`}
+      data-scroll-behavior="smooth"
+      lang="en"
+    >
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
         <Script
           defer
-          data-website-id="f3c16b6d-ba74-4792-a21a-a7930138c0f0"
-          src="https://analytics.mikecebul.dev/script.js"
+          data-website-id="586c09dc-5042-49ef-a3b1-f72736cae1c3"
+          src="https://analytics.mikecebul.com/script.js"
           strategy="lazyOnload"
         />
       </head>

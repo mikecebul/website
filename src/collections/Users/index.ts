@@ -1,4 +1,6 @@
+import React from 'react'
 import type { CollectionConfig } from 'payload'
+import { render } from '@react-email/components'
 
 import { authenticated } from '../../access/authenticated'
 import { roleSelectMutate } from './access/roleSelectMutate'
@@ -8,6 +10,23 @@ import { superAdmin } from '@/access/superAdmin'
 import { self } from '@/access/self'
 import { adminUserAccess } from './access/adminUserAccess'
 import { editorOrHigher } from '@/access/editorOrHigher'
+import { formatAdminURL } from 'payload/shared'
+import ForgotPasswordEmail from '@/emails/ForgotPasswordEmail'
+
+const getRequestOrigin = (req: { headers?: Headers; url?: string }) => {
+  try {
+    if (!req.url) {
+      return ''
+    }
+
+    const protocol = new URL(req.url).protocol
+    const host = req.headers?.get('host')
+
+    return host ? `${protocol}//${host}` : ''
+  } catch {
+    return ''
+  }
+}
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -25,6 +44,30 @@ const Users: CollectionConfig = {
     useAsTitle: 'name',
   },
   auth: {
+    forgotPassword: {
+      generateEmailHTML: async (args = {}) => {
+        const { req, token, user } = args
+
+        if (!req || typeof token !== 'string' || !token) {
+          return ''
+        }
+
+        const resetPath = `${req.payload.config.admin.routes.reset}/${token}` as `/${string}`
+        const resetURL = formatAdminURL({
+          adminRoute: req.payload.config.routes.admin,
+          path: resetPath,
+          serverURL: getRequestOrigin(req),
+        })
+
+        return render(
+          React.createElement(ForgotPasswordEmail, {
+            resetURL,
+            userEmail: typeof user?.email === 'string' ? user.email : undefined,
+          }),
+        )
+      },
+      generateEmailSubject: () => 'Reset your MIKECEBUL Admin password',
+    },
     useAPIKey: true,
   },
   fields: [
