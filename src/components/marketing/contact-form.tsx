@@ -1,10 +1,10 @@
 'use client'
 
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import { useForm } from '@tanstack/react-form'
 import { useState } from 'react'
 
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import {
@@ -16,7 +16,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { cn } from '@/lib/utils'
 import { contactFormSchema } from '@/lib/contact'
 import { websiteContent } from '@/lib/website-content'
 import { normalizeFieldErrors } from '@/forms/field-components/normalize-field-errors'
@@ -55,9 +54,13 @@ export function MarketingContactForm() {
       }
 
       formApi.reset()
-      setSuccessMessage(payload.message || 'Thanks for reaching out. Your inquiry was sent successfully.')
+      setSuccessMessage("I'll be getting back with you shortly.")
     },
   })
+
+  if (successMessage) {
+    return <MarketingContactThankYou message={successMessage} />
+  }
 
   return (
     <form
@@ -203,9 +206,6 @@ export function MarketingContactForm() {
                   className="min-h-40 rounded-3xl border-white/10 bg-white/3 px-4 py-4 text-base text-(--marketing-heading) placeholder:text-(--marketing-copy-soft)"
                   placeholder="Tell me about your project, timeline, or the friction you want to solve."
                 />
-                <FieldDescription>
-                  Include enough context to understand the project goals, constraints, or room setup.
-                </FieldDescription>
                 {isInvalid ? <FieldError errors={normalizedErrors} /> : null}
               </Field>
             )
@@ -213,24 +213,9 @@ export function MarketingContactForm() {
         </form.Field>
       </FieldGroup>
 
-      {successMessage ? <FieldDescription className="text-(--marketing-gold)">{successMessage}</FieldDescription> : null}
       {submissionError ? <FieldError>{submissionError}</FieldError> : null}
 
-      <div className="flex justify-end gap-3">
-        <button
-          type="button"
-          onClick={() => {
-            setSubmissionError(undefined)
-            setSuccessMessage(undefined)
-            form.reset()
-          }}
-          className={cn(
-            buttonVariants({ variant: 'outline' }),
-            'h-12 rounded-full border-white/10 bg-transparent px-5 text-(--marketing-heading) hover:bg-white/5',
-          )}
-        >
-          Reset
-        </button>
+      <div className="flex justify-end">
         <form.Subscribe selector={(state) => state.isSubmitting}>
           {(isSubmitting) => (
             <Button
@@ -245,5 +230,19 @@ export function MarketingContactForm() {
         </form.Subscribe>
       </div>
     </form>
+  )
+}
+
+function MarketingContactThankYou({ message }: { message: string }) {
+  return (
+    <div className="flex min-h-[420px] flex-col justify-center rounded-[32px] border border-white/8 bg-white/4 px-6 py-10 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:px-10">
+      <CheckCircle2 className="mx-auto size-14 text-(--marketing-gold)" />
+      <h3 className="mt-6 font-heading text-4xl tracking-[-0.05em] text-(--marketing-heading)">
+        Thank you
+      </h3>
+      <p className="mt-4 text-base leading-8 text-(--marketing-copy)">
+        {message}
+      </p>
+    </div>
   )
 }

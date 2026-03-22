@@ -11,7 +11,7 @@
     "hero": "/marketing/lighthouse.jpg",
     "office": "/marketing/modern-office.jpg",
     "dataVisualization": "/marketing/data-visualization.jpg",
-    "profile": "/marketing/mike-profile.jpg"
+    "profile": "/marketing/me-full.jpg"
   },
   "contact": {
     "email": "me@mikecebul.com",
@@ -126,8 +126,9 @@
     "heroCaptionTitle": "Hands-on support for regional businesses.",
     "backgroundTitle": "Technical Mind. Strategic Vision.",
     "backgroundBody": [
-      "Based in Charlevoix the beautiful, I turn overwhelming tech issues into simple solutions. My focus is user experience first so the user doesn't even notice the complexity underneath. Over the years I have developed trust in our community from local non-profits to courts across Michigan. On top of tech integrations I am also a certified counselor at BASES here in Charlevoix. I have discovered a passion for helping others and improving work efficiency. My mission is to provide businesses with the technical backbone they need to scale without friction.",
-      "Whether I'm architecting a custom web experience or designing an automated hybrid meeting room, the focus stays the same: reliability, performance, and future-proof design."
+      "Based in Charlevoix the Beautiful, I help businesses turn overwhelming tech challenges into simple, reliable systems. My approach is user experience first, so the complexity stays behind the scenes and the tools feel natural to use.",
+      "Over the years, I’ve earned trust across our community, supporting local nonprofits and working with courts across Michigan. Alongside my technical work, I’m also a certified counselor at BASES here in Charlevoix, which deepened my passion for helping people and improving how teams work.",
+      "Whether I’m building a custom website or designing an automated hybrid meeting room, the goal stays the same: dependable solutions that reduce friction and make everyday work feel smoother, easier, and more intentional."
     ]
   },
   "servicesIntro": {
@@ -279,72 +280,6 @@
   },
   "caseStudies": [
     {
-      "slug": "hybrid-meeting-solutions",
-      "eyebrow": "AV & Zoom Rooms",
-      "navTitle": "Hybrid meeting solutions",
-      "navDescription": "AV planning, Zoom Rooms, and practical room integration.",
-      "title": "Bridging the gap between ambition and infrastructure.",
-      "intro": "A hybrid meeting environment designed to feel executive-ready, quietly reliable, and easy for teams to operate without technical supervision.",
-      "challenge": "A leadership team needed their main boardroom to support executive meetings, remote collaboration, and client presentations without the usual cable chaos and inconsistent audio.",
-      "solution": "The solution centered on a Zoom Rooms-first experience with clearer device roles, stronger presentation flow, and room planning that balanced aesthetics with operational simplicity.",
-      "role": "Strategy, room planning, hardware guidance, integration direction",
-      "ctaHeading": "Ready to upgrade your workspace?",
-      "ctaBody": "If your meeting rooms need to feel more dependable, we can design the workflow before the next hardware purchase becomes expensive guesswork.",
-      "metrics": [
-        {
-          "label": "Room profile",
-          "value": "Executive boardroom"
-        },
-        {
-          "label": "Primary stack",
-          "value": "Zoom Rooms + AV control"
-        },
-        {
-          "label": "Outcome",
-          "value": "Faster, calmer meetings"
-        }
-      ],
-      "summary": [
-        {
-          "title": "Context",
-          "body": "The room needed to support leadership, clients, and hybrid attendees without technical babysitting."
-        },
-        {
-          "title": "Approach",
-          "body": "The system was designed around clarity: where people look, how they speak, and how quickly a meeting can start."
-        },
-        {
-          "title": "Impact",
-          "body": "The final setup felt composed and repeatable, with fewer awkward transitions between in-person and remote collaboration."
-        }
-      ],
-      "results": [
-        "Reduced setup friction at the start of meetings.",
-        "Improved audio and presentation consistency for remote participants.",
-        "Delivered a room that matched the professional standard of the organization using it."
-      ],
-      "gallery": [
-        {
-          "title": "Created hybrid hub",
-          "body": "A clean presentation wall and camera-ready room layout created a more professional experience for internal and client-facing calls.",
-          "imageSrc": "/marketing/modern-office.jpg",
-          "imageAlt": "Modern meeting space"
-        },
-        {
-          "title": "Simple control flow",
-          "body": "Control logic and equipment placement were organized around how the room is used, not just how the products are marketed.",
-          "imageSrc": "/marketing/lighthouse.jpg",
-          "imageAlt": "Lighthouse at dusk"
-        },
-        {
-          "title": "Operational clarity",
-          "body": "Supporting documentation reduced support calls and made everyday room operation easier for non-technical staff.",
-          "imageSrc": "/marketing/data-visualization.jpg",
-          "imageAlt": "Data visualization"
-        }
-      ]
-    },
-    {
       "slug": "websites",
       "eyebrow": "Website Case Study",
       "navTitle": "Business websites",
@@ -407,6 +342,72 @@
           "body": "The final system balanced presentation quality with a content structure that could stay useful over time.",
           "imageSrc": "/marketing/lighthouse.jpg",
           "imageAlt": "Lighthouse by the water"
+        }
+      ]
+    },
+    {
+      "slug": "hybrid-meeting-solutions",
+      "eyebrow": "AV & Zoom Rooms",
+      "navTitle": "Hybrid meeting solutions",
+      "navDescription": "AV planning, Zoom Rooms, and practical room integration.",
+      "title": "Bridging the gap between ambition and infrastructure.",
+      "intro": "A hybrid meeting environment designed to feel executive-ready, quietly reliable, and easy for teams to operate without technical supervision.",
+      "challenge": "A leadership team needed their main boardroom to support executive meetings, remote collaboration, and client presentations without the usual cable chaos and inconsistent audio.",
+      "solution": "The solution centered on a Zoom Rooms-first experience with clearer device roles, stronger presentation flow, and room planning that balanced aesthetics with operational simplicity.",
+      "role": "Strategy, room planning, hardware guidance, integration direction",
+      "ctaHeading": "Ready to upgrade your workspace?",
+      "ctaBody": "If your meeting rooms need to feel more dependable, we can design the workflow before the next hardware purchase becomes expensive guesswork.",
+      "metrics": [
+        {
+          "label": "Room profile",
+          "value": "Executive boardroom"
+        },
+        {
+          "label": "Primary stack",
+          "value": "Zoom Rooms + AV control"
+        },
+        {
+          "label": "Outcome",
+          "value": "Faster, calmer meetings"
+        }
+      ],
+      "summary": [
+        {
+          "title": "Context",
+          "body": "The room needed to support leadership, clients, and hybrid attendees without technical babysitting."
+        },
+        {
+          "title": "Approach",
+          "body": "The system was designed around clarity: where people look, how they speak, and how quickly a meeting can start."
+        },
+        {
+          "title": "Impact",
+          "body": "The final setup felt composed and repeatable, with fewer awkward transitions between in-person and remote collaboration."
+        }
+      ],
+      "results": [
+        "Reduced setup friction at the start of meetings.",
+        "Improved audio and presentation consistency for remote participants.",
+        "Delivered a room that matched the professional standard of the organization using it."
+      ],
+      "gallery": [
+        {
+          "title": "Created hybrid hub",
+          "body": "A clean presentation wall and camera-ready room layout created a more professional experience for internal and client-facing calls.",
+          "imageSrc": "/marketing/modern-office.jpg",
+          "imageAlt": "Modern meeting space"
+        },
+        {
+          "title": "Simple control flow",
+          "body": "Control logic and equipment placement were organized around how the room is used, not just how the products are marketed.",
+          "imageSrc": "/marketing/lighthouse.jpg",
+          "imageAlt": "Lighthouse at dusk"
+        },
+        {
+          "title": "Operational clarity",
+          "body": "Supporting documentation reduced support calls and made everyday room operation easier for non-technical staff.",
+          "imageSrc": "/marketing/data-visualization.jpg",
+          "imageAlt": "Data visualization"
         }
       ]
     }

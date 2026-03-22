@@ -216,7 +216,7 @@ export function MarketingAboutPage() {
         <div className="rounded-[32px] border border-white/8 bg-[linear-gradient(180deg,rgba(19,27,46,0.96),rgba(9,16,31,0.96))] p-6 shadow-[0_24px_70px_rgba(0,0,0,0.32)]">
           <img
             alt="Mike Cebulski portrait"
-            className="h-[360px] w-full rounded-[24px] object-cover object-[center_18%]"
+            className="h-[360px] w-full rounded-[24px] object-cover object-top"
             src={websiteContent.images.profile}
           />
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -295,7 +295,7 @@ export function MarketingContactPage() {
       </section>
 
       <section className="mx-auto mt-16 grid max-w-[1220px] gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(320px,0.82fr)_minmax(0,1.18fr)] lg:px-12">
-        <div className="flex flex-col gap-8">
+        <div className="order-2 flex flex-col gap-8 lg:order-1">
           <div className="rounded-[32px] border border-white/8 bg-[rgba(19,27,46,0.85)] p-8 shadow-[0_24px_70px_rgba(0,0,0,0.3)]">
             <h2 className="font-heading text-3xl tracking-[-0.05em]">{websiteContent.contactPage.detailsTitle}</h2>
             <div className="mt-6 flex flex-col gap-5 text-sm leading-7 text-(--marketing-copy)">
@@ -344,12 +344,9 @@ export function MarketingContactPage() {
           </div>
         </div>
 
-        <div className="rounded-[36px] border border-white/8 bg-[linear-gradient(180deg,rgba(19,27,46,0.98),rgba(12,18,33,0.98))] p-8 shadow-[0_30px_80px_rgba(0,0,0,0.34)] sm:p-10">
-          <div className="mb-8 space-y-3">
+        <div className="order-1 rounded-[36px] border border-white/8 bg-[linear-gradient(180deg,rgba(19,27,46,0.98),rgba(12,18,33,0.98))] p-8 shadow-[0_30px_80px_rgba(0,0,0,0.34)] sm:p-10 lg:order-2">
+          <div className="mb-8">
             <h2 className="font-heading text-3xl tracking-[-0.05em]">{websiteContent.contactPage.formTitle}</h2>
-            <p className="max-w-2xl text-sm leading-7 text-(--marketing-copy)">
-              {websiteContent.contactPage.formBody}
-            </p>
           </div>
           <MarketingContactForm />
         </div>
