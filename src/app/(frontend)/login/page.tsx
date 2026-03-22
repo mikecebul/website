@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { LoginForm } from "@/components/login-form"
 import { GalleryVerticalEndIcon } from "lucide-react"
 
@@ -22,10 +23,12 @@ export default function LoginPage() {
         </div>
       </div>
       <div className="relative hidden bg-muted lg:block">
-        <img
-          src="/placeholder.svg"
+        <Image
           alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="object-cover dark:brightness-[0.2] dark:grayscale"
+          src="/placeholder.svg"
+          fill
+          sizes="50vw"
         />
       </div>
     </div>
