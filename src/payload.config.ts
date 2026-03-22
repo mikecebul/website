@@ -5,8 +5,6 @@ import { resendAdapter } from '@payloadcms/email-resend'
 
 import { sentryPlugin } from '@payloadcms/plugin-sentry'
 import * as Sentry from '@sentry/nextjs'
-import { redirectsPlugin } from '@payloadcms/plugin-redirects'
-import { seoPlugin } from '@payloadcms/plugin-seo'
 import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
 import { S3_PLUGIN_CONFIG } from './plugins/s3'
 import {
@@ -29,46 +27,16 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
-import { Pages } from './collections/Pages'
 import Users from './collections/Users'
-import { Footer } from './globals/Footer/config'
-import { Header } from './globals/Header/config'
-import { revalidateRedirects } from './hooks/revalidateRedirects'
-import { GenerateTitle, GenerateURL, GenerateImage } from '@payloadcms/plugin-seo/types'
-import { CompanyInfo } from './globals/CompanyInfo/config'
-import { superAdmin } from './access/superAdmin'
 import { MediaBlock } from './blocks/MediaBlock/config'
 import { Code } from './blocks/Code/config'
 import { Media } from './collections/Media'
-import { baseUrl } from './utilities/baseUrl'
-import { Forms } from './collections/Forms'
-import { FormSubmissions } from './collections/FormSubmissions'
+import { baseUrl } from './lib/baseUrl'
 import { Blogs } from './collections/Blogs'
-import type { Page } from './payload-types'
+import { Contacts } from './collections/Contacts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-
-const generateTitle: GenerateTitle<Page> = ({ doc }) => {
-  if ('name' in doc) {
-    return doc.name ? `${doc.name} | MIKECEBUL` : 'MIKECEBUL'
-  }
-  return doc?.title ? `${doc.title} | MIKECEBUL` : 'MIKECEBUL'
-}
-
-const generateURL: GenerateURL<Page> = ({ doc }) => {
-  if (!doc.slug) return baseUrl
-  return `${baseUrl}/${doc.slug}`
-}
-const generateImage: GenerateImage<Page> = ({ doc }) => {
-  if (
-    typeof doc.meta?.metadata?.image === 'object' &&
-    doc.meta?.metadata?.image?.sizes?.meta?.url
-  ) {
-    return doc.meta.metadata.image.sizes.meta.url || '/mike-profile.jpg'
-  }
-  return '/flowers-sign.webp'
-}
 
 export default buildConfig({
   serverURL: baseUrl,
@@ -81,6 +49,9 @@ export default buildConfig({
         Logo: '@/graphics/Logo',
       },
       views: {
+        login: {
+          Component: '@/components/views/Login',
+        },
         CustomRootView: {
           Component: '@/components/views/Analytics',
           path: '/analytics',
@@ -95,28 +66,6 @@ export default buildConfig({
       titleSuffix: ' - MIKECEBUL',
     },
     user: Users.slug,
-    livePreview: {
-      breakpoints: [
-        {
-          label: 'Mobile',
-          name: 'mobile',
-          width: 375,
-          height: 667,
-        },
-        {
-          label: 'Tablet',
-          name: 'tablet',
-          width: 768,
-          height: 1024,
-        },
-        {
-          label: 'Desktop',
-          name: 'desktop',
-          width: 1440,
-          height: 900,
-        },
-      ],
-    },
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: lexicalEditor({
@@ -135,7 +84,7 @@ export default buildConfig({
           blocks: [MediaBlock, Code],
         }),
         LinkFeature({
-          enabledCollections: ['pages', 'blogs'],
+          enabledCollections: ['blogs'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
               if ('name' in field && field.name === 'url') return false
@@ -171,8 +120,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
-  collections: [Pages, Blogs, Media, Users, Forms, FormSubmissions],
-  globals: [Header, Footer, CompanyInfo],
+  collections: [Blogs, Media, Users, Contacts],
   cors: [baseUrl || ''].filter(Boolean),
   csrf: [baseUrl || ''].filter(Boolean),
   email:
@@ -210,43 +158,6 @@ export default buildConfig({
         debug: false,
       },
       Sentry,
-    }),
-    redirectsPlugin({
-      collections: ['pages'],
-      overrides: {
-        access: {
-          admin: superAdmin,
-          read: superAdmin,
-          delete: superAdmin,
-          update: superAdmin,
-          create: superAdmin,
-        },
-        admin: {
-          group: 'Admin',
-        },
-        // @ts-expect-error
-        fields: ({ defaultFields }) => {
-          return defaultFields.map((field) => {
-            if ('name' in field && field.name === 'from') {
-              return {
-                ...field,
-                admin: {
-                  description: 'You will need to rebuild the website when changing this field.',
-                },
-              }
-            }
-            return field
-          })
-        },
-        hooks: {
-          afterChange: [revalidateRedirects],
-        },
-      },
-    }),
-    seoPlugin({
-      generateTitle,
-      generateURL,
-      generateImage,
     }),
     s3StoragePlugin({
       ...S3_PLUGIN_CONFIG,

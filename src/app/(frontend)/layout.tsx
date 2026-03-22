@@ -1,24 +1,26 @@
 import type { Metadata } from 'next'
 
-import { cn } from 'src/utilities/cn'
-import { Inter } from 'next/font/google'
+import { DM_Sans, Geist } from 'next/font/google'
 import type { ReactNode } from 'react'
-import { Footer } from '@/globals/Footer/Component'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { MarketingShell } from '@/components/marketing/marketing-pages'
+import { createMarketingMetadata } from '@/lib/marketing-metadata'
+import { websiteContent } from '@/lib/website-content'
 import './globals.css'
-import { draftMode } from 'next/headers'
-import { Header } from '@/globals/Header/Component'
-import { ThemeProvider } from 'next-themes'
-import { baseUrl } from '@/utilities/baseUrl'
 import Script from 'next/script'
 
-const inter = Inter({ subsets: ['latin'] })
+const geist = Geist({
+  subsets: ['latin'],
+  variable: '--font-sans',
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-heading',
+})
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
-  const { isEnabled } = await draftMode()
-
   return (
-    <html className={cn(inter.className)} lang="en" suppressHydrationWarning>
+    <html className={`${geist.variable} ${dmSans.variable}`} data-scroll-behavior="smooth" lang="en">
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
@@ -29,27 +31,15 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           strategy="lazyOnload"
         />
       </head>
-      <body className="flex flex-col min-h-dvh bg-background lg:px-4">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          <div className="flex flex-col grow">{children}</div>
-          <Footer />
-        </ThemeProvider>
+      <body>
+        <MarketingShell>{children}</MarketingShell>
       </body>
     </html>
   )
 }
 
-export const metadata: Metadata = {
-  metadataBase: new URL(baseUrl),
-  openGraph: mergeOpenGraph(),
-  twitter: {
-    card: 'summary_large_image',
-    creator: '@mikecebul',
-  },
-}
+export const metadata: Metadata = createMarketingMetadata({
+  description: websiteContent.site.description,
+  pathname: '/',
+  title: websiteContent.site.name,
+})

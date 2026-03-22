@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
-import { baseUrl } from '@/utilities/baseUrl'
+import { baseUrl } from '@/lib/baseUrl'
+
+const blockedRoutes = ['/admin', '/login', '/next', '/sentry-example-page']
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
   if (process.env.NEXT_PUBLIC_IS_LIVE === 'false') {
@@ -13,26 +13,13 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     }
   }
 
-  const payload = await getPayload({ config: configPromise })
-  const { docs: pages } = await payload.find({
-    collection: 'pages',
-    where: {
-      'meta.hideFromSearchEngines': {
-        equals: true,
-      },
-    },
-    limit: 1000,
-  })
-
-  // Map the slugs of the pages you want to disallow in robots.txt
-  const disallowedPages = pages.map((page) => `/${page.slug}`)
-
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin', ...disallowedPages],
+      disallow: blockedRoutes,
     },
+    host: baseUrl,
     sitemap: `${baseUrl}/sitemap.xml`,
   }
 }

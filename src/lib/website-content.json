@@ -1,0 +1,471 @@
+{
+  "site": {
+    "name": "Mike Cebulski",
+    "legalName": "MIKECEBUL LLC",
+    "titleSuffix": " | Mike Cebulski",
+    "description": "Technical consulting, marketing websites, and automation support for Northern Michigan businesses that want modern systems with a human touch.",
+    "location": "Charlevoix, Michigan",
+    "coordinates": "45.3181° N, 85.2584° W"
+  },
+  "images": {
+    "hero": "/marketing/lighthouse.webp",
+    "office": "/marketing/modern-office.jpg",
+    "dataVisualization": "/marketing/data-visualization.jpg",
+    "profile": "/marketing/me-full.jpg"
+  },
+  "contact": {
+    "email": "me@mikecebul.com",
+    "phone": "(231) 373-6341",
+    "phoneHref": "12313736341",
+    "location": "Charlevoix, MI",
+    "inquiryTypes": [
+      "Marketing website",
+      "Hybrid meeting solution",
+      "AI & automation consulting",
+      "General question"
+    ]
+  },
+  "socialLinks": [
+    {
+      "label": "X",
+      "href": "https://x.com/MikeCebul"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/mikecebul/"
+    }
+  ],
+  "headerNav": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "Services",
+      "href": "/services"
+    },
+    {
+      "label": "About",
+      "href": "/about"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ],
+  "footer": {
+    "description": "Independent technical consulting for business websites, hybrid meeting systems, and automation in Northern Michigan.",
+    "servicesLinks": [
+      {
+        "label": "Overview",
+        "href": "/services"
+      },
+      {
+        "label": "Business Websites",
+        "href": "/case-studies/websites"
+      },
+      {
+        "label": "Hybrid Meeting Solutions",
+        "href": "/case-studies/hybrid-meeting-solutions"
+      }
+    ],
+    "companyLinks": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "About",
+        "href": "/about"
+      },
+      {
+        "label": "Contact",
+        "href": "/contact"
+      }
+    ]
+  },
+  "seo": {
+    "defaultOgImage": "/marketing/login-og.jpg",
+    "home": {
+      "title": "Mike Cebulski | Northern Michigan Technical Consulting",
+      "description": "Technical consulting, marketing websites, and automation support for Northern Michigan businesses that want modern systems with a human touch.",
+      "keywords": [
+        "northern michigan technical consulting",
+        "charlevoix web design",
+        "small business automation",
+        "hybrid meeting systems",
+        "mike cebulski"
+      ]
+    },
+    "services": {
+      "title": "Services | Mike Cebulski",
+      "description": "Consulting, websites, and hybrid meeting systems for Northern Michigan businesses that need practical technical execution.",
+      "keywords": [
+        "technical consulting services",
+        "business website development",
+        "ai automation consulting",
+        "hybrid meeting solutions",
+        "northern michigan consultant"
+      ]
+    },
+    "about": {
+      "title": "About | Mike Cebulski",
+      "description": "Learn more about Mike Cebulski's approach to websites, hybrid meeting systems, and practical technical execution in Northern Michigan.",
+      "keywords": [
+        "about mike cebulski",
+        "charlevoix technology consultant",
+        "northern michigan web consultant",
+        "local technical partner",
+        "website and automation specialist"
+      ]
+    },
+    "contact": {
+      "title": "Contact | Mike Cebulski",
+      "description": "Get in touch about marketing websites, hybrid meeting solutions, and AI automation consulting.",
+      "keywords": [
+        "contact mike cebulski",
+        "charlevoix web consultant contact",
+        "automation consulting inquiry",
+        "hybrid meeting consultation",
+        "website project inquiry"
+      ]
+    },
+    "blogIndex": {
+      "title": "Blog | Mike Cebulski",
+      "description": "Insights on modern web systems, hybrid meeting spaces, and practical automation for small businesses and local teams.",
+      "keywords": [
+        "technical consulting blog",
+        "website strategy insights",
+        "small business automation blog",
+        "hybrid meeting tips",
+        "mike cebulski blog"
+      ]
+    },
+    "caseStudies": {
+      "hybridMeetingSolutions": {
+        "title": "Hybrid Meeting Solutions Case Study | Mike Cebulski",
+        "description": "A case study in designing a hybrid meeting environment that feels professional, clear, and dependable.",
+        "keywords": [
+          "hybrid meeting case study",
+          "boardroom av consultant",
+          "conference room technology project",
+          "remote meeting system design",
+          "hybrid collaboration solution"
+        ]
+      },
+      "websites": {
+        "title": "Website Case Study | Mike Cebulski",
+        "description": "A case study in building a website system that improves clarity, credibility, and ongoing maintainability.",
+        "keywords": [
+          "website case study",
+          "small business website portfolio",
+          "marketing website consultant",
+          "next.js website case study",
+          "northern michigan website project"
+        ]
+      }
+    }
+  },
+  "home": {
+    "eyebrow": "Independent technology services",
+    "headline": "Elevate Your Business with Modern Tech.",
+    "highlight": "Business",
+    "body": "Mike Cebulski provides hands-on technical services across web systems, automation, AV, and hardware integration for businesses throughout Northern Michigan.",
+    "heroCaptionEyebrow": "Serving Northern Michigan",
+    "heroCaptionTitle": "Hands-on support for regional businesses.",
+    "backgroundTitle": "Technical Mind. Strategic Vision.",
+    "backgroundBody": [
+      "Based in Charlevoix the Beautiful, I help businesses turn overwhelming tech challenges into simple, reliable systems. My approach is user experience first, so the complexity stays behind the scenes and the tools feel natural to use.",
+      "Over the years, I’ve earned trust across our community, supporting local nonprofits and working with courts across Michigan. Alongside my technical work, I’m also a certified counselor at BASES here in Charlevoix, which deepened my passion for helping people and improving how teams work.",
+      "Whether I’m building a custom website or designing an automated hybrid meeting room, the goal stays the same: dependable solutions that reduce friction and make everyday work feel smoother, easier, and more intentional."
+    ]
+  },
+  "servicesIntro": {
+    "eyebrow": "Services",
+    "title": "Clear systems. Local support.",
+    "body": "I help local businesses navigate the digital landscape with automation, modern and captivating websites, and seamless hybrid meeting solutions."
+  },
+  "services": [
+    {
+      "eyebrow": "Consulting",
+      "headline": "AI & automation consulting",
+      "title": "Automation that respects how your team actually works.",
+      "description": "Operational consulting for teams that need a practical path from manual work to repeatable systems.",
+      "price": "$285",
+      "priceSuffix": "/day",
+      "bullets": [
+        "Discovery workshops",
+        "System mapping",
+        "AI adoption planning"
+      ],
+      "ctaLabel": "Inquire for Dates",
+      "ctaHref": "/contact"
+    },
+    {
+      "eyebrow": "Websites",
+      "headline": "Business websites",
+      "title": "A sharper digital presence to stand out from the rest.",
+      "description": "Websites built around business-specific logic, reliable integrations, and polished delivery.",
+      "price": "$2400",
+      "priceSuffix": "setup",
+      "priceDetail": {
+        "amount": "+$100/mo",
+        "label": "hosting, analytics + unlimited edits"
+      },
+      "featured": true,
+      "bullets": [
+        "Error monitoring + viewer analytics",
+        "Portable deployment",
+        "Fast AI-assisted delivery"
+      ],
+      "ctaLabel": "View Portfolio",
+      "ctaHref": "/case-studies/websites"
+    },
+    {
+      "eyebrow": "AV Systems",
+      "headline": "Hybrid meeting solutions",
+      "title": "Boardrooms and studios built for calm, confident collaboration.",
+      "description": "Hybrid meeting environments that help in-room and remote participants feel equally present and heard.",
+      "price": "$3200",
+      "priceSuffix": "setup",
+      "priceDetail": {
+        "amount": "+$100/mo",
+        "label": "device management"
+      },
+      "bullets": [
+        "Room planning",
+        "AV integration",
+        "Support documentation"
+      ],
+      "ctaLabel": "Consult on Hardware",
+      "ctaHref": "/case-studies/hybrid-meeting-solutions"
+    }
+  ],
+  "servicePrinciples": [
+    {
+      "title": "Practical by default",
+      "body": "Work is scoped around real operational constraints, not trendy tooling checklists."
+    },
+    {
+      "title": "One system, not silos",
+      "body": "The design, copy, and implementation all reinforce the same business story."
+    },
+    {
+      "title": "Built for longevity",
+      "body": "Every deliverable is meant to keep working after launch, not collapse into maintenance debt."
+    }
+  ],
+  "about": {
+    "eyebrow": "About Mike",
+    "heading": {
+      "lineOne": "Bridging the gap between",
+      "accentGold": "ambition",
+      "middle": "and",
+      "accentSky": "infrastructure."
+    },
+    "body": "I build the systems around the work, websites that communicate clearly, spaces that support collaboration, and automation that makes the day-to-day feel less wasteful.",
+    "stats": [
+      {
+        "label": "Home base",
+        "value": "Charlevoix, Michigan"
+      },
+      {
+        "label": "Working style",
+        "value": "Direct and detail-minded"
+      }
+    ]
+  },
+  "aboutHighlights": [
+    {
+      "title": "Technical range",
+      "body": "My work brings together elegant design, thoughtful user experience, software development, and hardware management."
+    },
+    {
+      "title": "Local perspective",
+      "body": "I want to bring modern technical expertise to Northern Michigan in a way that still feels personal, grounded, and local."
+    },
+    {
+      "title": "Long-term thinking",
+      "body": "Projects are designed to feel polished on day one and manageable six months later."
+    }
+  ],
+  "processSteps": [
+    {
+      "number": "01",
+      "title": "Discover",
+      "body": "We map the business problem, the friction points, and the desired outcome before touching implementation."
+    },
+    {
+      "number": "02",
+      "title": "Design",
+      "body": "Information architecture, content direction, and interface hierarchy are shaped around clarity and trust."
+    },
+    {
+      "number": "03",
+      "title": "Build",
+      "body": "Delivery stays lightweight and modern, with systems that can be maintained without ceremony."
+    },
+    {
+      "number": "04",
+      "title": "Refine",
+      "body": "The final pass focuses on polish, guidance, and the small details that make the result feel dependable."
+    }
+  ],
+  "contactPage": {
+    "eyebrow": "Get in Touch",
+    "title": "Let's build the right solution for your business.",
+    "detailsTitle": "Contact Details",
+    "formTitle": "Tell me about the project.",
+    "formBody": "Share enough context to outline the goal, the timeline, and the friction you want to solve."
+  },
+  "blogPage": {
+    "eyebrow": "Journal",
+    "title": "Latest insights and technical deep dives.",
+    "body": "A few notes on modern websites, calmer systems, and how to make new technology feel less chaotic inside real businesses.",
+    "newsletterEyebrow": "Newsletter",
+    "newsletterTitle": "Keep up with new notes and process writeups.",
+    "newsletterBody": "A lightweight field for now, styled from the design system and ready for a real newsletter integration later.",
+    "newsletterPlaceholder": "hello@company.com"
+  },
+  "caseStudies": [
+    {
+      "slug": "websites",
+      "eyebrow": "Website Case Study",
+      "navTitle": "Business websites",
+      "navDescription": "Strategy, design, and maintainable site systems.",
+      "title": "A website system that earns trust faster.",
+      "intro": "A website redesign focused on stronger messaging, calmer structure, and implementation choices that stay easy to maintain.",
+      "challenge": "The client needed a website that communicated authority, loaded quickly, and gave them a structure they could keep fresh without a redesign every quarter.",
+      "solution": "The solution paired a tighter content structure with performance-minded implementation so the site felt more premium without becoming harder to update.",
+      "role": "Strategy, UX direction, interface design, implementation",
+      "ctaHeading": "Need a sharper web presence?",
+      "ctaBody": "If your website is underselling the quality of your work, we can reshape the story, structure, and execution into something that earns trust faster.",
+      "metrics": [
+        {
+          "label": "Project type",
+          "value": "Marketing website"
+        },
+        {
+          "label": "Primary focus",
+          "value": "Clarity + maintainability"
+        },
+        {
+          "label": "Outcome",
+          "value": "Stronger narrative flow"
+        }
+      ],
+      "summary": [
+        {
+          "title": "Context",
+          "body": "The site needed to signal quality quickly while still being manageable for ongoing updates."
+        },
+        {
+          "title": "Approach",
+          "body": "The messaging, visual hierarchy, and implementation choices were aligned into one calmer system."
+        },
+        {
+          "title": "Impact",
+          "body": "The finished site improved trust, sharpened the story, and removed maintenance friction."
+        }
+      ],
+      "results": [
+        "Turned scattered messaging into a clearer decision path.",
+        "Improved perceived quality through stronger hierarchy and implementation polish.",
+        "Delivered a structure that remains easy to update as the business evolves."
+      ],
+      "gallery": [
+        {
+          "title": "Sharper narrative",
+          "body": "A stronger visual hierarchy turned scattered messaging into a page flow that guided visitors from context to action.",
+          "imageSrc": "/marketing/data-visualization.jpg",
+          "imageAlt": "Data visualization image"
+        },
+        {
+          "title": "Premium, not bloated",
+          "body": "Performance-minded implementation kept the experience feeling premium without bloated frontend decisions.",
+          "imageSrc": "/marketing/modern-office.jpg",
+          "imageAlt": "Modern office interior"
+        },
+        {
+          "title": "Built to evolve",
+          "body": "The final system balanced presentation quality with a content structure that could stay useful over time.",
+          "imageSrc": "/marketing/lighthouse.webp",
+          "imageAlt": "Lighthouse by the water"
+        }
+      ]
+    },
+    {
+      "slug": "hybrid-meeting-solutions",
+      "eyebrow": "AV & Zoom Rooms",
+      "navTitle": "Hybrid meeting solutions",
+      "navDescription": "AV planning, Zoom Rooms, and practical room integration.",
+      "title": "Bridging the gap between ambition and infrastructure.",
+      "intro": "A hybrid meeting environment designed to feel executive-ready, quietly reliable, and easy for teams to operate without technical supervision.",
+      "challenge": "A leadership team needed their main boardroom to support executive meetings, remote collaboration, and client presentations without the usual cable chaos and inconsistent audio.",
+      "solution": "The solution centered on a Zoom Rooms-first experience with clearer device roles, stronger presentation flow, and room planning that balanced aesthetics with operational simplicity.",
+      "role": "Strategy, room planning, hardware guidance, integration direction",
+      "ctaHeading": "Ready to upgrade your workspace?",
+      "ctaBody": "If your meeting rooms need to feel more dependable, we can design the workflow before the next hardware purchase becomes expensive guesswork.",
+      "metrics": [
+        {
+          "label": "Room profile",
+          "value": "Executive boardroom"
+        },
+        {
+          "label": "Primary stack",
+          "value": "Zoom Rooms + AV control"
+        },
+        {
+          "label": "Outcome",
+          "value": "Faster, calmer meetings"
+        }
+      ],
+      "summary": [
+        {
+          "title": "Context",
+          "body": "The room needed to support leadership, clients, and hybrid attendees without technical babysitting."
+        },
+        {
+          "title": "Approach",
+          "body": "The system was designed around clarity: where people look, how they speak, and how quickly a meeting can start."
+        },
+        {
+          "title": "Impact",
+          "body": "The final setup felt composed and repeatable, with fewer awkward transitions between in-person and remote collaboration."
+        }
+      ],
+      "results": [
+        "Reduced setup friction at the start of meetings.",
+        "Improved audio and presentation consistency for remote participants.",
+        "Delivered a room that matched the professional standard of the organization using it."
+      ],
+      "gallery": [
+        {
+          "title": "Created hybrid hub",
+          "body": "A clean presentation wall and camera-ready room layout created a more professional experience for internal and client-facing calls.",
+          "imageSrc": "/marketing/modern-office.jpg",
+          "imageAlt": "Modern meeting space"
+        },
+        {
+          "title": "Simple control flow",
+          "body": "Control logic and equipment placement were organized around how the room is used, not just how the products are marketed.",
+          "imageSrc": "/marketing/lighthouse.webp",
+          "imageAlt": "Lighthouse at dusk"
+        },
+        {
+          "title": "Operational clarity",
+          "body": "Supporting documentation reduced support calls and made everyday room operation easier for non-technical staff.",
+          "imageSrc": "/marketing/data-visualization.jpg",
+          "imageAlt": "Data visualization"
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "eyebrow": "Next step",
+    "title": "Ready to solve your next challenge?",
+    "body": "Let's discuss how customized technical solutions can streamline your operations and drive growth.",
+    "buttonLabel": "Book a Free Consultation",
+    "buttonHref": "/contact"
+  }
+}

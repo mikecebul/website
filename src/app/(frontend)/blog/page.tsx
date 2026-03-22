@@ -1,5 +1,5 @@
 import configPromise from '@payload-config'
-import Container from '@/components/Container'
+import Link from 'next/link'
 import {
   Pagination,
   PaginationContent,
@@ -9,10 +9,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { formatDateTime } from '@/utilities/formatDateTime'
+import { MarketingBlogIntro, MarketingBlogNewsletterCard } from '@/components/marketing/marketing-pages'
+import { createMarketingMetadata } from '@/lib/marketing-metadata'
+import { websiteContent } from '@/lib/website-content'
+import { formatDateTime } from '@/lib/formatDateTime'
 import { getPayload } from 'payload'
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import type { Metadata } from 'next'
 
 const BLOGS_PER_PAGE = 10
 
@@ -40,6 +43,28 @@ const getPageHref = (page: number) => {
   if (page <= 1) return '/blog'
 
   return `/blog?page=${page}`
+}
+
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const { page } = await searchParams
+  const requestedPage = getRequestedPage(page)
+  const pathname = getPageHref(requestedPage)
+
+  if (requestedPage <= 1) {
+    return createMarketingMetadata({
+      description: websiteContent.seo.blogIndex.description,
+      keywords: websiteContent.seo.blogIndex.keywords,
+      pathname,
+      title: websiteContent.seo.blogIndex.title,
+    })
+  }
+
+  return createMarketingMetadata({
+    description: `Page ${requestedPage} of articles on websites, automation, and hybrid collaboration systems.`,
+    keywords: websiteContent.seo.blogIndex.keywords,
+    pathname,
+    title: `Blog Page ${requestedPage} | Mike Cebulski`,
+  })
 }
 
 const getPageItems = (currentPage: number, totalPages: number): PageItem[] => {
@@ -100,71 +125,106 @@ export default async function BlogIndexPage({ searchParams }: PageProps) {
   const pageItems = getPageItems(requestedPage, result.totalPages)
 
   return (
-    <Container className="py-16 md:py-20">
-      <div className="container mx-auto max-w-3xl">
-        <h1 className="pb-10 text-4xl font-bold tracking-tight md:text-5xl">Blog</h1>
-
-        {result.docs.length === 0 ? (
-          <p className="text-muted-foreground">No blog posts have been published yet.</p>
-        ) : (
-          <div className="space-y-8">
-            {result.docs.map((post) => {
+    <main className="pt-8 pb-24 sm:pt-10 lg:pt-14 lg:pb-32">
+      <MarketingBlogIntro />
+      <section className="mx-auto mt-16 grid max-w-[1220px] gap-6 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] lg:px-12">
+        <div className="space-y-6">
+          {result.docs.length === 0 ? (
+            <article className="overflow-hidden rounded-[34px] border border-white/8 bg-[rgba(19,27,46,0.85)] p-8 shadow-[0_26px_70px_rgba(0,0,0,0.3)]">
+              <p className="text-muted-foreground">No blog posts have been published yet.</p>
+            </article>
+          ) : (
+            result.docs.map((post, index) => {
               if (!post.slug) return null
 
               const publishedAt = post.firstPublishedAt || post.createdAt
+              const articleClassName =
+                index === 0
+                  ? 'overflow-hidden rounded-[34px] border border-white/8 bg-[rgba(19,27,46,0.85)] shadow-[0_26px_70px_rgba(0,0,0,0.3)]'
+                  : 'grid gap-4 rounded-[28px] border border-white/8 bg-[rgba(19,27,46,0.85)] p-5'
 
               return (
-                <article key={post.id} className="border-border border-b pb-6">
-                  <p className="text-muted-foreground text-sm">
-                    {publishedAt ? formatDateTime(publishedAt) : ''}
-                  </p>
-                  <h2 className="pt-2 text-2xl font-semibold tracking-tight">
-                    <Link className="hover:underline" href={`/blog/${post.slug}`}>
-                      {post.title}
-                    </Link>
-                  </h2>
+                <article key={post.id} className={articleClassName}>
+                  {index === 0 ? (
+                    <>
+                      <img
+                        alt={post.title}
+                        className="h-[320px] w-full object-cover"
+                        src={websiteContent.images.dataVisualization}
+                      />
+                      <div className="p-8">
+                        {publishedAt ? (
+                          <p className="text-sm uppercase tracking-[0.28em] text-(--marketing-sky)">
+                            {formatDateTime(publishedAt)}
+                          </p>
+                        ) : null}
+                        <h2 className="mt-3 max-w-2xl font-heading text-4xl tracking-[-0.06em] text-(--marketing-heading)">
+                          <Link className="transition-colors hover:text-(--marketing-gold)" href={`/blog/${post.slug}`}>
+                            {post.title}
+                          </Link>
+                        </h2>
+                      </div>
+                    </>
+                  ) : (
+                    <div>
+                      {publishedAt ? (
+                        <p className="text-xs uppercase tracking-[0.28em] text-(--marketing-gold)">
+                          {formatDateTime(publishedAt)}
+                        </p>
+                      ) : null}
+                      <h3 className="mt-3 font-heading text-2xl tracking-[-0.04em] text-(--marketing-heading)">
+                        <Link className="transition-colors hover:text-(--marketing-gold)" href={`/blog/${post.slug}`}>
+                          {post.title}
+                        </Link>
+                      </h3>
+                    </div>
+                  )}
                 </article>
               )
-            })}
-          </div>
-        )}
+            })
+          )}
 
-        {result.totalDocs > BLOGS_PER_PAGE ? (
-          <Pagination className="pt-10">
-            <PaginationContent>
-              {result.hasPrevPage && result.prevPage ? (
-                <PaginationItem>
-                  <PaginationPrevious href={getPageHref(result.prevPage)} />
-                </PaginationItem>
-              ) : null}
+          {result.totalDocs > BLOGS_PER_PAGE ? (
+            <Pagination className="pt-6">
+              <PaginationContent>
+                {result.hasPrevPage && result.prevPage ? (
+                  <PaginationItem>
+                    <PaginationPrevious href={getPageHref(result.prevPage)} />
+                  </PaginationItem>
+                ) : null}
 
-              {pageItems.map((item, index) => {
-                if (item === 'ellipsis') {
+                {pageItems.map((item, index) => {
+                  if (item === 'ellipsis') {
+                    return (
+                      <PaginationItem key={`ellipsis-${index}`}>
+                        <PaginationEllipsis />
+                      </PaginationItem>
+                    )
+                  }
+
                   return (
-                    <PaginationItem key={`ellipsis-${index}`}>
-                      <PaginationEllipsis />
+                    <PaginationItem key={item}>
+                      <PaginationLink href={getPageHref(item)} isActive={item === requestedPage}>
+                        {item}
+                      </PaginationLink>
                     </PaginationItem>
                   )
-                }
+                })}
 
-                return (
-                  <PaginationItem key={item}>
-                    <PaginationLink href={getPageHref(item)} isActive={item === requestedPage}>
-                      {item}
-                    </PaginationLink>
+                {result.hasNextPage && result.nextPage ? (
+                  <PaginationItem>
+                    <PaginationNext href={getPageHref(result.nextPage)} />
                   </PaginationItem>
-                )
-              })}
+                ) : null}
+              </PaginationContent>
+            </Pagination>
+          ) : null}
+        </div>
 
-              {result.hasNextPage && result.nextPage ? (
-                <PaginationItem>
-                  <PaginationNext href={getPageHref(result.nextPage)} />
-                </PaginationItem>
-              ) : null}
-            </PaginationContent>
-          </Pagination>
-        ) : null}
-      </div>
-    </Container>
+        <div className="grid gap-6">
+          <MarketingBlogNewsletterCard />
+        </div>
+      </section>
+    </main>
   )
 }
