@@ -49,6 +49,15 @@ export default buildConfig({
         Logo: '@/graphics/Logo',
       },
       views: {
+        createFirstUser: {
+          Component: '@/components/views/CreateFirstUser',
+        },
+        forgot: {
+          Component: '@/components/views/ForgotPassword',
+        },
+        reset: {
+          Component: '@/components/views/ResetPassword',
+        },
         login: {
           Component: '@/components/views/Login',
         },

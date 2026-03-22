@@ -20,6 +20,9 @@ import { default as default_d3e265f969641a4ccf3d5a195904e268 } from '@/graphics/
 import { default as default_95a1304f99d4385400076a6aaa04a867 } from '@/components/afterNavLinks/LinkToAnalyticsDefaultRootView'
 import { AdminErrorBoundary as AdminErrorBoundary_e5a9e14bdbe97e70ba60697217fe7688 } from '@payloadcms/plugin-sentry/client'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
+import { default as default_1bc09b09ddbde6da5325df5ef57bc08b } from '@/components/views/CreateFirstUser'
+import { default as default_0b2a8c670dbc10931cbc057997240b7d } from '@/components/views/ForgotPassword'
+import { default as default_bea4aefe3a7b522805b2a65edd081959 } from '@/components/views/ResetPassword'
 import { default as default_0d92185e6b7ad2795138f832628d9901 } from '@/components/views/Login'
 import { default as default_562672c6d49401890858663241518d7e } from '@/components/views/Analytics'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
@@ -47,6 +50,9 @@ export const importMap = {
   "@/components/afterNavLinks/LinkToAnalyticsDefaultRootView#default": default_95a1304f99d4385400076a6aaa04a867,
   "@payloadcms/plugin-sentry/client#AdminErrorBoundary": AdminErrorBoundary_e5a9e14bdbe97e70ba60697217fe7688,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
+  "@/components/views/CreateFirstUser#default": default_1bc09b09ddbde6da5325df5ef57bc08b,
+  "@/components/views/ForgotPassword#default": default_0b2a8c670dbc10931cbc057997240b7d,
+  "@/components/views/ResetPassword#default": default_bea4aefe3a7b522805b2a65edd081959,
   "@/components/views/Login#default": default_0d92185e6b7ad2795138f832628d9901,
   "@/components/views/Analytics#default": default_562672c6d49401890858663241518d7e,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1

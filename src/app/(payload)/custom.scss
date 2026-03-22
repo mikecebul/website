@@ -1,13 +1,19 @@
 @import "./payload.css";
 
-.template-minimal.login {
+.template-minimal.login,
+.template-minimal.forgot-password,
+.template-minimal.reset-password,
+.template-minimal.createFirstUser {
   padding: 0;
   height: 100dvh;
   min-height: 100dvh;
   align-items: stretch;
 }
 
-.template-minimal.login .template-minimal__wrap {
+.template-minimal.login .template-minimal__wrap,
+.template-minimal.forgot-password .template-minimal__wrap,
+.template-minimal.reset-password .template-minimal__wrap,
+.template-minimal.createFirstUser .template-minimal__wrap {
   width: 100%;
   max-width: none;
   height: 100dvh;

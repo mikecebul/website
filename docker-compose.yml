@@ -1,35 +1,10 @@
-version: '3'
+name: mikecebul-website
 
 services:
-  app:
-    image: mikecebul/website:latest
-    ports:
-      - '3000:3000'
-    environment:
-      # Runtime environment variables - add these to Dokploy
-      - NEXT_PUBLIC_IS_LIVE=${NEXT_PUBLIC_IS_LIVE}
-      - NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
-      - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
-      - NEXT_PUBLIC_UPLOAD_PREFIX=${NEXT_PUBLIC_UPLOAD_PREFIX}
-      - NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN}
-      - DATABASE_URI=${DATABASE_URI}
-      - PAYLOAD_SECRET=${PAYLOAD_SECRET}
-      - RESEND_API_KEY=${RESEND_API_KEY}
-      - CONTACT_TO_EMAIL=${CONTACT_TO_EMAIL}
-      - S3_ACCESS_KEY_ID=${S3_ACCESS_KEY_ID}
-      - S3_SECRET_ACCESS_KEY=${S3_SECRET_ACCESS_KEY}
-      - S3_REGION=${S3_REGION}
-      - S3_ENDPOINT=${S3_ENDPOINT}
-      - S3_BUCKET=${S3_BUCKET}
-      - NEXT_PUBLIC_S3_HOSTNAME=${NEXT_PUBLIC_S3_HOSTNAME}
-      - UNSPLASH_ACCESS_KEY=${UNSPLASH_ACCESS_KEY}
-      - PREVIEW_SECRET=${PREVIEW_SECRET}
-    restart: unless-stopped
-
   mongo:
     image: mongo:latest
     ports:
-      - '27018:27017'
+      - '${MONGO_PORT:-27018}:27017'
     command:
       - --storageEngine=wiredTiger
     volumes:
@@ -39,13 +14,12 @@ services:
 
   mailpit:
     image: axllent/mailpit
-    container_name: mailpit
-    restart: unless-stopped
+    restart: 'no'
     volumes:
       - mailpit_data:/data
     ports:
-      - '8025:8025'
-      - '1025:1025'
+      - '${MAILPIT_UI_PORT:-8025}:8025'
+      - '${MAILPIT_SMTP_PORT:-1025}:1025'
     environment:
       MP_MAX_MESSAGES: 5000
       MP_DATABASE: /data/mailpit.db
