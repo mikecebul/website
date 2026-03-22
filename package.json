@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--no-deprecation payload migrate && next build",
-    "postbuild": "next-sitemap --config next-sitemap.config.cjs",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && pnpm start",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
@@ -78,7 +77,7 @@
     "@types/react": "19.2.13",
     "@types/react-dom": "19.2.3",
     "copyfiles": "^2.4.1",
-    "eslint": "10.0.0",
+    "eslint": "9.22.0",
     "eslint-config-next": "16.1.6",
     "postcss": "^8.5.6",
     "prettier": "^3.8.1",

@@ -652,7 +652,7 @@ function MarketingLocalRootsSection() {
         <MarketingEyebrow>Community</MarketingEyebrow>
         <h2 className="font-heading text-3xl tracking-[-0.05em] sm:text-4xl">Local Roots, Global Impact.</h2>
         <p className="max-w-2xl text-base leading-8 text-(--marketing-copy)">
-          Being based in Charlevoix isn't just about the scenery. It's about the values of a tight-knit
+          Being based in Charlevoix isn&apos;t just about the scenery. It&apos;s about the values of a tight-knit
           community: accountability, personal follow-through, and work that still matters after the
           presentation is over.
         </p>

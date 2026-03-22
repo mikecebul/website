@@ -8,6 +8,7 @@ import * as Sentry from '@sentry/nextjs'
 import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
 import { S3_PLUGIN_CONFIG } from './plugins/s3'
 import {
+  BlocksFeature,
   ParagraphFeature,
   BoldFeature,
   FixedToolbarFeature,
@@ -79,6 +80,9 @@ export default buildConfig({
         ItalicFeature(),
         UnorderedListFeature(),
         OrderedListFeature(),
+        BlocksFeature({
+          blocks: [MediaBlock, Code],
+        }),
         LinkFeature({
           enabledCollections: ['blogs'],
           fields: ({ defaultFields }) => {
