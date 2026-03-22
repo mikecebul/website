@@ -9,7 +9,10 @@ type ShadcnWrapperProps = {
 
 export default function ShadcnWrapper({ children, className = '' }: ShadcnWrapperProps) {
   return (
-    <div data-twp className={cn('text-foreground border-border outline-ring/50 pb-8', className)}>
+    <div
+      data-twp
+      className={cn('border-border text-foreground outline-ring/50 bg-transparent pb-8', className)}
+    >
       {children}
     </div>
   )

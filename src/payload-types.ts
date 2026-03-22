@@ -95,6 +95,7 @@ export interface Config {
   globalsSelect: {};
   locale: null;
   widgets: {
+    'umami-traffic': UmamiTrafficWidget;
     collections: CollectionsWidget;
   };
   user: User;
@@ -460,6 +461,16 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "umami-traffic_widget".
+ */
+export interface UmamiTrafficWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'medium' | 'large' | 'x-large' | 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

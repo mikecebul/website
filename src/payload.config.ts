@@ -43,6 +43,7 @@ export default buildConfig({
   admin: {
     avatar: 'default',
     components: {
+      beforeDashboard: ['@/components/dashboard/AdminWelcome'],
       afterNavLinks: ['@/components/afterNavLinks/LinkToAnalyticsDefaultRootView'],
       graphics: {
         Icon: '@/graphics/Icon',
@@ -69,6 +70,23 @@ export default buildConfig({
     },
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    dashboard: {
+      defaultLayout: [
+        {
+          widgetSlug: 'umami-traffic',
+          width: 'full',
+        },
+      ],
+      widgets: [
+        {
+          Component: '@/components/dashboard/UmamiTrafficWidget',
+          label: 'Traffic overview',
+          maxWidth: 'full',
+          minWidth: 'medium',
+          slug: 'umami-traffic',
+        },
+      ],
     },
     meta: {
       icons: [{ url: '/favicon.ico' }],
