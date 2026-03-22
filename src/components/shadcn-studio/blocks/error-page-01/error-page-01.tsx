@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
@@ -31,10 +32,13 @@ const ErrorPage01 = ({ fullscreen = false }: { fullscreen?: boolean }) => {
 
       <div className="relative max-h-screen w-full p-2 max-lg:hidden">
         <div className="h-full w-full rounded-[28px] border border-white/8 bg-(--marketing-panel)"></div>
-        <img
-          src="https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/error/image-1.png"
+        <Image
           alt="404 illustration"
-          className="absolute top-1/2 left-1/2 h-[clamp(260px,25vw,406px)] -translate-x-1/2 -translate-y-1/2"
+          className="absolute top-1/2 left-1/2 h-[clamp(260px,25vw,406px)] w-auto -translate-x-1/2 -translate-y-1/2"
+          src="https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/error/image-1.png"
+          width={406}
+          height={406}
+          sizes="406px"
         />
       </div>
     </section>

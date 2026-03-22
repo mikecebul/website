@@ -12,7 +12,7 @@ export const Contacts: CollectionConfig = {
     update: editorOrHigher,
   },
   admin: {
-    defaultColumns: ['name', 'email', 'inquiryType', 'createdAt'],
+    defaultColumns: ['name', 'email', 'phone', 'inquiryType', 'createdAt'],
     group: 'Admin',
     hideAPIURL: !superAdmin,
     useAsTitle: 'name',
@@ -26,6 +26,11 @@ export const Contacts: CollectionConfig = {
     {
       name: 'email',
       type: 'email',
+      required: true,
+    },
+    {
+      name: 'phone',
+      type: 'text',
       required: true,
     },
     {

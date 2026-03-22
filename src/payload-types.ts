@@ -234,6 +234,7 @@ export interface Contact {
   id: string;
   name: string;
   email: string;
+  phone: string;
   inquiryType: string;
   message: string;
   updatedAt: string;
@@ -414,6 +415,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface ContactsSelect<T extends boolean = true> {
   name?: T;
   email?: T;
+  phone?: T;
   inquiryType?: T;
   message?: T;
   updatedAt?: T;

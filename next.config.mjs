@@ -17,6 +17,7 @@ const nextConfig = {
         'https://mikecebul.com',
         'https://www.mikecebul.com',
         'https://media.mikecebul.com',
+        'https://cdn.shadcnstudio.com',
       ].map((item) => {
         const url = new URL(item)
         return {

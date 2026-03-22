@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { contactFormSchema } from '@/lib/contact'
+import { contactFormSchema, formatPhoneNumber } from '@/lib/contact'
 import { websiteContent } from '@/lib/website-content'
 import { normalizeFieldErrors } from '@/forms/field-components/normalize-field-errors'
 
@@ -30,6 +30,7 @@ export function MarketingContactForm() {
       inquiryType: '',
       message: '',
       name: '',
+      phone: '',
     },
     validators: {
       onSubmit: contactFormSchema,
@@ -135,6 +136,40 @@ export function MarketingContactForm() {
             }}
           </form.Field>
         </div>
+
+        <form.Field name="phone">
+          {(field) => {
+            const normalizedErrors = normalizeFieldErrors(field.state.meta.errors as unknown[])
+            const isInvalid =
+              (field.state.meta.isTouched || form.state.submissionAttempts > 0) &&
+              !field.state.meta.isValid
+
+            return (
+              <Field data-invalid={isInvalid || undefined}>
+                <FieldLabel htmlFor="contact-phone">Phone Number</FieldLabel>
+                <Input
+                  id="contact-phone"
+                  name={field.name}
+                  type="tel"
+                  value={field.state.value}
+                  onBlur={() => {
+                    field.handleChange(formatPhoneNumber(field.state.value))
+                    field.handleBlur()
+                  }}
+                  onChange={(event) => {
+                    setSubmissionError(undefined)
+                    field.handleChange(event.target.value)
+                  }}
+                  autoComplete="tel"
+                  aria-invalid={isInvalid}
+                  className="h-12 rounded-2xl border-white/10 bg-white/3 px-4 text-base text-(--marketing-heading) placeholder:text-(--marketing-copy-soft)"
+                  placeholder="(555) 123-4567"
+                />
+                {isInvalid ? <FieldError errors={normalizedErrors} /> : null}
+              </Field>
+            )
+          }}
+        </form.Field>
 
         <form.Field name="inquiryType">
           {(field) => {

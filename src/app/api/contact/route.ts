@@ -14,17 +14,12 @@ const escapeHtml = (value: string) =>
     .replaceAll("'", '&#39;')
 
 export async function POST(request: Request) {
+  let payload: Awaited<ReturnType<typeof getPayload>> | undefined
+
   try {
     const json = await request.json()
     const data = contactFormSchema.parse(json)
-
-    const payload = await getPayload({ config: configPromise })
-
-    await payload.create({
-      collection: 'contacts',
-      data,
-    })
-
+    payload = await getPayload({ config: configPromise })
     const to = process.env.CONTACT_TO_EMAIL
 
     if (!to) {
@@ -35,6 +30,20 @@ export async function POST(request: Request) {
       )
     }
 
+    if (process.env.NODE_ENV === 'production' && !process.env.RESEND_API_KEY) {
+      payload.logger.error('Missing RESEND_API_KEY for production contact submission delivery.')
+      return NextResponse.json(
+        { error: 'Contact email delivery is not configured yet.' },
+        { status: 500 },
+      )
+    }
+
+    await payload.create({
+      collection: 'contacts',
+      data,
+      overrideAccess: true,
+    })
+
     const subject = `New contact inquiry: ${data.inquiryType} from ${data.name}`
     const companyName = websiteContent.site.name
     const html = `
@@ -43,6 +52,7 @@ export async function POST(request: Request) {
           <h1 style="font-size:24px;line-height:1.3;margin:0 0 20px;">New Contact Form Submission</h1>
           <p style="margin:0 0 12px;"><strong style="color:#c7a157;">Name:</strong> ${escapeHtml(data.name)}</p>
           <p style="margin:0 0 12px;"><strong style="color:#c7a157;">Email:</strong> ${escapeHtml(data.email)}</p>
+          <p style="margin:0 0 12px;"><strong style="color:#c7a157;">Phone:</strong> ${escapeHtml(data.phone)}</p>
           <p style="margin:0 0 12px;"><strong style="color:#c7a157;">Inquiry Type:</strong> ${escapeHtml(data.inquiryType)}</p>
           <p style="margin:20px 0 8px;"><strong style="color:#c7a157;">Message:</strong></p>
           <p style="white-space:pre-line;margin:0;">${escapeHtml(data.message)}</p>
@@ -59,6 +69,7 @@ export async function POST(request: Request) {
         `${companyName} contact form submission`,
         `Name: ${data.name}`,
         `Email: ${data.email}`,
+        `Phone: ${data.phone}`,
         `Inquiry Type: ${data.inquiryType}`,
         '',
         data.message,
@@ -73,6 +84,11 @@ export async function POST(request: Request) {
     if (error instanceof Error && 'issues' in error) {
       return NextResponse.json({ error: 'Please check the form fields and try again.' }, { status: 400 })
     }
+
+    payload?.logger.error({
+      err: error,
+      msg: 'Contact form submission failed.',
+    })
 
     return NextResponse.json(
       { error: 'We could not send your inquiry right now. Please try again shortly.' },

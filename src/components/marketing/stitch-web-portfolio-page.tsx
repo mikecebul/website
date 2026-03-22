@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   ArrowRight,
@@ -28,8 +29,8 @@ type PortfolioProject =
       eyebrow: string
       features?: PortfolioFeature[]
       href: string
-      imageAlt?: string
-      imageSrc?: string
+      imageAlt: string
+      imageSrc: string
       name: string
       orientation: 'image-left' | 'image-right'
       type: 'image'
@@ -181,10 +182,13 @@ export function StitchWebPortfolioPage() {
 
           const media = (
             <div className="overflow-hidden rounded-[22px] border border-white/8 bg-(--marketing-panel) shadow-[0_24px_70px_rgba(0,0,0,0.28)]">
-              <img
+              <Image
                 alt={project.imageAlt}
                 className="aspect-video w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
                 src={project.imageSrc}
+                width={1600}
+                height={900}
+                sizes="(min-width: 1024px) 60vw, 100vw"
               />
             </div>
           )
@@ -345,10 +349,13 @@ function JuniorGolfPortfolioSection({
   return (
     <section className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
       <div className="lg:col-span-7 overflow-hidden rounded-[22px] border border-white/8 bg-(--marketing-panel) shadow-[0_24px_70px_rgba(0,0,0,0.28)]">
-        <img
+        <Image
           alt={project.imageAlt}
           className="aspect-video w-full object-cover object-top transition-transform duration-700 hover:scale-[1.02]"
           src={project.imageSrc}
+          width={1600}
+          height={900}
+          sizes="(min-width: 1024px) 60vw, 100vw"
         />
       </div>
 

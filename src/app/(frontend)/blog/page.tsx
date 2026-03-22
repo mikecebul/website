@@ -1,5 +1,6 @@
 import configPromise from '@payload-config'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   Pagination,
   PaginationContent,
@@ -147,10 +148,13 @@ export default async function BlogIndexPage({ searchParams }: PageProps) {
                 <article key={post.id} className={articleClassName}>
                   {index === 0 ? (
                     <>
-                      <img
+                      <Image
                         alt={post.title}
                         className="h-[320px] w-full object-cover"
                         src={websiteContent.images.dataVisualization}
+                        width={1600}
+                        height={1200}
+                        sizes="(min-width: 1024px) 60vw, 100vw"
                       />
                       <div className="p-8">
                         {publishedAt ? (
