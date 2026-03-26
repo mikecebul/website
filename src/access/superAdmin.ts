@@ -4,5 +4,6 @@ import { User } from '@/payload-types'
 
 export const superAdmin = ({ req: { user } }: AccessArgs<User>) => {
   if (!user) return false
+
   return checkRole('superAdmin', user)
 }

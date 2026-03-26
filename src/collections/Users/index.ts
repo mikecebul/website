@@ -127,7 +127,12 @@ const Users: CollectionConfig = {
             revalidatePath('/(payload)', 'layout'),
         ],
       },
-      validate: async (val, { req: { user, payload } }) => {
+      validate: async (val, options) => {
+        const {
+          previousValue,
+          req: { user, payload },
+        } = options
+
         if (!user) {
           const users = await payload.find({
             collection: 'users',
@@ -136,7 +141,22 @@ const Users: CollectionConfig = {
           if (users.totalDocs === 0) return true
         }
 
-        if (user?.role !== 'superAdmin' && val === 'superAdmin')
+        const superAdmins = await payload.find({
+          collection: 'users',
+          depth: 0,
+          limit: 0,
+          where: {
+            role: {
+              equals: 'superAdmin',
+            },
+          },
+        })
+
+        if (previousValue === 'superAdmin' && val !== 'superAdmin' && superAdmins.totalDocs <= 1) {
+          return 'There must always be at least one super admin'
+        }
+
+        if (user?.role !== 'superAdmin' && val === 'superAdmin' && superAdmins.totalDocs > 0)
           return 'Admins cannot create super admins'
         if (user?.role === 'editor') return 'Editors cannot update roles'
         return true
