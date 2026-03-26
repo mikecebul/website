@@ -29,7 +29,10 @@ import type { UmamiTrendPoint } from "@/lib/umami"
 
 const chartConfig = {
   pageviews: {
-    color: "var(--marketing-gold)",
+    theme: {
+      dark: "var(--marketing-gold)",
+      light: "var(--admin-shell-accent-strong)",
+    },
     label: "Pageviews",
   },
   sessions: {

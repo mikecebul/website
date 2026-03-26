@@ -44,11 +44,11 @@ export default buildConfig({
     avatar: 'default',
     components: {
       beforeDashboard: ['@/components/dashboard/AdminWelcome'],
-      afterNavLinks: ['@/components/afterNavLinks/LinkToAnalyticsDefaultRootView'],
       graphics: {
         Icon: '@/graphics/Icon',
         Logo: '@/graphics/Logo',
       },
+      settingsMenu: ['@/components/settingsMenu/AdminQuickLinks'],
       views: {
         createFirstUser: {
           Component: '@/components/views/CreateFirstUser',

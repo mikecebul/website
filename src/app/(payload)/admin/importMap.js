@@ -15,9 +15,9 @@ import { FixedToolbarFeatureClient as FixedToolbarFeatureClient_e70f5e05f09f93e0
 import { SlugField as SlugField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
 import { default as default_f4047b1a8a90d344d3f09d570ca929c0 } from '@/collections/Users/RoleCell'
 import { default as default_a0ed575495a5f102e2308e339b13de0a } from '@/collections/Users/RoleSelect'
+import { default as default_ab83291f69e53bb51c6ac10182238751 } from '@/components/settingsMenu/AdminQuickLinks'
 import { default as default_a8ed57560afaff4535f43ca83a9fecbd } from '@/graphics/Icon'
 import { default as default_d3e265f969641a4ccf3d5a195904e268 } from '@/graphics/Logo'
-import { default as default_95a1304f99d4385400076a6aaa04a867 } from '@/components/afterNavLinks/LinkToAnalyticsDefaultRootView'
 import { default as default_bb4cac8809ccc8673886a4b66641e08b } from '@/components/dashboard/AdminWelcome'
 import { AdminErrorBoundary as AdminErrorBoundary_e5a9e14bdbe97e70ba60697217fe7688 } from '@payloadcms/plugin-sentry/client'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
@@ -47,9 +47,9 @@ export const importMap = {
   "@payloadcms/next/client#SlugField": SlugField_2b8867833a34864a02ddf429b0728a40,
   "@/collections/Users/RoleCell#default": default_f4047b1a8a90d344d3f09d570ca929c0,
   "@/collections/Users/RoleSelect#default": default_a0ed575495a5f102e2308e339b13de0a,
+  "@/components/settingsMenu/AdminQuickLinks#default": default_ab83291f69e53bb51c6ac10182238751,
   "@/graphics/Icon#default": default_a8ed57560afaff4535f43ca83a9fecbd,
   "@/graphics/Logo#default": default_d3e265f969641a4ccf3d5a195904e268,
-  "@/components/afterNavLinks/LinkToAnalyticsDefaultRootView#default": default_95a1304f99d4385400076a6aaa04a867,
   "@/components/dashboard/AdminWelcome#default": default_bb4cac8809ccc8673886a4b66641e08b,
   "@payloadcms/plugin-sentry/client#AdminErrorBoundary": AdminErrorBoundary_e5a9e14bdbe97e70ba60697217fe7688,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
