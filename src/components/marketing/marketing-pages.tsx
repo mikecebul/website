@@ -79,8 +79,10 @@ export function MarketingHomePage() {
           <div className="max-w-[46rem] space-y-5">
             <h1 className="max-w-[10.5ch] font-heading text-5xl font-semibold tracking-tighter text-balance sm:text-[4.35rem] lg:text-[5.6rem]">
               Elevate Your{' '}
-              <span className="text-(--marketing-gold)">{websiteContent.home.highlight}</span> with
-              Modern Tech.
+              <span className="text-(--marketing-gold-strong)">
+                {websiteContent.home.highlight}
+              </span>{' '}
+              with Modern Tech.
             </h1>
             <p className="max-w-xl text-base leading-7 text-(--marketing-copy) sm:text-lg">
               {websiteContent.home.body}
@@ -659,7 +661,7 @@ function MarketingServicesHero() {
         <MarketingEyebrow>{websiteContent.servicesIntro.eyebrow}</MarketingEyebrow>
         <h1 className="max-w-[11ch] font-heading text-5xl leading-[0.92] tracking-[-0.07em] text-balance sm:text-6xl">
           Clear systems.
-          <span className="block text-(--marketing-gold)">Local support.</span>
+          <span className="block text-(--marketing-gold-strong)">Local support.</span>
         </h1>
         <p className="max-w-2xl text-base leading-8 text-(--marketing-copy) sm:text-lg">
           {websiteContent.servicesIntro.body}

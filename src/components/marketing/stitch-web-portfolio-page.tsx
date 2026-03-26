@@ -164,7 +164,8 @@ export function StitchWebPortfolioPage() {
             Selected Works
           </p>
           <h1 className="max-w-[14ch] font-heading text-5xl font-semibold leading-[0.96] tracking-[-0.07em] sm:text-6xl lg:max-w-none lg:text-[4.4rem]">
-            Web Portfolio &amp; Software <span className="text-[#facc15]">Engineering</span>
+            Web Portfolio &amp; Software{' '}
+            <span className="text-(--marketing-gold-strong)">Engineering</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-8 text-(--marketing-copy) sm:text-lg">
             High-performance web solutions built around HIPAA-compliant healthcare integrations,
@@ -295,17 +296,19 @@ export function StitchWebPortfolioPage() {
           <div className="absolute right-0 top-0 size-64 rounded-full bg-(--marketing-gold)/6 blur-[100px]" />
           <div className="relative z-10">
             <h3 className="font-heading text-4xl tracking-[-0.06em] sm:text-5xl">
-              Ready to build your next <span className="text-[#facc15]">digital platform?</span>
+              Ready to build your next{' '}
+              <span className="text-(--marketing-gold-strong)">website?</span>
             </h3>
             <p className="mx-auto mt-6 max-w-xl text-base leading-8 text-(--marketing-copy)">
-              Whether it&apos;s a HIPAA-compliant healthcare portal or a custom business automation
-              tool, I bring technical precision to every pixel.
+              Whether it&apos;s a HIPAA-compliant form or a custom business automation tool, the
+              goal is always the same: simpler workflows, reliable systems, and a better user
+              experience.
             </p>
             <div className="mt-10 flex justify-center">
               <Link
                 className={cn(
                   buttonVariants({ size: 'xl', variant: 'default' }),
-                  'rounded-lg bg-linear-to-br from-(--marketing-gold) to-[#facc15] px-10 py-4 text-sm font-black uppercase tracking-[0.24em] text-(--marketing-gold-foreground) shadow-[0_22px_44px_rgba(238,194,0,0.2)] hover:scale-[1.02] hover:opacity-95',
+                  'rounded-lg bg-linear-to-br from-(--marketing-gold) to-(--marketing-gold-strong) px-10 py-4 text-sm font-black uppercase tracking-[0.24em] text-(--marketing-gold-foreground) shadow-[0_22px_44px_rgba(238,194,0,0.2)] hover:scale-[1.02] hover:opacity-95',
                 )}
                 href="/contact"
               >
@@ -332,7 +335,7 @@ function FeatureItem({ feature }: { feature: PortfolioFeature }) {
 
   return (
     <div className="flex items-start gap-4">
-      <Icon className="mt-1 size-5 text-[#facc15]" />
+      <Icon className="mt-1 size-5 text-(--marketing-gold-strong)" />
       <div>
         <h4 className="font-semibold text-(--marketing-heading)">{feature.title}</h4>
         <p className="mt-1 text-sm leading-6 text-(--marketing-copy-soft)">{feature.body}</p>
