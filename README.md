@@ -224,3 +224,4 @@ Update your production `.env` file with MongoDB connection details:
 DATABASE_URI=mongodb://username:password@localhost:27017/database
 # ... other existing env vars ...
 ```
+-end
