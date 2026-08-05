@@ -11,7 +11,8 @@ WORKDIR /app
 RUN npm install --global pnpm@11.20.0
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+# Include pnpm's workspace policy so CI applies the same install rules as development.
+COPY package.json pnpm-workspace.yaml yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
   if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
