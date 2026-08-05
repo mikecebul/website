@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
-
 import { DM_Sans, Geist } from 'next/font/google'
+import Script from 'next/script'
 import type { ReactNode } from 'react'
+
 import { MarketingShell } from '@/components/marketing/marketing-pages'
+import { JsonLd, professionalServiceJsonLd } from '@/components/seo/json-ld'
 import { createMarketingMetadata } from '@/lib/marketing-metadata'
 import { websiteContent } from '@/lib/website-content'
+
 import './globals.css'
-import Script from 'next/script'
 
 const geist = Geist({
   subsets: ['latin'],
@@ -27,7 +29,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     >
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <link href="/favicon1.svg" rel="icon" type="image/svg+xml" />
         <Script
           defer
           data-website-id="586c09dc-5042-49ef-a3b1-f72736cae1c3"
@@ -36,6 +38,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         />
       </head>
       <body>
+        <JsonLd data={professionalServiceJsonLd} />
         <MarketingShell>{children}</MarketingShell>
       </body>
     </html>
