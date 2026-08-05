@@ -1,5 +1,5 @@
-# Use Node.js 20-alpine for compatibility with tsx and your engines field
-FROM node:20-alpine AS base
+# pnpm 11.20.0 requires Node.js 22.13 or newer
+FROM node:22-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -7,13 +7,13 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Update and enable Corepack
-RUN npm install -g corepack@latest
+# Pin pnpm so Docker builds do not depend on Corepack's moving default
+RUN npm install --global pnpm@11.20.0
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
-  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
@@ -27,8 +27,8 @@ ENV SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING=1
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_OUTPUT=standalone
 
-# Update and enable Corepack
-RUN npm install -g corepack@latest
+# Keep the build stage on the same pinned pnpm version
+RUN npm install --global pnpm@11.20.0
 
 # Build with secrets as environment variables
 RUN \
@@ -38,7 +38,7 @@ RUN \
   --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN \
   --mount=type=secret,id=NEXT_PUBLIC_IS_LIVE,env=NEXT_PUBLIC_IS_LIVE \
   --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN,env=NEXT_PUBLIC_SENTRY_DSN \
-  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  if [ -f pnpm-lock.yaml ]; then pnpm run build; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
