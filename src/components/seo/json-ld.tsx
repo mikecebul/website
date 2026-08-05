@@ -16,6 +16,17 @@ export function JsonLd({ data }: { data: JsonLdValue }) {
 
 const businessId = `${baseUrl}/#business`
 
+const serviceAreas = [
+  'Charlevoix County',
+  'Emmet County',
+  'Antrim County',
+  'Cheboygan County',
+  'Otsego County',
+].map((name) => ({
+  '@type': 'AdministrativeArea',
+  name,
+}))
+
 export const professionalServiceJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
@@ -40,10 +51,7 @@ export const professionalServiceJsonLd = {
     latitude: 45.3181,
     longitude: -85.2584,
   },
-  areaServed: websiteContent.webDesignPage.serviceAreas.map((area) => ({
-    '@type': 'AdministrativeArea',
-    name: area.name,
-  })),
+  areaServed: serviceAreas,
   sameAs: [
     ...websiteContent.socialLinks.map((profile) => profile.href),
     websiteContent.site.googleBusinessProfileUrl,
@@ -56,11 +64,6 @@ export const professionalServiceJsonLd = {
     'Hybrid meeting systems',
   ],
 }
-
-const serviceAreas = websiteContent.webDesignPage.serviceAreas.map((area) => ({
-  '@type': 'AdministrativeArea',
-  name: area.name,
-}))
 
 const createServiceJsonLd = ({
   description,
@@ -128,27 +131,27 @@ const createServiceJsonLd = ({
   },
 ]
 
-export const charlevoixWebDesignJsonLd = createServiceJsonLd({
-  description: websiteContent.seo.charlevoixWebDesign.description,
+export const webDesignPortfolioJsonLd = createServiceJsonLd({
+  description: websiteContent.seo.caseStudies.websites.description,
   name: 'Charlevoix Web Design',
-  pathname: '/web-design-charlevoix',
+  pathname: '/case-studies/websites',
   price: '2400',
   serviceType: 'Small business website design and development',
 })
 
-export const aiBusinessAutomationJsonLd = createServiceJsonLd({
-  description: websiteContent.seo.aiBusinessAutomation.description,
+export const automationServicesJsonLd = createServiceJsonLd({
+  description: 'System syncing and email automation for Northern Michigan businesses.',
   name: 'AI Business Automation in Charlevoix',
-  pathname: '/ai-business-automation-charlevoix',
+  pathname: '/services',
   price: '285',
   priceUnit: 'DAY',
-  serviceType: websiteContent.focusedServices.aiAutomation.serviceType,
+  serviceType: 'Business process, system integration, email, and AI automation consulting',
 })
 
-export const hybridMeetingSolutionsJsonLd = createServiceJsonLd({
-  description: websiteContent.seo.hybridMeetingSolutions.description,
+export const hybridMeetingCaseStudyJsonLd = createServiceJsonLd({
+  description: websiteContent.seo.caseStudies.hybridMeetingSolutions.description,
   name: 'Hybrid Meeting and Zoom Room Solutions',
-  pathname: '/hybrid-meeting-solutions-northern-michigan',
+  pathname: '/case-studies/hybrid-meeting-solutions',
   price: '3200',
-  serviceType: websiteContent.focusedServices.hybridMeetings.serviceType,
+  serviceType: 'Hybrid meeting room, Zoom Rooms, and audiovisual integration consulting',
 })

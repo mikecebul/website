@@ -1,4 +1,5 @@
 import { MarketingCaseStudyPage } from '@/components/marketing/marketing-pages'
+import { hybridMeetingCaseStudyJsonLd, JsonLd } from '@/components/seo/json-ld'
 import { createMarketingMetadata } from '@/lib/marketing-metadata'
 import { getCaseStudyBySlug, websiteContent } from '@/lib/website-content'
 
@@ -16,5 +17,10 @@ export default function HybridMeetingSolutionsCaseStudyPage() {
     return null
   }
 
-  return <MarketingCaseStudyPage caseStudy={caseStudy} />
+  return (
+    <>
+      <JsonLd data={hybridMeetingCaseStudyJsonLd} />
+      <MarketingCaseStudyPage caseStudy={caseStudy} />
+    </>
+  )
 }

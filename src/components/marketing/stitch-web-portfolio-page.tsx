@@ -161,16 +161,15 @@ export function StitchWebPortfolioPage() {
       <section className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         <div className="max-w-4xl">
           <p className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-(--marketing-gold)">
-            Selected Works
+            Charlevoix &amp; Northern Michigan
           </p>
           <h1 className="max-w-[14ch] font-heading text-5xl font-semibold leading-[0.96] tracking-[-0.07em] sm:text-6xl lg:max-w-none lg:text-[4.4rem]">
-            Web Portfolio &amp; Software{' '}
+            Web Design &amp; Software{' '}
             <span className="text-(--marketing-gold-strong)">Engineering</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-8 text-(--marketing-copy) sm:text-lg">
-            High-performance web solutions built around HIPAA-compliant healthcare integrations,
-            complex forms with specific business logic, and automated email notifications that also
-            follow the same operational rules.
+            Websites and web software built for Northern Michigan organizations, including
+            HIPAA-compliant integrations, business-specific forms, and automated email workflows.
           </p>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import { MarketingServicesPage } from '@/components/marketing/marketing-pages'
+import { automationServicesJsonLd, JsonLd } from '@/components/seo/json-ld'
 import { createMarketingMetadata } from '@/lib/marketing-metadata'
 import { websiteContent } from '@/lib/website-content'
 
@@ -10,5 +11,10 @@ export const metadata = createMarketingMetadata({
 })
 
 export default function ServicesPage() {
-  return <MarketingServicesPage />
+  return (
+    <>
+      <JsonLd data={automationServicesJsonLd} />
+      <MarketingServicesPage />
+    </>
+  )
 }

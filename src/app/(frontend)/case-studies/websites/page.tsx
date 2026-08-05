@@ -1,4 +1,5 @@
 import { StitchWebPortfolioPage } from '@/components/marketing/stitch-web-portfolio-page'
+import { JsonLd, webDesignPortfolioJsonLd } from '@/components/seo/json-ld'
 import { createMarketingMetadata } from '@/lib/marketing-metadata'
 import { websiteContent } from '@/lib/website-content'
 
@@ -10,5 +11,10 @@ export const metadata = createMarketingMetadata({
 })
 
 export default function WebsitesCaseStudyPage() {
-  return <StitchWebPortfolioPage />
+  return (
+    <>
+      <JsonLd data={webDesignPortfolioJsonLd} />
+      <StitchWebPortfolioPage />
+    </>
+  )
 }
