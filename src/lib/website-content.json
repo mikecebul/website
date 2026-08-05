@@ -3,7 +3,8 @@
     "name": "Mike Cebulski",
     "legalName": "MIKECEBUL LLC",
     "titleSuffix": " | Mike Cebulski",
-    "description": "Technical consulting, marketing websites, and automation support for Northern Michigan businesses that want modern systems with a human touch.",
+    "description": "Web design, automation, and hybrid meeting solutions for businesses across Charlevoix and Northern Michigan.",
+    "googleBusinessProfileUrl": "https://share.google/0TpKoQFhz5oOSfkux",
     "location": "Charlevoix, Michigan",
     "coordinates": "45.3181° N, 85.2584° W"
   },
@@ -45,6 +46,10 @@
       "href": "/services"
     },
     {
+      "label": "Web Design",
+      "href": "/web-design-charlevoix"
+    },
+    {
       "label": "About",
       "href": "/about"
     },
@@ -61,12 +66,16 @@
         "href": "/services"
       },
       {
-        "label": "Business Websites",
-        "href": "/case-studies/websites"
+        "label": "Charlevoix Web Design",
+        "href": "/web-design-charlevoix"
+      },
+      {
+        "label": "AI Business Automation",
+        "href": "/ai-business-automation-charlevoix"
       },
       {
         "label": "Hybrid Meeting Solutions",
-        "href": "/case-studies/hybrid-meeting-solutions"
+        "href": "/hybrid-meeting-solutions-northern-michigan"
       }
     ],
     "companyLinks": [
@@ -87,8 +96,8 @@
   "seo": {
     "defaultOgImage": "/marketing/login-og.jpg",
     "home": {
-      "title": "Mike Cebulski | Northern Michigan Technical Consulting",
-      "description": "Technical consulting, marketing websites, and automation support for Northern Michigan businesses that want modern systems with a human touch.",
+      "title": "Mike Cebulski | Charlevoix Web Design",
+      "description": "Web design, automation, and hybrid meeting solutions for businesses across Charlevoix and Northern Michigan.",
       "keywords": [
         "northern michigan technical consulting",
         "charlevoix web design",
@@ -106,6 +115,41 @@
         "ai automation consulting",
         "hybrid meeting solutions",
         "northern michigan consultant"
+      ]
+    },
+    "charlevoixWebDesign": {
+      "title": "Charlevoix Web Design | Mike Cebulski",
+      "description": "Fast, clear websites for Charlevoix and Northern Michigan businesses—built to earn trust and generate inquiries.",
+      "keywords": [
+        "charlevoix web design",
+        "website designer near me",
+        "charlevoix website developer",
+        "northern michigan web design",
+        "small business website design",
+        "petoskey web design",
+        "boyne city web design"
+      ]
+    },
+    "aiBusinessAutomation": {
+      "title": "AI Business Automation | Mike Cebulski",
+      "description": "System syncing and email automation for Charlevoix and Northern Michigan businesses.",
+      "keywords": [
+        "ai business automation charlevoix",
+        "business process automation northern michigan",
+        "email automation consultant",
+        "system integration consultant",
+        "small business automation near me"
+      ]
+    },
+    "hybridMeetingSolutions": {
+      "title": "Hybrid Meeting & Zoom Room Solutions | Mike Cebulski",
+      "description": "Zoom Rooms and hybrid meeting systems for organizations across Northern Michigan.",
+      "keywords": [
+        "hybrid meeting solutions northern michigan",
+        "zoom rooms consultant",
+        "conference room av integration",
+        "hybrid meeting room installation",
+        "boardroom technology consultant"
       ]
     },
     "about": {
@@ -154,8 +198,8 @@
         ]
       },
       "websites": {
-        "title": "Website Case Study | Mike Cebulski",
-        "description": "A case study in building a website system that improves clarity, credibility, and ongoing maintainability.",
+        "title": "Northern Michigan Website Portfolio | Mike Cebulski",
+        "description": "See websites designed and developed for Northern Michigan organizations, with a focus on clarity, credibility, performance, and maintainability.",
         "keywords": [
           "website case study",
           "small business website portfolio",
@@ -167,12 +211,12 @@
     }
   },
   "home": {
-    "eyebrow": "Independent technology services",
-    "headline": "Elevate Your Business with Modern Tech.",
-    "highlight": "Business",
-    "body": "Mike Cebulski provides hands-on technical services across web systems, automation, AV, and hardware integration for businesses throughout Northern Michigan.",
-    "heroCaptionEyebrow": "Serving Northern Michigan",
-    "heroCaptionTitle": "Hands-on support for regional businesses.",
+    "eyebrow": "Charlevoix web design",
+    "headline": "Local websites that work.",
+    "highlight": "websites",
+    "body": "Fast, polished websites for Northern Michigan businesses—built to earn trust and bring in leads.",
+    "heroCaptionEyebrow": "Based in Charlevoix",
+    "heroCaptionTitle": "Web design and support, close to home.",
     "backgroundTitle": "Technical Mind. Strategic Vision.",
     "backgroundBody": [
       "Based in Charlevoix the Beautiful, I help businesses turn overwhelming tech challenges into simple, reliable systems. My approach is user experience first, so the complexity stays behind the scenes and the tools feel natural to use.",
@@ -193,13 +237,9 @@
       "description": "Operational consulting for teams that need a practical path from manual work to repeatable systems.",
       "price": "$285",
       "priceSuffix": "/day",
-      "bullets": [
-        "Discovery workshops",
-        "System mapping",
-        "AI adoption planning"
-      ],
+      "bullets": ["System syncing", "Email automation", "Workflow mapping"],
       "ctaLabel": "Inquire for Dates",
-      "ctaHref": "/contact"
+      "ctaHref": "/ai-business-automation-charlevoix"
     },
     {
       "eyebrow": "Websites",
@@ -219,7 +259,7 @@
         "Fast AI-assisted delivery"
       ],
       "ctaLabel": "View Portfolio",
-      "ctaHref": "/case-studies/websites"
+      "ctaHref": "/web-design-charlevoix"
     },
     {
       "eyebrow": "AV Systems",
@@ -232,13 +272,9 @@
         "amount": "+$100/mo",
         "label": "device management"
       },
-      "bullets": [
-        "Room planning",
-        "AV integration",
-        "Support documentation"
-      ],
+      "bullets": ["Room planning", "AV integration", "Support documentation"],
       "ctaLabel": "Consult on Hardware",
-      "ctaHref": "/case-studies/hybrid-meeting-solutions"
+      "ctaHref": "/hybrid-meeting-solutions-northern-michigan"
     }
   ],
   "servicePrinciples": [
@@ -255,6 +291,251 @@
       "body": "Every deliverable is meant to keep working after launch, not collapse into maintenance debt."
     }
   ],
+  "webDesignPage": {
+    "eyebrow": "Charlevoix web design",
+    "title": "Local websites built to get found.",
+    "body": "Custom web design for Charlevoix and Northern Michigan businesses—fast, clear, and ready to earn the next call.",
+    "deliverables": [
+      {
+        "title": "Local search foundation",
+        "body": "Location-aware page structure, descriptive metadata, structured data, sitemap coverage, and content shaped around how nearby customers search."
+      },
+      {
+        "title": "Trust-building design",
+        "body": "A polished, mobile-first experience that explains your services quickly and gives visitors a clear path to call, email, or request a quote."
+      },
+      {
+        "title": "Support after launch",
+        "body": "Managed hosting, analytics, error monitoring, and ongoing edits keep the site useful as your business and service area evolve."
+      }
+    ],
+    "included": [
+      "Website strategy and page planning",
+      "Custom responsive design",
+      "Conversion-focused service copy",
+      "Technical and on-page SEO setup",
+      "Contact form and lead routing",
+      "Analytics and error monitoring",
+      "Fast, portable deployment",
+      "Ongoing hosting and unlimited edits"
+    ],
+    "serviceAreas": [
+      {
+        "name": "Charlevoix County",
+        "communities": "Charlevoix, Boyne City, East Jordan, and Beaver Island"
+      },
+      {
+        "name": "Emmet County",
+        "communities": "Petoskey, Harbor Springs, Pellston, and surrounding townships"
+      },
+      {
+        "name": "Antrim County",
+        "communities": "Elk Rapids, Bellaire, Central Lake, and nearby communities"
+      },
+      {
+        "name": "Cheboygan & Otsego Counties",
+        "communities": "Cheboygan, Indian River, Gaylord, and nearby communities"
+      }
+    ],
+    "process": [
+      {
+        "title": "Listen and map",
+        "body": "We clarify your best-fit customer, services, geography, and the questions people ask before choosing you."
+      },
+      {
+        "title": "Write and design",
+        "body": "The message and page hierarchy are shaped together so the site feels credible, specific, and easy to navigate."
+      },
+      {
+        "title": "Build and launch",
+        "body": "I implement the site, test the conversion path, connect measurement, and prepare it for search indexing."
+      },
+      {
+        "title": "Improve over time",
+        "body": "Analytics and real customer questions guide useful updates instead of leaving the website frozen after launch."
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Do you only build websites for businesses in Charlevoix?",
+        "answer": "No. I am based in Charlevoix and regularly serve businesses throughout Northern Michigan, including Charlevoix, Emmet, Antrim, Cheboygan, and Otsego counties. Remote projects are welcome too."
+      },
+      {
+        "question": "How much does a small business website cost?",
+        "answer": "The standard website package starts at $2,400, with hosting, analytics, monitoring, and unlimited edits available for $100 per month. A final scope is confirmed before work begins."
+      },
+      {
+        "question": "Is local SEO included?",
+        "answer": "Yes. Every build includes the technical and on-page foundations search engines need to understand the business, services, and service area. Rankings also depend on competition, business prominence, links, and an accurate Google Business Profile, so no honest provider can guarantee a particular position."
+      },
+      {
+        "question": "Can you improve an existing website?",
+        "answer": "Yes. I can assess an existing site and recommend whether focused improvements or a rebuild will provide the clearest return."
+      },
+      {
+        "question": "Will I be able to update the site after launch?",
+        "answer": "Yes. The site can be maintained through a content system, or you can send changes through the ongoing support plan and I will handle them for you."
+      }
+    ]
+  },
+  "focusedServices": {
+    "aiAutomation": {
+      "variant": "automation",
+      "slug": "ai-business-automation-charlevoix",
+      "eyebrow": "Business automation in Charlevoix",
+      "title": "Connect the systems behind the work.",
+      "body": "I help Northern Michigan businesses reduce manual handoffs with system syncing, email automation, and carefully scoped AI.",
+      "serviceType": "Business process, system integration, email, and AI automation consulting",
+      "package": {
+        "eyebrow": "Automation consulting",
+        "title": "Start with one costly workflow.",
+        "price": "$285",
+        "priceSuffix": "per day",
+        "items": [
+          "Workflow and system mapping",
+          "Integration and API review",
+          "Email automation design",
+          "Monitoring and handoff documentation"
+        ],
+        "footer": "Scope starts with a real workflow, not a generic AI rollout."
+      },
+      "deliverables": [
+        {
+          "title": "System synchronization",
+          "body": "Move the right information between separate tools with clear rules, validation, and recovery paths."
+        },
+        {
+          "title": "Email automation",
+          "body": "Trigger useful confirmations, notifications, and follow-ups from the events already happening in the business."
+        },
+        {
+          "title": "Practical AI assistance",
+          "body": "Use AI for focused tasks where it removes friction while keeping important decisions visible to people."
+        }
+      ],
+      "proof": {
+        "eyebrow": "In production",
+        "title": "MI Drug Test",
+        "body": "A live operational workflow keeps information aligned across two separate systems and automates email communication. It is the clearest example of how I approach automation: solve a specific business handoff and make it dependable.",
+        "points": [
+          "Two-system data synchronization",
+          "Automated email workflows",
+          "Running inside a local business"
+        ],
+        "href": "https://www.midrugtest.com",
+        "linkLabel": "Visit MI Drug Test"
+      },
+      "included": [
+        "Workflow discovery",
+        "Current-system assessment",
+        "Data and trigger mapping",
+        "Integration implementation",
+        "Failure and retry planning",
+        "Email workflow setup",
+        "Testing with real scenarios",
+        "Documentation and launch support"
+      ],
+      "process": [
+        {
+          "title": "Find the handoff",
+          "body": "Identify the recurring copy-paste work, missed follow-up, or disconnected system causing the most friction."
+        },
+        {
+          "title": "Map the rules",
+          "body": "Define what moves, what triggers it, who should be notified, and where human review still belongs."
+        },
+        {
+          "title": "Build and test",
+          "body": "Implement the smallest dependable workflow and test normal, duplicate, and failure scenarios."
+        },
+        {
+          "title": "Monitor and refine",
+          "body": "Watch the workflow in production, document it, and improve only where real use shows a need."
+        }
+      ],
+      "ctaTitle": "What manual handoff keeps slowing the business down?",
+      "ctaBody": "Bring one real workflow. We can map whether automation is practical before committing to a larger project.",
+      "ctaLabel": "Discuss an automation workflow"
+    },
+    "hybridMeetings": {
+      "variant": "hybrid",
+      "slug": "hybrid-meeting-solutions-northern-michigan",
+      "eyebrow": "Hybrid meeting solutions",
+      "title": "Meeting rooms that simply start.",
+      "body": "I plan and integrate Zoom Rooms and hybrid meeting systems for Northern Michigan teams that need clear, dependable collaboration.",
+      "serviceType": "Hybrid meeting room, Zoom Rooms, and audiovisual integration consulting",
+      "package": {
+        "eyebrow": "Room integration",
+        "title": "Design the workflow before buying hardware.",
+        "price": "$3,200",
+        "priceSuffix": "starting setup",
+        "items": [
+          "Room and use-case planning",
+          "Camera, audio, and display guidance",
+          "Zoom Rooms and AV integration",
+          "Control documentation and support"
+        ],
+        "footer": "Hardware and final scope are confirmed for the room before installation."
+      },
+      "deliverables": [
+        {
+          "title": "Room planning",
+          "body": "Plan sightlines, displays, microphones, cameras, and control around the meetings the room actually hosts."
+        },
+        {
+          "title": "Zoom Rooms integration",
+          "body": "Create a consistent way to start calls, present content, and include remote participants without cable confusion."
+        },
+        {
+          "title": "Operational support",
+          "body": "Document the room, manage devices when needed, and leave staff with a system they can operate confidently."
+        }
+      ],
+      "proof": {
+        "eyebrow": "Hands-on experience",
+        "title": "A room designed around the meeting.",
+        "body": "The existing hybrid meeting case study shows the approach: define how people enter, present, speak, and troubleshoot before selecting the equipment that supports that flow.",
+        "points": [
+          "Zoom Rooms-first operation",
+          "Camera, display, and audio planning",
+          "Documentation for non-technical users"
+        ],
+        "href": "/case-studies/hybrid-meeting-solutions",
+        "linkLabel": "View the hybrid meeting case study"
+      },
+      "included": [
+        "Room-use discovery",
+        "Equipment and compatibility review",
+        "Camera and microphone planning",
+        "Display and presentation flow",
+        "Zoom Rooms configuration",
+        "AV and control integration",
+        "User-facing documentation",
+        "Optional device management"
+      ],
+      "process": [
+        {
+          "title": "Understand the room",
+          "body": "Review the space, meeting types, participant count, existing equipment, and everyday pain points."
+        },
+        {
+          "title": "Design the experience",
+          "body": "Map what users see and touch from walking in through starting, presenting, and ending a meeting."
+        },
+        {
+          "title": "Integrate and test",
+          "body": "Configure the room and test audio, video, sharing, control, and common recovery scenarios."
+        },
+        {
+          "title": "Document and support",
+          "body": "Provide clear operating guidance and ongoing device support where the organization needs it."
+        }
+      ],
+      "ctaTitle": "Planning a room before the next hardware purchase?",
+      "ctaBody": "We can define the meeting experience first, then choose the equipment that supports it.",
+      "ctaLabel": "Plan a hybrid meeting room"
+    }
+  },
   "about": {
     "eyebrow": "About Mike",
     "heading": {

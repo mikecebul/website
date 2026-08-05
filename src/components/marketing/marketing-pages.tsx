@@ -78,11 +78,11 @@ export function MarketingHomePage() {
           <MarketingEyebrow>{websiteContent.home.eyebrow}</MarketingEyebrow>
           <div className="max-w-[46rem] space-y-5">
             <h1 className="max-w-[10.5ch] font-heading text-5xl font-semibold tracking-tighter text-balance sm:text-[4.35rem] lg:text-[5.6rem]">
-              Elevate Your{' '}
+              {websiteContent.home.headline.split(websiteContent.home.highlight)[0]}
               <span className="text-(--marketing-gold-strong)">
                 {websiteContent.home.highlight}
-              </span>{' '}
-              with Modern Tech.
+              </span>
+              {websiteContent.home.headline.split(websiteContent.home.highlight)[1]}
             </h1>
             <p className="max-w-xl text-base leading-7 text-(--marketing-copy) sm:text-lg">
               {websiteContent.home.body}
