@@ -33,9 +33,6 @@ const getSitemap = unstable_cache(
     const marketingRoutes = [
       '',
       '/services',
-      '/web-design-charlevoix',
-      '/ai-business-automation-charlevoix',
-      '/hybrid-meeting-solutions-northern-michigan',
       '/about',
       '/contact',
       '/blog',

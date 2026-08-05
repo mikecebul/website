@@ -568,6 +568,7 @@ function MarketingServicesOverview() {
 
           return (
             <article
+              id={service.id}
               key={service.headline}
               className={cn(
                 'relative flex min-h-[640px] flex-col overflow-visible rounded-[34px] border border-white/8 bg-[linear-gradient(180deg,rgba(21,29,48,0.96),rgba(18,25,42,0.98))] px-8 py-7 shadow-[0_24px_70px_rgba(0,0,0,0.28)]',

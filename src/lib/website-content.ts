@@ -30,37 +30,6 @@ const seoEntrySchema = z.object({
   title: z.string(),
 })
 
-const focusedServiceSchema = z.object({
-  body: z.string(),
-  ctaBody: z.string(),
-  ctaLabel: z.string(),
-  ctaTitle: z.string(),
-  deliverables: z.array(z.object({ body: z.string(), title: z.string() })),
-  eyebrow: z.string(),
-  included: z.array(z.string()),
-  package: z.object({
-    eyebrow: z.string(),
-    footer: z.string(),
-    items: z.array(z.string()),
-    price: z.string(),
-    priceSuffix: z.string(),
-    title: z.string(),
-  }),
-  process: z.array(z.object({ body: z.string(), title: z.string() })),
-  proof: z.object({
-    body: z.string(),
-    eyebrow: z.string(),
-    href: z.string(),
-    linkLabel: z.string(),
-    points: z.array(z.string()),
-    title: z.string(),
-  }),
-  serviceType: z.string(),
-  slug: z.string(),
-  title: z.string(),
-  variant: z.enum(['automation', 'hybrid']),
-})
-
 const websiteContentSchema = z.object({
   site: z.object({
     coordinates: z.string(),
@@ -100,9 +69,6 @@ const websiteContentSchema = z.object({
     defaultOgImage: z.string(),
     home: seoEntrySchema,
     services: seoEntrySchema,
-    charlevoixWebDesign: seoEntrySchema,
-    aiBusinessAutomation: seoEntrySchema,
-    hybridMeetingSolutions: seoEntrySchema,
     about: seoEntrySchema,
     contact: seoEntrySchema,
     blogIndex: seoEntrySchema,
@@ -135,6 +101,7 @@ const websiteContentSchema = z.object({
       eyebrow: z.string(),
       featured: z.boolean().optional(),
       headline: z.string(),
+      id: z.string(),
       price: z.string(),
       priceDetail: detailSchema.optional(),
       priceSuffix: z.string(),
@@ -142,20 +109,6 @@ const websiteContentSchema = z.object({
     }),
   ),
   servicePrinciples: z.array(z.object({ body: z.string(), title: z.string() })),
-  webDesignPage: z.object({
-    body: z.string(),
-    deliverables: z.array(z.object({ body: z.string(), title: z.string() })),
-    eyebrow: z.string(),
-    faqs: z.array(z.object({ answer: z.string(), question: z.string() })),
-    included: z.array(z.string()),
-    process: z.array(z.object({ body: z.string(), title: z.string() })),
-    serviceAreas: z.array(z.object({ communities: z.string(), name: z.string() })),
-    title: z.string(),
-  }),
-  focusedServices: z.object({
-    aiAutomation: focusedServiceSchema,
-    hybridMeetings: focusedServiceSchema,
-  }),
   about: z.object({
     body: z.string(),
     eyebrow: z.string(),
@@ -235,9 +188,6 @@ export const websitePaths = {
   contact: '/contact',
   home: '/',
   services: '/services',
-  charlevoixWebDesign: '/web-design-charlevoix',
-  aiBusinessAutomation: '/ai-business-automation-charlevoix',
-  hybridMeetingSolutions: '/hybrid-meeting-solutions-northern-michigan',
 } as const
 
 export const getCaseStudyBySlug = (slug: string) =>
