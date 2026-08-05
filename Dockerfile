@@ -35,20 +35,9 @@ RUN \
   --mount=type=secret,id=DATABASE_URI,env=DATABASE_URI \
   --mount=type=secret,id=NEXT_PUBLIC_SERVER_URL,env=NEXT_PUBLIC_SERVER_URL \
   --mount=type=secret,id=PAYLOAD_SECRET,env=PAYLOAD_SECRET \
-  --mount=type=secret,id=S3_ENABLED,env=S3_ENABLED \
   --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN \
   --mount=type=secret,id=NEXT_PUBLIC_IS_LIVE,env=NEXT_PUBLIC_IS_LIVE \
-  --mount=type=secret,id=NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,env=NEXT_PUBLIC_GOOGLE_MAPS_API_KEY \
-  --mount=type=secret,id=NEXT_PUBLIC_UPLOAD_PREFIX,env=NEXT_PUBLIC_UPLOAD_PREFIX \
   --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN,env=NEXT_PUBLIC_SENTRY_DSN \
-  --mount=type=secret,id=PREVIEW_SECRET,env=PREVIEW_SECRET \
-  --mount=type=secret,id=S3_ACCESS_KEY_ID,env=S3_ACCESS_KEY_ID \
-  --mount=type=secret,id=S3_SECRET_ACCESS_KEY,env=S3_SECRET_ACCESS_KEY \
-  --mount=type=secret,id=S3_REGION,env=S3_REGION \
-  --mount=type=secret,id=S3_ENDPOINT,env=S3_ENDPOINT \
-  --mount=type=secret,id=S3_BUCKET,env=S3_BUCKET \
-  --mount=type=secret,id=NEXT_PUBLIC_S3_HOSTNAME,env=NEXT_PUBLIC_S3_HOSTNAME \
-  --mount=type=secret,id=UNSPLASH_ACCESS_KEY,env=UNSPLASH_ACCESS_KEY \
   if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
   else echo "Lockfile not found." && exit 1; \
   fi
@@ -85,4 +74,3 @@ ENV PORT=3000
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
 ENV HOSTNAME="0.0.0.0"
 CMD ["node", "server.js"]
-
