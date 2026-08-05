@@ -3,7 +3,7 @@
     "name": "Mike Cebulski",
     "legalName": "MIKECEBUL LLC",
     "titleSuffix": " | Mike Cebulski",
-    "description": "Web design, automation, and hybrid meeting solutions for businesses across Charlevoix and Northern Michigan.",
+    "description": "Technical consulting, marketing websites, and automation support for Northern Michigan businesses that want modern systems with a human touch.",
     "googleBusinessProfileUrl": "https://share.google/0TpKoQFhz5oOSfkux",
     "location": "Charlevoix, Michigan",
     "coordinates": "45.3181° N, 85.2584° W"
@@ -92,8 +92,8 @@
   "seo": {
     "defaultOgImage": "/marketing/login-og.jpg",
     "home": {
-      "title": "Mike Cebulski | Charlevoix Web Design",
-      "description": "Web design, automation, and hybrid meeting solutions for businesses across Charlevoix and Northern Michigan.",
+      "title": "Mike Cebulski | Northern Michigan Technical Consulting",
+      "description": "Technical consulting, marketing websites, and automation support for Northern Michigan businesses that want modern systems with a human touch.",
       "keywords": [
         "northern michigan technical consulting",
         "charlevoix web design",
@@ -180,12 +180,12 @@
     }
   },
   "home": {
-    "eyebrow": "Charlevoix web design",
-    "headline": "Local websites that work.",
-    "highlight": "websites",
-    "body": "Fast, polished websites for Northern Michigan businesses—built to earn trust and bring in leads.",
-    "heroCaptionEyebrow": "Based in Charlevoix",
-    "heroCaptionTitle": "Web design and support, close to home.",
+    "eyebrow": "Independent technology services",
+    "headline": "Elevate Your Business with Modern Tech.",
+    "highlight": "Business",
+    "body": "Mike Cebulski provides hands-on technical services across web systems, automation, AV, and hardware integration for businesses throughout Northern Michigan.",
+    "heroCaptionEyebrow": "Serving Northern Michigan",
+    "heroCaptionTitle": "Hands-on support for regional businesses.",
     "backgroundTitle": "Technical Mind. Strategic Vision.",
     "backgroundBody": [
       "Based in Charlevoix the Beautiful, I help businesses turn overwhelming tech challenges into simple, reliable systems. My approach is user experience first, so the complexity stays behind the scenes and the tools feel natural to use.",
