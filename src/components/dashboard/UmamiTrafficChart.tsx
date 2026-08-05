@@ -144,7 +144,7 @@ export function UmamiTrafficChart({ data }: Props) {
               tickLine={false}
               tickMargin={10}
               tickFormatter={(value) =>
-                new Date(value).toLocaleDateString("en-US", {
+                new Date(String(value)).toLocaleDateString("en-US", {
                   day: "numeric",
                   month: "short",
                 })
@@ -165,7 +165,7 @@ export function UmamiTrafficChart({ data }: Props) {
                 <ChartTooltipContent
                   indicator="dot"
                   labelFormatter={(value) =>
-                    new Date(value).toLocaleDateString("en-US", {
+                    new Date(String(value)).toLocaleDateString("en-US", {
                       day: "numeric",
                       month: "short",
                     })

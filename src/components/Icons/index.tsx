@@ -17,7 +17,6 @@ import {
   SprayCan,
   Brain,
   CircleOff,
-  Facebook,
   CheckCircle,
   UserPlus,
   User,
@@ -31,6 +30,8 @@ import {
   Clock,
   CodeXml,
 } from 'lucide-react'
+import { FaFacebookF } from 'react-icons/fa'
+import type { IconType } from 'react-icons'
 import { ReactNode } from 'react'
 
 export const Icons = {
@@ -63,7 +64,7 @@ export const Icons = {
   spray: SprayCan,
   brain: Brain,
   zero: CircleOff,
-  facebook: Facebook,
+  facebook: FaFacebookF,
   checkCirlce: CheckCircle,
   adduser: UserPlus,
   user: User,
@@ -97,7 +98,7 @@ export const lucideIcons = [
   { component: SprayCan, label: 'Spray Can', value: 'SprayCan' },
   { component: Brain, label: 'Brain', value: 'Brain' },
   { component: CircleOff, label: 'Zero', value: 'CircleOff' },
-  { component: Facebook, label: 'Facebook', value: 'Facebook' },
+  { component: FaFacebookF, label: 'Facebook', value: 'Facebook' },
   { component: CheckCircle, label: 'Check Circle', value: 'CheckCircle' },
   { component: UserPlus, label: 'Add User', value: 'UserPlus' },
   { component: User, label: 'User', value: 'User' },
@@ -108,7 +109,7 @@ export const lucideIcons = [
   { component: CodeXml, label: 'Code', value: 'CodeXml' },
 ]
 
-export const iconMapping = lucideIcons.reduce<Record<string, LucideIcon>>((acc, icon) => {
+export const iconMapping = lucideIcons.reduce<Record<string, LucideIcon | IconType>>((acc, icon) => {
   acc[icon.value] = icon.component
   return acc
 }, {})
@@ -151,7 +152,7 @@ export const lucideIconArray = [
   SprayCan,
   Brain,
   CircleOff,
-  Facebook,
+  FaFacebookF,
   CheckCircle,
   UserPlus,
   User,

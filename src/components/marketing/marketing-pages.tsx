@@ -7,7 +7,6 @@ import {
   ArrowRight,
   Check,
   Globe,
-  Linkedin,
   MapPin,
   Menu,
   Notebook,
@@ -18,6 +17,7 @@ import {
   Zap,
 } from 'lucide-react'
 import { motion } from 'motion/react'
+import { FaLinkedinIn } from 'react-icons/fa'
 import { useState, type ReactNode } from 'react'
 
 import { MarketingContactForm } from '@/components/marketing/contact-form'
@@ -56,7 +56,7 @@ const serviceIconMap = {
 } as const
 
 const socialIconMap = {
-  LinkedIn: Linkedin,
+  LinkedIn: FaLinkedinIn,
   X,
 } as const
 

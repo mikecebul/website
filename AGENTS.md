@@ -1,45 +1,15 @@
-# AGENTS.md
+# Purpose
 
-Project instructions for coding agents in `/Users/mikecebul/Code/website`.
+This project is my personal business for getting work to build websites, help businesses incoporate automated workflows with AI, or installing hybrid meeting solutions like with Zoom Rooms. My main objective is being seen locally and getting potential clients to submit a contact form.
 
-## Core Rules
+# Forms
 
-- Keep changes minimal, typed, and aligned with existing patterns.
-- Prefer editing existing modules over adding new abstractions.
-- Treat `src/payload.config.ts` as the CMS/runtime source of truth.
-- Run relevant validation before handoff:
-  - `pnpm run typecheck`
-  - `pnpm run lint`
-  - `pnpm run generate:types` when schema or Payload config changes
-  - `pnpm run generate:importmap` after adding or updating custom payload components
+I expect all forms to use Tanstack form and should follow the best practices
 
+# UI
 
-## Architecture Anchors
+Use shadcn components whenever possible. Form fields should use shadcn field ui components.
 
-- Frontend routes: `src/app/(frontend)/`
-- Payload admin/API routes: `src/app/(payload)/`
-- Collections: `src/collections/`
-- Globals: `src/globals/`
-- Blocks: `src/blocks/`
-- Form runtime logic: `src/forms/`
-- Shared components: `src/components/`
+# Emails
 
-## Progressive Discovery
-
-Read only what is needed for the task, in this order:
-
-1. `README.md` for product and deployment context.
-3. `package.json` for active scripts and tooling.
-4. `src/payload.config.ts` for CMS/plugins/runtime behavior.
-5. `src/forms/` for form runtime behavior and field rendering.
-6. Relevant feature module (collection/block/global/component) being edited.
-
-External reference:
-
-- [TanStack Form (React) docs](https://github.com/TanStack/form/blob/main/docs/framework/react/reference/index.md)
-
-## High-Value Project Notes
-
-- Env var for database is `DATABASE_URI`.
-- Build runs migrations; treat build failures as possible migration/config issues.
-- Revalidation hooks are part of content freshness; preserve them unless intentionally changing cache behavior.
+Always use react emails for emails
