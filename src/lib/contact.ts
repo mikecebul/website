@@ -1,19 +1,9 @@
 import { z } from 'zod'
 
+import { formatPhoneNumber, usPhonePattern } from '@/lib/phone'
 import { websiteContent } from '@/lib/website-content'
 
 const inquiryTypeSet = new Set(websiteContent.contact.inquiryTypes)
-const phonePattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
-
-export const formatPhoneNumber = (value: string) => {
-  const trimmedValue = value.trim()
-
-  if (!phonePattern.test(trimmedValue)) {
-    return trimmedValue
-  }
-
-  return trimmedValue.replace(phonePattern, '($1) $2-$3')
-}
 
 export const contactFormSchema = z.object({
   email: z.string().trim().email('Enter a valid email address.'),
@@ -34,7 +24,7 @@ export const contactFormSchema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(phonePattern, 'Enter a valid phone number.')
+    .regex(usPhonePattern, 'Enter a valid U.S. phone number.')
     .transform(formatPhoneNumber),
 })
 

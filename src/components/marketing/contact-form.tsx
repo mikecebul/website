@@ -16,7 +16,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { contactFormSchema, formatPhoneNumber } from '@/lib/contact'
+import { contactFormSchema } from '@/lib/contact'
+import { formatPhoneInput, formatPhoneNumber } from '@/lib/phone'
 import { websiteContent } from '@/lib/website-content'
 import { normalizeFieldErrors } from '@/forms/field-components/normalize-field-errors'
 
@@ -158,12 +159,12 @@ export function MarketingContactForm() {
                   }}
                   onChange={(event) => {
                     setSubmissionError(undefined)
-                    field.handleChange(event.target.value)
+                    field.handleChange(formatPhoneInput(event.target.value))
                   }}
                   autoComplete="tel"
                   aria-invalid={isInvalid}
                   className="h-12 rounded-2xl border-white/10 bg-white/3 px-4 text-base text-(--marketing-heading) placeholder:text-(--marketing-copy-soft)"
-                  placeholder="(555) 123-4567"
+                  placeholder="(555) 555-5555"
                 />
                 {isInvalid ? <FieldError errors={normalizedErrors} /> : null}
               </Field>
