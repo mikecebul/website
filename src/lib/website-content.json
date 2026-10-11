@@ -3,7 +3,7 @@
     "name": "Mike Cebulski",
     "legalName": "MIKECEBUL LLC",
     "titleSuffix": " | Mike Cebulski",
-    "description": "Technical consulting, marketing websites, and automation support for Northern Michigan businesses that want modern systems with a human touch.",
+    "description": "Fast, polished websites and ongoing website management for Charlevoix and Northern Michigan businesses, with practical Google Business Profile setup help.",
     "googleBusinessProfileUrl": "https://share.google/0TpKoQFhz5oOSfkux",
     "location": "Charlevoix, Michigan",
     "coordinates": "45.3181° N, 85.2584° W"
@@ -12,17 +12,21 @@
     "hero": "/marketing/lighthouse.webp",
     "office": "/marketing/modern-office.jpg",
     "dataVisualization": "/marketing/data-visualization.jpg",
-    "profile": "/marketing/me-full.jpg"
+    "profile": "/marketing/me-full.jpg",
+    "kiosk": "/marketing/hybrid/kiosk-production.webp"
   },
   "contact": {
     "email": "me@mikecebul.com",
     "phone": "(231) 373-6341",
     "phoneHref": "12313736341",
-    "location": "Charlevoix, MI",
+    "location": "201 State St, Lower Lever, Charlevoix, MI 49720",
     "inquiryTypes": [
       "Marketing website",
-      "Hybrid meeting solution",
-      "AI & automation consulting",
+      "Website redesign",
+      "Custom website development",
+      "Google Business Profile setup",
+      "Hybrid meeting solutions",
+      "AI & automated workflows",
       "General question"
     ]
   },
@@ -42,12 +46,20 @@
       "href": "/"
     },
     {
-      "label": "Services",
-      "href": "/services"
+      "label": "Websites",
+      "href": "/websites"
+    },
+    {
+      "label": "Hybrid meetings",
+      "href": "/hybrid-meeting-solutions"
     },
     {
       "label": "About",
       "href": "/about"
+    },
+    {
+      "label": "Journal",
+      "href": "/blog"
     },
     {
       "label": "Contact",
@@ -55,33 +67,33 @@
     }
   ],
   "footer": {
-    "description": "Independent technical consulting for business websites, hybrid meeting systems, and automation in Northern Michigan.",
+    "description": "Website development, personal ongoing support, and hybrid meeting solutions for Northern Michigan businesses.",
     "servicesLinks": [
       {
-        "label": "Overview",
-        "href": "/services"
+        "label": "Websites",
+        "href": "/websites"
       },
       {
-        "label": "Charlevoix Web Design",
-        "href": "/case-studies/websites"
+        "label": "Website projects",
+        "href": "/websites#selected-work"
       },
       {
-        "label": "AI Business Automation",
-        "href": "/services#ai-automation-consulting"
+        "label": "Google Business Profile help",
+        "href": "/websites#google-business-profile"
       },
       {
-        "label": "Hybrid Meeting Solutions",
-        "href": "/case-studies/hybrid-meeting-solutions"
+        "label": "Hybrid meeting solutions",
+        "href": "/hybrid-meeting-solutions"
       }
     ],
     "companyLinks": [
       {
-        "label": "Home",
-        "href": "/"
-      },
-      {
         "label": "About",
         "href": "/about"
+      },
+      {
+        "label": "Journal",
+        "href": "/blog"
       },
       {
         "label": "Contact",
@@ -92,47 +104,34 @@
   "seo": {
     "defaultOgImage": "/marketing/login-og.jpg",
     "home": {
-      "title": "Mike Cebulski | Northern Michigan Technical Consulting",
-      "description": "Technical consulting, marketing websites, and automation support for Northern Michigan businesses that want modern systems with a human touch.",
+      "title": "Charlevoix Web Design & Development | Mike Cebulski",
+      "description": "Fast, polished websites for Northern Michigan businesses. Simple marketing websites from $250 setup + $100/month with updates handled by Mike. Google Business Profile help available.",
       "keywords": [
-        "northern michigan technical consulting",
         "charlevoix web design",
-        "small business automation",
-        "hybrid meeting systems",
-        "mike cebulski"
-      ]
-    },
-    "services": {
-      "title": "Services | Mike Cebulski",
-      "description": "Consulting, websites, and hybrid meeting systems for Northern Michigan businesses that need practical technical execution.",
-      "keywords": [
-        "technical consulting services",
-        "business website development",
-        "ai automation consulting",
-        "hybrid meeting solutions",
-        "northern michigan consultant"
+        "northern michigan website development",
+        "small business marketing websites",
+        "website management",
+        "google business profile setup"
       ]
     },
     "about": {
       "title": "About | Mike Cebulski",
-      "description": "Learn more about Mike Cebulski's approach to websites, hybrid meeting systems, and practical technical execution in Northern Michigan.",
+      "description": "Meet Mike Cebulski, a Charlevoix-based website developer helping Northern Michigan businesses get a sharper online presence with personal ongoing support.",
       "keywords": [
-        "about mike cebulski",
-        "charlevoix technology consultant",
-        "northern michigan web consultant",
-        "local technical partner",
-        "website and automation specialist"
+        "mike cebulski website developer",
+        "charlevoix web designer",
+        "northern michigan web development",
+        "local website support"
       ]
     },
     "contact": {
       "title": "Contact | Mike Cebulski",
-      "description": "Get in touch about marketing websites, hybrid meeting solutions, and AI automation consulting.",
+      "description": "Talk with Mike about website development, Google Business Profile support, or hybrid meeting and Zoom Rooms solutions for your Northern Michigan business.",
       "keywords": [
-        "contact mike cebulski",
-        "charlevoix web consultant contact",
-        "automation consulting inquiry",
-        "hybrid meeting consultation",
-        "website project inquiry"
+        "contact charlevoix website developer",
+        "website project inquiry",
+        "google business profile setup help",
+        "northern michigan web design"
       ]
     },
     "blogIndex": {
@@ -146,57 +145,51 @@
         "mike cebulski blog"
       ]
     },
-    "caseStudies": {
-      "hybridMeetingSolutions": {
-        "title": "Hybrid Meeting & Zoom Room Solutions | Mike Cebulski",
-        "description": "Zoom Rooms and hybrid meeting systems for organizations across Northern Michigan.",
-        "keywords": [
-          "hybrid meeting case study",
-          "hybrid meeting solutions northern michigan",
-          "zoom rooms consultant",
-          "conference room av integration",
-          "boardroom av consultant",
-          "conference room technology project",
-          "remote meeting system design",
-          "hybrid collaboration solution"
-        ]
-      },
-      "websites": {
-        "title": "Charlevoix Web Design & Portfolio | Mike Cebulski",
-        "description": "Websites designed and built for Charlevoix and Northern Michigan organizations.",
-        "keywords": [
-          "charlevoix web design",
-          "website designer near me",
-          "charlevoix website developer",
-          "northern michigan web design",
-          "small business website design",
-          "website case study",
-          "small business website portfolio",
-          "marketing website consultant",
-          "next.js website case study",
-          "northern michigan website project"
-        ]
-      }
+    "websites": {
+      "title": "Websites & Web Development | Mike Cebulski",
+      "description": "Website development for Northern Michigan businesses. Simple marketing websites for $250 setup + $100/month, personal updates, local project examples, and custom development.",
+      "keywords": [
+        "charlevoix website development",
+        "small business web design",
+        "website updates and management",
+        "google business profile help",
+        "northern michigan websites",
+        "charlevoix website portfolio",
+        "custom web development northern michigan"
+      ]
+    },
+    "hybridMeetingSolutions": {
+      "title": "Hybrid Meeting & Zoom Room Solutions | Mike Cebulski",
+      "description": "Hybrid meeting solutions, Zoom Rooms, AV integration, and meeting kiosks in Northern Michigan. Room planning, setup, device management, and personal support from Mike Cebulski.",
+      "keywords": [
+        "hybrid meeting solutions northern michigan",
+        "zoom rooms consultant",
+        "conference room av integration",
+        "boardroom av consultant",
+        "conference room technology project",
+        "remote meeting system design",
+        "hybrid collaboration solution",
+        "zoom rooms kiosk",
+        "meeting room setup charlevoix"
+      ]
     }
   },
   "home": {
-    "eyebrow": "Independent technology services",
-    "headline": "Elevate Your Business with Modern Tech.",
-    "highlight": "Business",
-    "body": "Mike Cebulski provides hands-on technical services across web systems, automation, AV, and hardware integration for businesses throughout Northern Michigan.",
-    "heroCaptionEyebrow": "Serving Northern Michigan",
-    "heroCaptionTitle": "Hands-on support for regional businesses.",
-    "backgroundTitle": "Technical Mind. Strategic Vision.",
+    "eyebrow": "Northern Michigan web development",
+    "headline": "Get found. Earn trust.",
+    "highlight": "Earn trust.",
+    "body": "Fast, polished websites built for Google visibility and customer confidence. I build it. I keep it current.",
+    "heroCaptionEyebrow": "Built in Charlevoix",
+    "heroCaptionTitle": "Real websites for local organizations.",
+    "backgroundTitle": "Your website, handled.",
     "backgroundBody": [
-      "Based in Charlevoix the Beautiful, I help businesses turn overwhelming tech challenges into simple, reliable systems. My approach is user experience first, so the complexity stays behind the scenes and the tools feel natural to use.",
-      "Over the years, I’ve earned trust across our community, supporting local nonprofits and working with courts across Michigan. Alongside my technical work, I’m also a certified counselor at BASES here in Charlevoix, which deepened my passion for helping people and improving how teams work.",
-      "Whether I’m building a custom website or designing an automated hybrid meeting room, the goal stays the same: dependable solutions that reduce friction and make everyday work feel smoother, easier, and more intentional."
+      "I build websites for local businesses and keep them current, so your time stays focused on your customers."
     ]
   },
   "servicesIntro": {
-    "eyebrow": "Services",
-    "title": "Clear systems. Local support.",
-    "body": "I help local businesses navigate the digital landscape with automation, modern and captivating websites, and seamless hybrid meeting solutions."
+    "eyebrow": "Website development",
+    "title": "Your website, handled.",
+    "body": "Fast, polished marketing websites with personal ongoing support. Custom web development and Google Business Profile setup help are also available."
   },
   "services": [
     {
@@ -216,21 +209,21 @@
       "eyebrow": "Websites",
       "headline": "Business websites",
       "title": "A sharper digital presence to stand out from the rest.",
-      "description": "Websites built around business-specific logic, reliable integrations, and polished delivery.",
-      "price": "$2400",
+      "description": "Fast, polished marketing websites with personal ongoing support. Custom functionality is quoted separately.",
+      "price": "$250",
       "priceSuffix": "setup",
       "priceDetail": {
         "amount": "+$100/mo",
-        "label": "hosting, analytics + unlimited edits"
+        "label": "personally managed website updates"
       },
       "featured": true,
       "bullets": [
-        "Error monitoring + viewer analytics",
-        "Portable deployment",
-        "Fast AI-assisted delivery"
+        "Simple marketing websites without a CMS",
+        "Fast pages for phones and desktops",
+        "Personal ongoing support"
       ],
       "ctaLabel": "View Portfolio",
-      "ctaHref": "/case-studies/websites"
+      "ctaHref": "/websites#selected-work"
     },
     {
       "id": "hybrid-meeting-solutions",
@@ -246,7 +239,7 @@
       },
       "bullets": ["Room planning", "AV integration", "Support documentation"],
       "ctaLabel": "Consult on Hardware",
-      "ctaHref": "/case-studies/hybrid-meeting-solutions"
+      "ctaHref": "/hybrid-meeting-solutions"
     }
   ],
   "servicePrinciples": [
@@ -271,7 +264,7 @@
       "middle": "and",
       "accentSky": "infrastructure."
     },
-    "body": "I build the systems around the work, websites that communicate clearly, spaces that support collaboration, and automation that makes the day-to-day feel less wasteful.",
+    "body": "I’m Mike Cebulski, a website developer based in Charlevoix. I help Northern Michigan businesses turn their online presence into something clear, fast, and easy to trust. From a simple marketing website to custom web software, I bring hands-on technical experience and personal follow-through to the work.",
     "stats": [
       {
         "label": "Home base",
@@ -321,10 +314,10 @@
   ],
   "contactPage": {
     "eyebrow": "Get in Touch",
-    "title": "Let's build the right solution for your business.",
+    "title": "Let’s build your online presence.",
     "detailsTitle": "Contact Details",
-    "formTitle": "Tell me about the project.",
-    "formBody": "Share enough context to outline the goal, the timeline, and the friction you want to solve."
+    "formTitle": "Tell me about your business.",
+    "formBody": "Share what you need: a new website, a redesign, custom development, or help with your Google Business Profile."
   },
   "blogPage": {
     "eyebrow": "Journal",
@@ -471,9 +464,23 @@
   ],
   "cta": {
     "eyebrow": "Next step",
-    "title": "Ready to solve your next challenge?",
-    "body": "Let's discuss how customized technical solutions can streamline your operations and drive growth.",
-    "buttonLabel": "Book a Free Consultation",
+    "title": "Let’s build your next website.",
+    "body": "A fast, polished website, with one local person to build it and keep it up to date. Tell me what your business needs.",
+    "buttonLabel": "Tell me about your website",
     "buttonHref": "/contact"
+  },
+  "websiteOffer": {
+    "setupPrice": 250,
+    "monthlyPrice": 100,
+    "setupDescription": "Your marketing website, ready to launch.",
+    "managementDescription": "Send me your updates. I’ll handle them.",
+    "qualification": "For simple marketing websites without a CMS. Custom features quoted separately."
+  },
+  "hybridMeetingOffer": {
+    "setupPrice": 3200,
+    "monthlyPrice": 100,
+    "setupDescription": "A room setup planned around how your team meets.",
+    "managementDescription": "Ongoing device management with a local point of contact.",
+    "qualification": "Room requirements, equipment, and the full installation scope are confirmed before work begins."
   }
 }

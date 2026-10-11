@@ -9,6 +9,23 @@ export const metadata = createMarketingMetadata({
   title: websiteContent.seo.contact.title,
 })
 
-export default function ContactPage() {
-  return <MarketingContactPage />
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ inquiry?: string }>
+}) {
+  const { inquiry } = await searchParams
+  return (
+    <MarketingContactPage
+      initialInquiryType={
+        inquiry === 'google-business-profile'
+          ? 'Google Business Profile setup'
+          : inquiry === 'hybrid-meeting-solutions'
+            ? 'Hybrid meeting solutions'
+            : inquiry === 'automated-workflows'
+              ? 'AI & automated workflows'
+              : ''
+      }
+    />
+  )
 }
