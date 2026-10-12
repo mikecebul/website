@@ -83,7 +83,10 @@ function MarketingMobileNav() {
           <Menu aria-hidden="true" />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="marketing-shell web-mobile-menu">
+      <DrawerContent
+        className="marketing-shell web-mobile-menu"
+        overlayClassName="web-mobile-menu-overlay"
+      >
         <AngularFrame className="web-menu-frame" />
         <div className="web-mobile-menu-header">
           <div>
