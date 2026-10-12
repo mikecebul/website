@@ -21,10 +21,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import {
-  MarketingBlogIntro,
-  MarketingBlogContactCard,
-} from '@/components/marketing/marketing-pages'
+import { MarketingBlogIntro } from '@/components/marketing/marketing-pages'
 import { websiteContent } from '@/lib/website-content'
 import { formatDateTime } from '@/lib/formatDateTime'
 
@@ -200,10 +197,6 @@ function BlogIndexPage() {
               </PaginationContent>
             </Pagination>
           ) : null}
-        </div>
-
-        <div className="web-journal-sidebar">
-          <MarketingBlogContactCard />
         </div>
       </section>
     </PageFrame>

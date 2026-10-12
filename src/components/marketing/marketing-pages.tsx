@@ -297,31 +297,6 @@ export function MarketingBlogIntro() {
   )
 }
 
-export function MarketingBlogContactCard() {
-  return (
-    <aside className="web-panel web-journal-contact">
-      <AngularFrame />
-      <p className="web-eyebrow">Put an idea to work</p>
-      <h2 className="web-heading">
-        Let’s build
-        <br />
-        something useful.
-      </h2>
-      <p className="web-copy">
-        A better website, a simpler workflow, or a clearer plan for your business. Tell me what you
-        have in mind.
-      </p>
-      <WebsiteAction href="/contact">Let’s talk</WebsiteAction>
-      <Separator />
-      <p className="web-journal-contact-note">
-        Charlevoix, Michigan.
-        <br />
-        Personal support, from idea to launch.
-      </p>
-    </aside>
-  )
-}
-
 function ContactInfoItem({
   icon,
   label,

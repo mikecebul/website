@@ -1443,6 +1443,9 @@
   min-height: 44px;
 }
 .web-mobile-menu[data-vaul-drawer-direction='right'] {
+  /* Include the floating inset and hold the last frame until Presence unmounts. */
+  --initial-transform: calc(100% + 8px);
+  animation-fill-mode: both;
   isolation: isolate;
   inset: 8px 8px 8px auto;
   width: min(calc(100vw - 16px), 430px);
@@ -1462,7 +1465,8 @@
     linear-gradient(160deg, #0b1d33, #061426 70%);
   background: linear-gradient(130deg, #4ba4d1, #16466d 45%, #2999c6);
 }
-body:has(.web-mobile-menu) [data-slot='drawer-overlay'] {
+.web-mobile-menu-overlay[data-slot='drawer-overlay'] {
+  animation-fill-mode: both;
   background: rgba(2, 10, 22, 0.68);
   backdrop-filter: blur(9px);
 }
@@ -2137,7 +2141,7 @@ body:has(.web-mobile-menu) [data-slot='drawer-overlay'] {
 }
 .web-journal-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
   gap: 40px;
 }
@@ -2195,24 +2199,6 @@ body:has(.web-mobile-menu) [data-slot='drawer-overlay'] {
   width: 44px;
   height: 44px;
   border-radius: 3px;
-}
-.web-journal-contact {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  padding: 32px;
-}
-.web-journal-contact .web-heading {
-  font-size: clamp(2rem, 3vw, 2.5rem);
-}
-.web-journal-contact .web-copy {
-  font-size: 15px;
-}
-.web-journal-contact-note {
-  font-size: 12px;
-  line-height: 1.8;
-  color: var(--marketing-copy-soft);
 }
 .web-article-back {
   padding-top: 40px;
@@ -2290,7 +2276,6 @@ body:has(.web-mobile-menu) [data-slot='drawer-overlay'] {
   }
   .web-journal-grid {
     gap: 24px;
-    grid-template-columns: 1.35fr 1fr;
   }
   .web-page-cta {
     padding: 38px;
@@ -2423,9 +2408,6 @@ body:has(.web-mobile-menu) [data-slot='drawer-overlay'] {
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  .web-journal-contact .web-heading {
-    font-size: 34px;
-  }
   .web-article {
     padding: 35px;
   }
@@ -2554,9 +2536,6 @@ body:has(.web-mobile-menu) [data-slot='drawer-overlay'] {
   }
   .web-journal-post h2 {
     font-size: 29px;
-  }
-  .web-journal-contact {
-    padding: 28px;
   }
   .web-article-back {
     padding-top: 28px;
