@@ -12,10 +12,26 @@ const metadata = createMarketingMetadata({
 })
 
 function ContactPage() {
-  return <MarketingContactPage />
+  const { inquiry } = Route.useSearch()
+  return (
+    <MarketingContactPage
+      initialInquiryType={
+        inquiry === 'google-business-profile'
+          ? 'Google Business Profile setup'
+          : inquiry === 'hybrid-meeting-solutions'
+            ? 'Hybrid meeting solutions'
+            : inquiry === 'automated-workflows'
+              ? 'AI & automated workflows'
+              : ''
+      }
+    />
+  )
 }
 
 export const Route = createFileRoute('/_marketing/contact')({
+  validateSearch: (search: Record<string, unknown>) => ({
+    inquiry: typeof search.inquiry === 'string' ? search.inquiry : undefined,
+  }),
   head: () => createMarketingHead(metadata),
   component: ContactPage,
 })

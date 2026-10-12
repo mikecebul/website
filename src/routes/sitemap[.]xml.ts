@@ -5,7 +5,6 @@ export const Route = createFileRoute('/sitemap.xml')({
     handlers: {
       GET: async () => {
         const { getCMS } = await import('@/server/cms')
-        const { websiteContent } = await import('@/lib/website-content')
         const baseUrl =
           process.env.VITE_SERVER_URL ||
           process.env.NEXT_PUBLIC_SERVER_URL ||
@@ -38,11 +37,11 @@ export const Route = createFileRoute('/sitemap.xml')({
               .at(-1) || fallback
           entries = [
             '',
-            '/services',
+            '/websites',
+            '/hybrid-meeting-solutions',
             '/about',
             '/contact',
             '/blog',
-            ...websiteContent.caseStudies.map((study) => `/case-studies/${study.slug}`),
           ].map((path) => ({
             url: `${baseUrl}${path}`,
             lastModified: path === '/blog' ? latest : fallback,

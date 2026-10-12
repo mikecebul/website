@@ -4,7 +4,6 @@ import {
   DefaultNodeTypes,
   SerializedBlockNode,
   SerializedLinkNode,
-  type DefaultTypedEditorState,
 } from '@payloadcms/richtext-lexical'
 import {
   JSXConvertersFunction,
@@ -13,7 +12,7 @@ import {
 
 import { cn } from '@/lib/utils'
 import Link from '@/components/router-link'
-import { useId, type ReactNode } from 'react'
+import { useId, type ReactNode, type ComponentProps } from 'react'
 import { addHTTPS } from '@/lib/addHTTPS'
 
 type MediaBlockProps = {
@@ -219,10 +218,10 @@ function ChecklistItem({
   )
 }
 
-export type RichTextContent = DefaultTypedEditorState
+export type RichTextContent = ComponentProps<typeof ConvertRichText>['data']
 
 type Props = {
-  data: DefaultTypedEditorState
+  data: ComponentProps<typeof ConvertRichText>['data']
   enableGutter?: boolean
   enableProse?: boolean
   paragraphClassName?: string

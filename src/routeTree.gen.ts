@@ -18,9 +18,10 @@ import { Route as MarketingIndexRouteImport } from './routes/_marketing.index'
 import { Route as MarketingSplatRouteImport } from './routes/_marketing.$'
 import { Route as MarketingAboutRouteImport } from './routes/_marketing.about'
 import { Route as MarketingContactRouteImport } from './routes/_marketing.contact'
+import { Route as MarketingHybridMeetingSolutionsRouteImport } from './routes/_marketing.hybrid-meeting-solutions'
 import { Route as MarketingLoginRouteImport } from './routes/_marketing.login'
 import { Route as MarketingSentryExamplePageRouteImport } from './routes/_marketing.sentry-example-page'
-import { Route as MarketingServicesRouteImport } from './routes/_marketing.services'
+import { Route as MarketingWebsitesRouteImport } from './routes/_marketing.websites'
 import { Route as ApiContactRouteImport } from './routes/api.contact'
 import { Route as ApiSentryExampleApiRouteImport } from './routes/api.sentry-example-api'
 import { Route as ApiSentryTunnelRouteImport } from './routes/api.sentry-tunnel'
@@ -28,8 +29,6 @@ import { Route as NextExitPreviewRouteImport } from './routes/next.exit-preview'
 import { Route as NextPreviewRouteImport } from './routes/next.preview'
 import { Route as MarketingBlogIndexRouteImport } from './routes/_marketing.blog.index'
 import { Route as MarketingBlogSlugRouteImport } from './routes/_marketing.blog.$slug'
-import { Route as MarketingCaseStudiesHybridMeetingSolutionsRouteImport } from './routes/_marketing.case-studies.hybrid-meeting-solutions'
-import { Route as MarketingCaseStudiesWebsitesRouteImport } from './routes/_marketing.case-studies.websites'
 import { Route as PayloadAdminIndexRouteImport } from './routes/_payload/admin.index'
 import { Route as PayloadAdminSplatRouteImport } from './routes/_payload/admin.$'
 import { Route as PayloadApiSplatRouteImport } from './routes/_payload/api.$'
@@ -77,6 +76,12 @@ const MarketingContactRoute = MarketingContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => MarketingRoute,
 } as any)
+const MarketingHybridMeetingSolutionsRoute =
+  MarketingHybridMeetingSolutionsRouteImport.update({
+    id: '/hybrid-meeting-solutions',
+    path: '/hybrid-meeting-solutions',
+    getParentRoute: () => MarketingRoute,
+  } as any)
 const MarketingLoginRoute = MarketingLoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -88,9 +93,9 @@ const MarketingSentryExamplePageRoute =
     path: '/sentry-example-page',
     getParentRoute: () => MarketingRoute,
   } as any)
-const MarketingServicesRoute = MarketingServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
+const MarketingWebsitesRoute = MarketingWebsitesRouteImport.update({
+  id: '/websites',
+  path: '/websites',
   getParentRoute: () => MarketingRoute,
 } as any)
 const ApiContactRoute = ApiContactRouteImport.update({
@@ -128,18 +133,6 @@ const MarketingBlogSlugRoute = MarketingBlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => MarketingRoute,
 } as any)
-const MarketingCaseStudiesHybridMeetingSolutionsRoute =
-  MarketingCaseStudiesHybridMeetingSolutionsRouteImport.update({
-    id: '/case-studies/hybrid-meeting-solutions',
-    path: '/case-studies/hybrid-meeting-solutions',
-    getParentRoute: () => MarketingRoute,
-  } as any)
-const MarketingCaseStudiesWebsitesRoute =
-  MarketingCaseStudiesWebsitesRouteImport.update({
-    id: '/case-studies/websites',
-    path: '/case-studies/websites',
-    getParentRoute: () => MarketingRoute,
-  } as any)
 const PayloadAdminIndexRoute = PayloadAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -164,17 +157,16 @@ export interface FileRoutesByFullPath {
   '/$': typeof MarketingSplatRoute
   '/about': typeof MarketingAboutRoute
   '/contact': typeof MarketingContactRoute
+  '/hybrid-meeting-solutions': typeof MarketingHybridMeetingSolutionsRoute
   '/login': typeof MarketingLoginRoute
   '/sentry-example-page': typeof MarketingSentryExamplePageRoute
-  '/services': typeof MarketingServicesRoute
+  '/websites': typeof MarketingWebsitesRoute
   '/api/contact': typeof ApiContactRoute
   '/api/sentry-example-api': typeof ApiSentryExampleApiRoute
   '/api/sentry-tunnel': typeof ApiSentryTunnelRoute
   '/next/exit-preview': typeof NextExitPreviewRoute
   '/next/preview': typeof NextPreviewRoute
   '/blog/$slug': typeof MarketingBlogSlugRoute
-  '/case-studies/hybrid-meeting-solutions': typeof MarketingCaseStudiesHybridMeetingSolutionsRoute
-  '/case-studies/websites': typeof MarketingCaseStudiesWebsitesRoute
   '/admin/$': typeof PayloadAdminSplatRoute
   '/api/$': typeof PayloadApiSplatRoute
   '/blog/': typeof MarketingBlogIndexRoute
@@ -188,17 +180,16 @@ export interface FileRoutesByTo {
   '/$': typeof MarketingSplatRoute
   '/about': typeof MarketingAboutRoute
   '/contact': typeof MarketingContactRoute
+  '/hybrid-meeting-solutions': typeof MarketingHybridMeetingSolutionsRoute
   '/login': typeof MarketingLoginRoute
   '/sentry-example-page': typeof MarketingSentryExamplePageRoute
-  '/services': typeof MarketingServicesRoute
+  '/websites': typeof MarketingWebsitesRoute
   '/api/contact': typeof ApiContactRoute
   '/api/sentry-example-api': typeof ApiSentryExampleApiRoute
   '/api/sentry-tunnel': typeof ApiSentryTunnelRoute
   '/next/exit-preview': typeof NextExitPreviewRoute
   '/next/preview': typeof NextPreviewRoute
   '/blog/$slug': typeof MarketingBlogSlugRoute
-  '/case-studies/hybrid-meeting-solutions': typeof MarketingCaseStudiesHybridMeetingSolutionsRoute
-  '/case-studies/websites': typeof MarketingCaseStudiesWebsitesRoute
   '/admin/$': typeof PayloadAdminSplatRoute
   '/api/$': typeof PayloadApiSplatRoute
   '/blog': typeof MarketingBlogIndexRoute
@@ -214,9 +205,10 @@ export interface FileRoutesById {
   '/_marketing/$': typeof MarketingSplatRoute
   '/_marketing/about': typeof MarketingAboutRoute
   '/_marketing/contact': typeof MarketingContactRoute
+  '/_marketing/hybrid-meeting-solutions': typeof MarketingHybridMeetingSolutionsRoute
   '/_marketing/login': typeof MarketingLoginRoute
   '/_marketing/sentry-example-page': typeof MarketingSentryExamplePageRoute
-  '/_marketing/services': typeof MarketingServicesRoute
+  '/_marketing/websites': typeof MarketingWebsitesRoute
   '/api/contact': typeof ApiContactRoute
   '/api/sentry-example-api': typeof ApiSentryExampleApiRoute
   '/api/sentry-tunnel': typeof ApiSentryTunnelRoute
@@ -224,8 +216,6 @@ export interface FileRoutesById {
   '/next/preview': typeof NextPreviewRoute
   '/_marketing/': typeof MarketingIndexRoute
   '/_marketing/blog/$slug': typeof MarketingBlogSlugRoute
-  '/_marketing/case-studies/hybrid-meeting-solutions': typeof MarketingCaseStudiesHybridMeetingSolutionsRoute
-  '/_marketing/case-studies/websites': typeof MarketingCaseStudiesWebsitesRoute
   '/_payload/admin/$': typeof PayloadAdminSplatRoute
   '/_payload/api/$': typeof PayloadApiSplatRoute
   '/_marketing/blog/': typeof MarketingBlogIndexRoute
@@ -241,17 +231,16 @@ export interface FileRouteTypes {
     | '/$'
     | '/about'
     | '/contact'
+    | '/hybrid-meeting-solutions'
     | '/login'
     | '/sentry-example-page'
-    | '/services'
+    | '/websites'
     | '/api/contact'
     | '/api/sentry-example-api'
     | '/api/sentry-tunnel'
     | '/next/exit-preview'
     | '/next/preview'
     | '/blog/$slug'
-    | '/case-studies/hybrid-meeting-solutions'
-    | '/case-studies/websites'
     | '/admin/$'
     | '/api/$'
     | '/blog/'
@@ -265,17 +254,16 @@ export interface FileRouteTypes {
     | '/$'
     | '/about'
     | '/contact'
+    | '/hybrid-meeting-solutions'
     | '/login'
     | '/sentry-example-page'
-    | '/services'
+    | '/websites'
     | '/api/contact'
     | '/api/sentry-example-api'
     | '/api/sentry-tunnel'
     | '/next/exit-preview'
     | '/next/preview'
     | '/blog/$slug'
-    | '/case-studies/hybrid-meeting-solutions'
-    | '/case-studies/websites'
     | '/admin/$'
     | '/api/$'
     | '/blog'
@@ -290,9 +278,10 @@ export interface FileRouteTypes {
     | '/_marketing/$'
     | '/_marketing/about'
     | '/_marketing/contact'
+    | '/_marketing/hybrid-meeting-solutions'
     | '/_marketing/login'
     | '/_marketing/sentry-example-page'
-    | '/_marketing/services'
+    | '/_marketing/websites'
     | '/api/contact'
     | '/api/sentry-example-api'
     | '/api/sentry-tunnel'
@@ -300,8 +289,6 @@ export interface FileRouteTypes {
     | '/next/preview'
     | '/_marketing/'
     | '/_marketing/blog/$slug'
-    | '/_marketing/case-studies/hybrid-meeting-solutions'
-    | '/_marketing/case-studies/websites'
     | '/_payload/admin/$'
     | '/_payload/api/$'
     | '/_marketing/blog/'
@@ -386,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketingContactRouteImport
       parentRoute: typeof MarketingRoute
     }
+    '/_marketing/hybrid-meeting-solutions': {
+      id: '/_marketing/hybrid-meeting-solutions'
+      path: '/hybrid-meeting-solutions'
+      fullPath: '/hybrid-meeting-solutions'
+      preLoaderRoute: typeof MarketingHybridMeetingSolutionsRouteImport
+      parentRoute: typeof MarketingRoute
+    }
     '/_marketing/login': {
       id: '/_marketing/login'
       path: '/login'
@@ -400,11 +394,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketingSentryExamplePageRouteImport
       parentRoute: typeof MarketingRoute
     }
-    '/_marketing/services': {
-      id: '/_marketing/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof MarketingServicesRouteImport
+    '/_marketing/websites': {
+      id: '/_marketing/websites'
+      path: '/websites'
+      fullPath: '/websites'
+      preLoaderRoute: typeof MarketingWebsitesRouteImport
       parentRoute: typeof MarketingRoute
     }
     '/api/contact': {
@@ -456,20 +450,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketingBlogSlugRouteImport
       parentRoute: typeof MarketingRoute
     }
-    '/_marketing/case-studies/hybrid-meeting-solutions': {
-      id: '/_marketing/case-studies/hybrid-meeting-solutions'
-      path: '/case-studies/hybrid-meeting-solutions'
-      fullPath: '/case-studies/hybrid-meeting-solutions'
-      preLoaderRoute: typeof MarketingCaseStudiesHybridMeetingSolutionsRouteImport
-      parentRoute: typeof MarketingRoute
-    }
-    '/_marketing/case-studies/websites': {
-      id: '/_marketing/case-studies/websites'
-      path: '/case-studies/websites'
-      fullPath: '/case-studies/websites'
-      preLoaderRoute: typeof MarketingCaseStudiesWebsitesRouteImport
-      parentRoute: typeof MarketingRoute
-    }
     '/_payload/admin/': {
       id: '/_payload/admin/'
       path: '/admin'
@@ -498,13 +478,12 @@ interface MarketingRouteChildren {
   MarketingSplatRoute: typeof MarketingSplatRoute
   MarketingAboutRoute: typeof MarketingAboutRoute
   MarketingContactRoute: typeof MarketingContactRoute
+  MarketingHybridMeetingSolutionsRoute: typeof MarketingHybridMeetingSolutionsRoute
   MarketingLoginRoute: typeof MarketingLoginRoute
   MarketingSentryExamplePageRoute: typeof MarketingSentryExamplePageRoute
-  MarketingServicesRoute: typeof MarketingServicesRoute
+  MarketingWebsitesRoute: typeof MarketingWebsitesRoute
   MarketingIndexRoute: typeof MarketingIndexRoute
   MarketingBlogSlugRoute: typeof MarketingBlogSlugRoute
-  MarketingCaseStudiesHybridMeetingSolutionsRoute: typeof MarketingCaseStudiesHybridMeetingSolutionsRoute
-  MarketingCaseStudiesWebsitesRoute: typeof MarketingCaseStudiesWebsitesRoute
   MarketingBlogIndexRoute: typeof MarketingBlogIndexRoute
 }
 
@@ -512,14 +491,12 @@ const MarketingRouteChildren: MarketingRouteChildren = {
   MarketingSplatRoute: MarketingSplatRoute,
   MarketingAboutRoute: MarketingAboutRoute,
   MarketingContactRoute: MarketingContactRoute,
+  MarketingHybridMeetingSolutionsRoute: MarketingHybridMeetingSolutionsRoute,
   MarketingLoginRoute: MarketingLoginRoute,
   MarketingSentryExamplePageRoute: MarketingSentryExamplePageRoute,
-  MarketingServicesRoute: MarketingServicesRoute,
+  MarketingWebsitesRoute: MarketingWebsitesRoute,
   MarketingIndexRoute: MarketingIndexRoute,
   MarketingBlogSlugRoute: MarketingBlogSlugRoute,
-  MarketingCaseStudiesHybridMeetingSolutionsRoute:
-    MarketingCaseStudiesHybridMeetingSolutionsRoute,
-  MarketingCaseStudiesWebsitesRoute: MarketingCaseStudiesWebsitesRoute,
   MarketingBlogIndexRoute: MarketingBlogIndexRoute,
 }
 

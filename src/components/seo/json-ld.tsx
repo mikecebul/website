@@ -42,8 +42,10 @@ export const professionalServiceJsonLd = {
   priceRange: '$$',
   address: {
     '@type': 'PostalAddress',
+    streetAddress: '201 State St, Lower Lever',
     addressLocality: 'Charlevoix',
     addressRegion: 'MI',
+    postalCode: '49720',
     addressCountry: 'US',
   },
   geo: {
@@ -60,8 +62,10 @@ export const professionalServiceJsonLd = {
     'Small business website design',
     'Website development',
     'Local search engine optimization',
-    'Business automation',
-    'Hybrid meeting systems',
+    'Website management',
+    'Google Business Profile setup',
+    'Hybrid meeting solutions',
+    'Zoom Rooms and audiovisual integration',
   ],
 }
 
@@ -131,13 +135,17 @@ const createServiceJsonLd = ({
   },
 ]
 
-export const webDesignPortfolioJsonLd = createServiceJsonLd({
-  description: websiteContent.seo.caseStudies.websites.description,
-  name: 'Charlevoix Web Design',
-  pathname: '/case-studies/websites',
-  price: '2400',
-  serviceType: 'Small business website design and development',
-})
+export const websitePackageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${baseUrl}/websites#website-package`,
+  name: 'Simple marketing website development and management',
+  serviceType: 'Marketing website development and ongoing management',
+  description: `A simple marketing website with a $${websiteContent.websiteOffer.setupPrice} one-time setup fee and $${websiteContent.websiteOffer.monthlyPrice} per month for ongoing management. ${websiteContent.websiteOffer.qualification}`,
+  url: `${baseUrl}/websites`,
+  provider: { '@id': businessId },
+  areaServed: serviceAreas,
+}
 
 export const automationServicesJsonLd = createServiceJsonLd({
   description: 'System syncing and email automation for Northern Michigan businesses.',
@@ -148,10 +156,10 @@ export const automationServicesJsonLd = createServiceJsonLd({
   serviceType: 'Business process, system integration, email, and AI automation consulting',
 })
 
-export const hybridMeetingCaseStudyJsonLd = createServiceJsonLd({
-  description: websiteContent.seo.caseStudies.hybridMeetingSolutions.description,
+export const hybridMeetingServiceJsonLd = createServiceJsonLd({
+  description: websiteContent.seo.hybridMeetingSolutions.description,
   name: 'Hybrid Meeting and Zoom Room Solutions',
-  pathname: '/case-studies/hybrid-meeting-solutions',
-  price: '3200',
+  pathname: '/hybrid-meeting-solutions',
+  price: String(websiteContent.hybridMeetingOffer.setupPrice),
   serviceType: 'Hybrid meeting room, Zoom Rooms, and audiovisual integration consulting',
 })

@@ -12,6 +12,13 @@ const redirects = async () => {
     source: '/:path((?!ie-incompatible.html$).*)', // all pages except the incompatibility page
   }
   const additionalRedirects = [
+    { source: '/services', destination: '/websites', permanent: true },
+    { source: '/case-studies/websites', destination: '/websites', permanent: true },
+    {
+      source: '/case-studies/hybrid-meeting-solutions',
+      destination: '/hybrid-meeting-solutions',
+      permanent: true,
+    },
     {
       source: '/wp/:path*',
       destination: '/',

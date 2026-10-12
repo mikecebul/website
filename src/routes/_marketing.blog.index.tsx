@@ -1,8 +1,17 @@
+import { NotebookPen, ArrowUpRight } from 'lucide-react'
+import { AngularFrame, PageFrame, WebsiteAction } from '@/components/marketing/design-system'
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { getBlogIndex } from '@/server/blog.functions'
 import { createMarketingHead } from '@/lib/marketing-metadata'
 import Link from '@/components/router-link'
-import Image from '@/components/image'
 import {
   Pagination,
   PaginationContent,
@@ -14,7 +23,7 @@ import {
 } from '@/components/ui/pagination'
 import {
   MarketingBlogIntro,
-  MarketingBlogNewsletterCard,
+  MarketingBlogContactCard,
 } from '@/components/marketing/marketing-pages'
 import { websiteContent } from '@/lib/website-content'
 import { formatDateTime } from '@/lib/formatDateTime'
@@ -105,69 +114,52 @@ function BlogIndexPage() {
   const { result, requestedPage } = Route.useLoaderData()
   const pageItems = getPageItems(requestedPage, result.totalPages)
   return (
-    <main className="pt-8 pb-24 sm:pt-10 lg:pt-14 lg:pb-32">
+    <PageFrame className="web-journal-page">
       <MarketingBlogIntro />
-      <section className="mx-auto mt-16 grid max-w-[1220px] gap-6 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] lg:px-12">
-        <div className="space-y-6">
+      <section className="web-container web-journal-grid">
+        <div className="web-journal-posts">
           {result.docs.length === 0 ? (
-            <article className="overflow-hidden rounded-[34px] border border-white/8 bg-[rgba(19,27,46,0.85)] p-8 shadow-[0_26px_70px_rgba(0,0,0,0.3)]">
-              <p className="text-muted-foreground">No blog posts have been published yet.</p>
-            </article>
+            <Empty className="web-panel web-journal-empty">
+              <AngularFrame />
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <NotebookPen aria-hidden="true" />
+                </EmptyMedia>
+                <EmptyTitle>New notes are on the way.</EmptyTitle>
+                <EmptyDescription>
+                  No articles have been published yet. In the meantime, take a look at a few recent
+                  projects.
+                </EmptyDescription>
+              </EmptyHeader>
+              <EmptyContent>
+                <WebsiteAction href="/websites#selected-work">Explore the work</WebsiteAction>
+              </EmptyContent>
+            </Empty>
           ) : (
             result.docs.map((post, index) => {
               if (!post.slug) return null
-
               const publishedAt = post.firstPublishedAt || post.createdAt
-              const articleClassName =
-                index === 0
-                  ? 'overflow-hidden rounded-[34px] border border-white/8 bg-[rgba(19,27,46,0.85)] shadow-[0_26px_70px_rgba(0,0,0,0.3)]'
-                  : 'grid gap-4 rounded-[28px] border border-white/8 bg-[rgba(19,27,46,0.85)] p-5'
-
               return (
-                <article key={post.id} className={articleClassName}>
-                  {index === 0 ? (
-                    <>
-                      <Image
-                        alt={post.title}
-                        className="h-[320px] w-full object-cover"
-                        src={websiteContent.images.dataVisualization}
-                        width={1600}
-                        height={1200}
-                        sizes="(min-width: 1024px) 60vw, 100vw"
-                      />
-                      <div className="p-8">
-                        {publishedAt ? (
-                          <p className="text-sm uppercase tracking-[0.28em] text-(--marketing-sky)">
-                            {formatDateTime(publishedAt)}
-                          </p>
-                        ) : null}
-                        <h2 className="mt-3 max-w-2xl font-heading text-4xl tracking-[-0.06em] text-(--marketing-heading)">
-                          <Link
-                            className="transition-colors hover:text-(--marketing-gold)"
-                            href={`/blog/${post.slug}`}
-                          >
-                            {post.title}
-                          </Link>
-                        </h2>
-                      </div>
-                    </>
-                  ) : (
-                    <div>
-                      {publishedAt ? (
-                        <p className="text-xs uppercase tracking-[0.28em] text-(--marketing-gold)">
-                          {formatDateTime(publishedAt)}
-                        </p>
-                      ) : null}
-                      <h3 className="mt-3 font-heading text-2xl tracking-[-0.04em] text-(--marketing-heading)">
-                        <Link
-                          className="transition-colors hover:text-(--marketing-gold)"
-                          href={`/blog/${post.slug}`}
-                        >
-                          {post.title}
-                        </Link>
-                      </h3>
-                    </div>
-                  )}
+                <article
+                  key={post.id}
+                  className={`web-panel web-journal-post${index === 0 ? ' web-journal-featured' : ''}`}
+                >
+                  <AngularFrame />
+                  <p className="web-eyebrow">{index === 0 ? 'Latest note' : 'From the journal'}</p>
+                  {publishedAt ? (
+                    <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
+                  ) : null}
+                  <h2>
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  </h2>
+                  <Link
+                    className="web-text-link"
+                    href={`/blog/${post.slug}`}
+                    aria-label={`Read ${post.title}`}
+                  >
+                    Read the article
+                    <ArrowUpRight aria-hidden="true" />
+                  </Link>
                 </article>
               )
             })
@@ -210,10 +202,10 @@ function BlogIndexPage() {
           ) : null}
         </div>
 
-        <div className="grid gap-6">
-          <MarketingBlogNewsletterCard />
+        <div className="web-journal-sidebar">
+          <MarketingBlogContactCard />
         </div>
       </section>
-    </main>
+    </PageFrame>
   )
 }

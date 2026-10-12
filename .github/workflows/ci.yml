@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   unit-tests:
-    name: Unit tests
+    name: Tests and build
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -38,3 +38,9 @@ jobs:
 
       - name: Run unit tests
         run: pnpm test
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Build production server
+        run: pnpm build
