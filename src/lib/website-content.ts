@@ -45,6 +45,7 @@ const websiteContentSchema = z.object({
     hero: z.string(),
     office: z.string(),
     profile: z.string(),
+    kiosk: z.string(),
   }),
   contact: z.object({
     email: z.string().email(),
@@ -68,14 +69,11 @@ const websiteContentSchema = z.object({
   seo: z.object({
     defaultOgImage: z.string(),
     home: seoEntrySchema,
-    services: seoEntrySchema,
+    websites: seoEntrySchema,
+    hybridMeetingSolutions: seoEntrySchema,
     about: seoEntrySchema,
     contact: seoEntrySchema,
     blogIndex: seoEntrySchema,
-    caseStudies: z.object({
-      hybridMeetingSolutions: seoEntrySchema,
-      websites: seoEntrySchema,
-    }),
   }),
   home: z.object({
     backgroundBody: z.array(z.string()).min(1),
@@ -86,6 +84,20 @@ const websiteContentSchema = z.object({
     heroCaptionEyebrow: z.string(),
     heroCaptionTitle: z.string(),
     highlight: z.string(),
+  }),
+  websiteOffer: z.object({
+    setupPrice: z.number().positive(),
+    monthlyPrice: z.number().positive(),
+    setupDescription: z.string(),
+    managementDescription: z.string(),
+    qualification: z.string(),
+  }),
+  hybridMeetingOffer: z.object({
+    setupPrice: z.number().positive(),
+    monthlyPrice: z.number().positive(),
+    setupDescription: z.string(),
+    managementDescription: z.string(),
+    qualification: z.string(),
   }),
   servicesIntro: z.object({
     body: z.string(),
@@ -181,13 +193,10 @@ export type MarketingService = WebsiteContent['services'][number]
 export const websitePaths = {
   about: '/about',
   blog: '/blog',
-  caseStudies: {
-    hybridMeetingSolutions: '/case-studies/hybrid-meeting-solutions',
-    websites: '/case-studies/websites',
-  },
+  hybridMeetingSolutions: '/hybrid-meeting-solutions',
+  websites: '/websites',
   contact: '/contact',
   home: '/',
-  services: '/services',
 } as const
 
 export const getCaseStudyBySlug = (slug: string) =>

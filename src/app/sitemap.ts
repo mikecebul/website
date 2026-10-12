@@ -3,7 +3,6 @@ import type { MetadataRoute } from 'next'
 import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import { baseUrl } from '@/lib/baseUrl'
-import { websiteContent } from '@/lib/website-content'
 
 const getSitemap = unstable_cache(
   async (): Promise<MetadataRoute.Sitemap> => {
@@ -32,11 +31,11 @@ const getSitemap = unstable_cache(
     const dateFallback = new Date().toISOString()
     const marketingRoutes = [
       '',
-      '/services',
+      '/websites',
+      '/hybrid-meeting-solutions',
       '/about',
       '/contact',
       '/blog',
-      ...websiteContent.caseStudies.map((caseStudy) => `/case-studies/${caseStudy.slug}`),
     ]
 
     const latestBlogUpdate = blogs
