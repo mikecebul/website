@@ -36,6 +36,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install SQLite CLI for backup tests
+        run: sudo apt-get update && sudo apt-get install -y sqlite3
+
       - name: Run unit tests
         run: pnpm test
 

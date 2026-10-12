@@ -54,15 +54,15 @@ Use one application replica on one Dokploy server. Set `DATABASE_URI=file:/app/d
 
 Production startup runs the committed `prodMigrations` through Payload, applying the initial schema on an empty volume and recording completed migrations. Later startups reuse the existing schema and data. Development uses Payload's automatic schema push. For future collection changes, generate and commit a SQL migration and its JSON snapshot with `pnpm payload migrate:create <name>`; never generate migrations against the live database.
 
-Dokploy's [Volume Backups](https://docs.dokploy.com/docs/core/volume-backups) support application named volumes and existing S3 destinations. Recommended setup:
+Live backups run `sh /app/scripts/backup-sqlite.sh` as a Dokploy **Application Schedule**, with Shell Type **Sh**, timezone **America/Detroit** and nightly cron `0 3 * * *`. The image includes SQLite, rclone and flock. No application shutdown is needed. Keep the previously prepared stop-container Volume Backup disabled.
 
-1. Add a backup for the website's `/app/data` named volume.
-2. Choose the existing S3 backup destination and a prefix such as `mikecebul/website/sqlite`.
-3. Set a nightly schedule (for example `0 3 * * *`, 03:00 in the scheduler's timezone; confirm that timezone in Dokploy).
-4. Enable **Turn off Container**. Dokploy recommends this for SQLite consistency; the website is unavailable briefly while the backup runs.
-5. Test a backup and restore it to a new, unused volume before relying on the schedule. Keep the original volume while testing. Check the restored database with `sqlite3 /app/data/payload.db 'PRAGMA integrity_check;'`, expecting `ok`, then check admin login and submissions.
+Add only `BACKUP_DESTINATION=s3://your-private-backup-bucket/mikecebul/website/sqlite` to the website's runtime environment. The script reuses `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_REGION` and `S3_ENDPOINT`, translating them into temporary rclone environment settings. Existing keys must allow object writes and reads in that bucket/prefix. If the media key is restricted, set both `BACKUP_S3_ACCESS_KEY_ID` and `BACKUP_S3_SECRET_ACCESS_KEY`; the endpoint and region remain shared. A partial override is rejected rather than mixing keys. Dokploy's S3 destination name is not necessarily the actual bucket name. Never use a publicly readable media bucket for database snapshots; an object ACL cannot override a public bucket policy.
 
-Copying a live SQLite file directly is not a safe backup strategy, especially with WAL. If uninterrupted service becomes necessary, use SQLite's online backup API or `sqlite3 .backup` in a scheduled snapshot job, then upload the completed snapshot. [SQLite backup documentation](https://sqlite.org/backup.html)
+The script checks the source file, prevents overlapping executions with an OS lock, uses SQLite's online `.backup` API, validates the snapshot, compresses it, retries uploads and downloads the uploaded object to compare bytes. A failed snapshot/upload/verification exits nonzero for Dokploy logs. Temporary files are removed on exit. Credentials are not written to configuration files or passed as command arguments. Uploads use private ACLs. [SQLite online backup documentation](https://sqlite.org/backup.html), [rclone S3 documentation](https://rclone.org/s3/).
+
+Use the backup bucket's lifecycle configuration to expire this dedicated prefix after 30 days; the job does not delete remote objects. Test manually before enabling the schedule. Restore a downloaded snapshot into a separate SQLite file, run `PRAGMA integrity_check;` expecting `ok`, and verify admin login and submissions. For a production restore, stop the application and restore onto an unused named volume rather than overwriting an open database or leaving old WAL files next to the restored file.
+
+For local use, `pnpm backup` runs the same script. It reads the process environment rather than sourcing `.env` automatically; load local test variables explicitly. The standalone container runs the script directly and does not require pnpm or the repository package.json.
 
 Database backups include users, forms, blog content and media metadata. Uploaded files stored in S3 require their own retention/versioning policy. When S3 is disabled, mount and back up `/app/public/media` separately. Database files and journals are excluded from Git and Docker build context.
 

@@ -23,6 +23,7 @@
     "test:watch": "vitest",
     "preview": "vite preview",
     "generate-routes": "tsr generate",
+    "backup": "sh scripts/backup-sqlite.sh",
     "test:database": "payload run scripts/verify-sqlite.ts"
   },
   "dependencies": {
