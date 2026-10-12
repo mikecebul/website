@@ -2,10 +2,10 @@ import React from 'react'
 import type { CollectionConfig } from 'payload'
 import { render } from '@react-email/components'
 
+import { checkRole } from '@/access/checkRole'
 import { authenticated } from '../../access/authenticated'
 import { roleSelectMutate } from './access/roleSelectMutate'
 import { ensureFirstUserIsSuperAdmin } from './hooks/ensureFirstUserIsSuperAdmin'
-import { revalidatePath } from 'next/cache'
 import { superAdmin } from '@/access/superAdmin'
 import { self } from '@/access/self'
 import { adminUserAccess } from './access/adminUserAccess'
@@ -30,17 +30,17 @@ const getRequestOrigin = (req: { headers?: Headers; url?: string }) => {
 
 const Users: CollectionConfig = {
   slug: 'users',
+  versions: false,
   access: {
     admin: editorOrHigher,
-    create: ({ req }) => adminUserAccess({ req }) || superAdmin({ req }),
-    delete: ({ req }) => adminUserAccess({ req }) || superAdmin({ req }),
+    create: (args) => adminUserAccess(args) || superAdmin(args),
+    delete: (args) => adminUserAccess(args) || superAdmin(args),
     read: authenticated,
-    update: ({ req, id }) => self({ req, id }) || adminUserAccess({ req }) || superAdmin({ req }),
+    update: (args) => self(args) || adminUserAccess(args) || superAdmin(args),
   },
   admin: {
     defaultColumns: ['name', 'email', 'role'],
-    group: 'Admin',
-    hideAPIURL: !superAdmin,
+    group: 'Settings',
     useAsTitle: 'name',
   },
   auth: {
@@ -82,9 +82,12 @@ const Users: CollectionConfig = {
       required: true,
       access: {
         create: roleSelectMutate,
-        read: async ({ req: { payload } }) => {
+        read: async ({ req }) => {
+          const { payload } = req
           const users = await payload.find({
             collection: 'users',
+            overrideAccess: true,
+            req,
             limit: 0,
           })
           return users.totalDocs > 0
@@ -110,10 +113,6 @@ const Users: CollectionConfig = {
         },
       ],
       admin: {
-        components: {
-          Field: '@/collections/Users/RoleSelect',
-          Cell: '@/collections/Users/RoleCell',
-        },
         condition: (data, siblingData, { user }) => {
           if (!user) return false
           return true
@@ -121,21 +120,17 @@ const Users: CollectionConfig = {
       },
       hooks: {
         beforeChange: [ensureFirstUserIsSuperAdmin],
-        afterChange: [
-          ({ req }) =>
-            req.headers.get('X-Payload-Migration') !== 'true' &&
-            revalidatePath('/(payload)', 'layout'),
-        ],
       },
       validate: async (val, options) => {
-        const {
-          previousValue,
-          req: { user, payload },
-        } = options
+        const { previousValue, req } = options
+
+        const { user, payload } = req
 
         if (!user) {
           const users = await payload.find({
             collection: 'users',
+            overrideAccess: true,
+            req,
             limit: 0,
           })
           if (users.totalDocs === 0) return true
@@ -143,6 +138,8 @@ const Users: CollectionConfig = {
 
         const superAdmins = await payload.find({
           collection: 'users',
+          overrideAccess: true,
+          req,
           depth: 0,
           limit: 0,
           where: {
@@ -163,20 +160,10 @@ const Users: CollectionConfig = {
       },
     },
     {
-      name: 'enableAPIKey',
-      type: 'checkbox',
-      access: {
-        update: ({ req }) => !!superAdmin({ req }),
-      },
-      admin: {
-        condition: ({ user }) => user?.role === 'superAdmin',
-      },
-    },
-    {
       name: 'apiKey',
       type: 'text',
       access: {
-        update: ({ req }) => !!superAdmin({ req }),
+        update: ({ req }) => checkRole('superAdmin', req.user),
       },
     },
   ],

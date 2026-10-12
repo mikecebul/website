@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from '@/components/router-link'
+import Image from '@/components/image'
 import { ArrowUpRight, Check } from 'lucide-react'
 
 import {

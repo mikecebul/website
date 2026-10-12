@@ -1,9 +1,9 @@
 'use client'
 
-import type { StaticImageData } from 'next/image'
+import type { StaticImageData } from '@/components/image'
 
 import { cn } from '@/lib/utils'
-import NextImage from 'next/image'
+import NextImage from '@/components/image'
 import React from 'react'
 
 import type { Props as MediaProps } from '../types'

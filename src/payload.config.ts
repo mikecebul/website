@@ -3,8 +3,7 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { resendAdapter } from '@payloadcms/email-resend'
 
-import { sentryPlugin } from '@payloadcms/plugin-sentry'
-import * as Sentry from '@sentry/nextjs'
+import * as Sentry from '@sentry/node'
 import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
 import { S3_PLUGIN_CONFIG } from './plugins/s3'
 import {
@@ -22,7 +21,8 @@ import {
   UnderlineFeature,
   type LinkFields,
 } from '@payloadcms/richtext-lexical'
-import sharp from 'sharp' // editor-import
+import { sharpTransformer } from '@payloadcms/transformer-sharp'
+import sharp from 'sharp'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -41,58 +41,42 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   serverURL: baseUrl,
   admin: {
-    avatar: 'default',
-    components: {
-      beforeDashboard: ['@/components/dashboard/AdminWelcome'],
-      afterNavLinks: ['@/components/afterNavLinks/LinkToAnalyticsDefaultRootView'],
-      graphics: {
-        Icon: '@/graphics/Icon',
-        Logo: '@/graphics/Logo',
-      },
-      views: {
-        createFirstUser: {
-          Component: '@/components/views/CreateFirstUser',
-        },
-        forgot: {
-          Component: '@/components/views/ForgotPassword',
-        },
-        reset: {
-          Component: '@/components/views/ResetPassword',
-        },
-        login: {
-          Component: '@/components/views/Login',
-        },
-        CustomRootView: {
-          Component: '@/components/views/Analytics',
-          path: '/analytics',
-        },
-      },
-    },
     importMap: {
       baseDir: path.resolve(dirname),
-    },
-    dashboard: {
-      defaultLayout: [
-        {
-          widgetSlug: 'umami-traffic',
-          width: 'full',
-        },
-      ],
-      widgets: [
-        {
-          Component: '@/components/dashboard/UmamiTrafficWidget',
-          label: 'Traffic overview',
-          maxWidth: 'full',
-          minWidth: 'medium',
-          slug: 'umami-traffic',
-        },
-      ],
-    },
-    meta: {
-      icons: [{ url: '/favicon.ico' }],
-      titleSuffix: ' - MIKECEBUL',
+      importMapFile: path.resolve(dirname, 'routes/_payload/importMap.js'),
     },
     user: Users.slug,
+    components: {
+      beforeNav: ['/components/admin/WorkspaceNavigation#StudioBrand'],
+      sidebar: {
+        tabs: [
+          {
+            slug: 'notifications',
+            label: 'Notifications',
+            components: {
+              Content: '/components/admin/WorkspaceNavigation#NotificationsTab',
+              Icon: '/components/admin/WorkspaceNavigation#NotificationsIcon',
+            },
+          },
+        ],
+      },
+    },
+    dashboard: {
+      widgets: [
+        {
+          slug: 'site-workspace',
+          label: 'Site workspace',
+          Component: '/components/admin/StudioOverview',
+          minWidth: 'full',
+          maxWidth: 'full',
+        },
+      ],
+      defaultLayout: [
+        { widgetSlug: 'site-workspace', width: 'full' },
+        { widgetSlug: 'activity', width: 'large' },
+        { widgetSlug: 'upload-dropzone', width: 'small' },
+      ],
+    },
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: lexicalEditor({
@@ -147,7 +131,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
-  collections: [Blogs, Media, Users, Contacts],
+  collections: [Blogs, Media, Contacts, Users],
   cors: [baseUrl || ''].filter(Boolean),
   csrf: [baseUrl || ''].filter(Boolean),
   email:
@@ -170,22 +154,20 @@ export default buildConfig({
           },
           skipVerify: true,
         }),
-  plugins: [
-    sentryPlugin({
-      options: {
-        captureErrors: [400, 401, 403],
-        context: ({ defaultContext, req }) => {
-          return {
-            ...defaultContext,
-            tags: {
-              locale: req.locale,
-            },
-          }
-        },
-        debug: false,
+  hooks: {
+    afterError: [
+      ({ error, collection, req }) => {
+        const status = 'status' in error ? Number(error.status) : 500
+        if (status >= 500 || [400, 401, 403].includes(status)) {
+          Sentry.captureException(error, {
+            tags: { locale: req.locale },
+            extra: { errorCollectionSlug: collection?.slug },
+          })
+        }
       },
-      Sentry,
-    }),
+    ],
+  },
+  storage: [
     s3StoragePlugin({
       ...S3_PLUGIN_CONFIG,
       collections: {
@@ -201,7 +183,50 @@ export default buildConfig({
     }),
   ],
   secret: process.env.PAYLOAD_SECRET!,
-  sharp,
+  upload: {
+    transformers: [
+      sharpTransformer({
+        sharp,
+        collections: {
+          media: {
+            formatOptions: {
+              format: 'webp',
+            },
+            resizeOptions: {
+              width: 1600,
+              height: undefined,
+            },
+            variants: [
+              {
+                name: 'thumbnail',
+                width: 300,
+                height: 300,
+                formatOptions: {
+                  format: 'webp',
+                },
+                generateImageName: ({ originalName }) => {
+                  return `${originalName}-thumbnail`
+                },
+              },
+              {
+                name: 'meta',
+                width: 1200,
+                height: 630,
+                position: 'top',
+                fit: 'inside',
+                formatOptions: {
+                  format: 'webp',
+                },
+                generateImageName: ({ originalName }) => {
+                  return `${originalName}-meta`
+                },
+              },
+            ],
+          },
+        },
+      }),
+    ],
+  },
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },

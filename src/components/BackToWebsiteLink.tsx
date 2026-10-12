@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/router-link'
 import { ArrowLeft } from 'lucide-react'
 
 import { cn } from '@/lib/utils'

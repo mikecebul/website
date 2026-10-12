@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import Link from '@/components/router-link'
+import { useLocation } from '@tanstack/react-router'
 import { ArrowRight, ArrowUpRight, Mail, MapPin, Menu, Phone, X } from 'lucide-react'
 import { AngularFrame } from '@/components/marketing/design-system'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -39,7 +39,7 @@ function isCurrentRoute(pathname: string, href: string) {
 }
 
 export function MarketingNav() {
-  const pathname = usePathname()
+  const pathname = useLocation({ select: (location) => location.pathname })
   return (
     <header className="web-nav">
       <div className="web-nav-inner web-container">
@@ -70,7 +70,7 @@ export function MarketingNav() {
 }
 
 function MarketingMobileNav() {
-  const pathname = usePathname()
+  const pathname = useLocation({ select: (location) => location.pathname })
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>
