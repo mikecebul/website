@@ -4,30 +4,16 @@ import { createPayloadRequest, getPayload, JWT_AUTH_VERSION } from 'payload'
 import jwt from 'jsonwebtoken'
 
 import config from '../src/payload.config'
-import { down, up } from '../src/migrations/20261011_213804_v4_media_variants'
 
-// This check writes fixture records. Never run it against an existing site database.
-const database = new URL(process.env.DATABASE_URI || 'mongodb://invalid/')
-assert.ok(['localhost', '127.0.0.1', 'host.docker.internal'].includes(database.hostname))
-assert.equal(database.pathname, '/website_v4_migration_fixture')
+// Only an isolated temporary SQLite file may be used for this fixture suite.
+assert.match(
+  process.env.DATABASE_URI || '',
+  /^file:\/(?:private\/)?tmp\/website-sqlite-fixture-[a-zA-Z0-9-]+\.db$/,
+)
 assert.notEqual(process.env.S3_ENABLED, 'true')
-
 const payload = await getPayload({ config })
 const req = await createPayloadRequest({ payload })
-const media = payload.db.collections.media.collection
-const mediaVersions = payload.db.versions.media?.collection
-const marker = `v4-migration-fixture-${randomUUID()}`
-const variant = {
-  thumbnail: {
-    filename: `${marker}-thumbnail.webp`,
-    url: `https://assets.example.test/media/${marker}-thumbnail.webp`,
-    width: 300,
-    height: 300,
-    mimeType: 'image/webp',
-    filesize: 12345,
-  },
-}
-const mediaIDs: unknown[] = []
+const marker = `sqlite-fixture-${randomUUID()}`
 let userID: string | number | undefined
 let editorID: string | number | undefined
 let blogID: string | number | undefined
@@ -56,57 +42,6 @@ try {
       updatedBy: true,
     })
   }
-  const legacy = await media.insertOne({ alt: marker, filename: `${marker}.webp`, sizes: variant })
-  const migrated = await media.insertOne({
-    alt: marker,
-    filename: `${marker}-new.webp`,
-    variants: variant,
-  })
-  mediaIDs.push(legacy.insertedId, migrated.insertedId)
-  if (mediaVersions) {
-    await mediaVersions.insertOne({
-      parent: legacy.insertedId,
-      version: { alt: marker, sizes: variant },
-    })
-  }
-  await media.createIndex({ 'sizes.thumbnail.filename': 1 }, { name: `${marker}_sizes` })
-  if (mediaVersions) {
-    await mediaVersions.createIndex(
-      { 'version.sizes.thumbnail.filename': 1 },
-      { name: `${marker}_version_sizes` },
-    )
-  }
-
-  const collision = await media.insertOne({
-    alt: marker,
-    sizes: variant,
-    variants: { custom: 'must not be overwritten' },
-  })
-  mediaIDs.push(collision.insertedId)
-  await assert.rejects(up({ payload, req }), /contains both/)
-  assert.deepEqual((await media.findOne({ _id: legacy.insertedId }))?.sizes, variant)
-  await media.deleteOne({ _id: collision.insertedId })
-
-  await up({ payload, req })
-  const stored = await media.findOne({ _id: legacy.insertedId })
-  assert.deepEqual(stored?.variants, variant)
-  assert.equal(stored?.sizes, undefined)
-  assert.deepEqual((await media.findOne({ _id: migrated.insertedId }))?.variants, variant)
-  assert.ok((await media.indexes()).some((index) => index.key['variants.thumbnail.filename'] === 1))
-  assert.ok(!(await media.indexes()).some((index) => 'sizes.thumbnail.filename' in index.key))
-  if (mediaVersions) {
-    const version = await mediaVersions.findOne({ parent: legacy.insertedId })
-    assert.deepEqual(version?.version.variants, variant)
-    assert.equal(version?.version.sizes, undefined)
-  }
-  await up({ payload, req })
-  await down({ payload, req })
-  assert.deepEqual((await media.findOne({ _id: legacy.insertedId }))?.sizes, variant)
-  await up({ payload, req })
-  console.log(
-    'PASS media migration: stored URLs, historical variants, indexes, collision protection, repeat runs, and rollback',
-  )
-
   const user = await payload.create({
     collection: 'users',
     overrideAccess: true,
@@ -248,26 +183,8 @@ try {
     ).totalDocs,
     0,
   )
-  // Existing records without the new field also belong in the unread inbox.
-  const storedContact = await payload.db.collections.contacts.collection.findOne({ name: marker })
-  assert.ok(storedContact)
-  await payload.db.collections.contacts.collection.updateOne(
-    { _id: storedContact._id },
-    { $unset: { isRead: '' } },
-  )
-  assert.equal(
-    (
-      await payload.find({
-        collection: 'contacts',
-        overrideAccess: false,
-        user: editor,
-        where: { and: [{ id: { equals: contact.id } }, { isRead: { not_equals: true } }] },
-      })
-    ).totalDocs,
-    1,
-  )
   console.log(
-    'PASS unread submission defaults, legacy records, staff read actions, and anonymous access protection',
+    'PASS unread submission defaults, staff read actions, and anonymous access protection',
   )
   assertAuthor(contact.createdBy, user.id)
   const edited = await payload.update({
@@ -339,6 +256,10 @@ try {
       .user,
     null,
   )
+  assert.equal(
+    (await payload.db.drizzle.$client.execute('PRAGMA integrity_check')).rows[0].integrity_check,
+    'ok',
+  )
   console.log(
     'PASS private history, first-user role, disabled user versions, JWT compatibility, and API-key creation/redaction/revocation',
   )
@@ -348,13 +269,5 @@ try {
   if (blogID) await payload.delete({ collection: 'blogs', id: blogID, overrideAccess: true })
   if (editorID) await payload.delete({ collection: 'users', id: editorID, overrideAccess: true })
   if (userID) await payload.delete({ collection: 'users', id: userID, overrideAccess: true })
-  await media.deleteMany({ alt: marker })
-  if (mediaVersions) await mediaVersions.deleteMany({ parent: { $in: mediaIDs } })
-  for (const collection of [media, mediaVersions]) {
-    if (!collection) continue
-    for (const index of await collection.indexes()) {
-      if (index.name?.startsWith(marker)) await collection.dropIndex(index.name)
-    }
-  }
   await payload.destroy()
 }

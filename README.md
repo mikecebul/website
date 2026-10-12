@@ -4,9 +4,9 @@ The public consulting website runs on TanStack Start, with shadcn components, Ta
 
 ## Local development
 
-Use Node 24.15.0 or newer and pnpm 11 or newer. Run `pnpm install`, copy `.env.example` to `.env`, and configure MongoDB and email delivery. `docker compose up -d` starts the existing MongoDB and Mailpit services. Run `pnpm dev` and open http://localhost:3000; the CMS is at `/admin`.
+Use Node 24.15.0 or newer and pnpm 11 or newer. Run `pnpm install`, copy `.env.example` to `.env`, and configure email delivery. SQLite defaults to `file:./data/payload.db`; no separate database service is needed. `docker compose up -d` starts Mailpit. Run `pnpm dev` and open http://localhost:3000; the CMS is at `/admin`.
 
-`pnpm typecheck`, `pnpm lint`, and `pnpm test` verify the app. `pnpm build` produces a Nitro Node server; `pnpm start` runs `.output/server/index.mjs`. Builds do not connect to MongoDB or run database migrations. Database, email, and S3 credentials are supplied at runtime.
+`pnpm typecheck`, `pnpm lint`, and `pnpm test` verify the app. `pnpm build` produces a Nitro Node server; `pnpm start` runs `.output/server/index.mjs`. Builds do not open the SQLite database or run migrations. Database, email, and S3 credentials are supplied at runtime.
 
 Use `pnpm generate:types` and `pnpm generate:importmap` after modifying Payload collections or editor components.
 
@@ -26,11 +26,11 @@ Sentry runs through the React and Node SDKs, the existing tunnel endpoint, and P
 
 `VITE_SERVER_URL` and `VITE_SENTRY_DSN` are browser build settings. Existing `NEXT_PUBLIC_SERVER_URL` and `NEXT_PUBLIC_SENTRY_DSN` names remain supported to match deployment secrets. The robots and sitemap endpoints respect `VITE_IS_LIVE` or the existing `NEXT_PUBLIC_IS_LIVE` setting.
 
-MongoDB collection names, content, roles, access checks, S3 configuration, and email templates are retained. V4 uses built-in slug fields, explicit trusted Local API reads for role invariants, `storage` adapters, and the Sharp upload transformer. New media thumbnails and social variants retain the original dimensions and WebP settings. The official MongoDB `sizes` → `variants` migration is registered in `src/migrations/20261011_213804_v4_media_variants.ts`. It preserves stored variant metadata and updates the corresponding indexes. No database or S3 files are migrated by the build or server startup.
+The app uses Payload’s SQLite adapter with numeric document IDs, WAL mode and a five-second busy timeout. Collection configuration, roles, access checks, S3 configuration and React Email templates are retained. This is a fresh database switch: MongoDB records, users and media metadata are not imported. Existing MongoDB volumes and S3 objects are not deleted. Create a new first admin account after cutover. V4 uses built-in slug fields, storage adapters, the Sharp upload transformer, history and authorship.
 
 Nitro explicitly traces `strtok3` because `file-type` imports it dynamically when serving uploaded media. Keep this runtime dependency in the standalone server output.
 
-The migration was checked with the production Node server and an isolated local MongoDB database. Checks cover public routes and metadata, first-user setup and public login, published/draft access, authenticated previews, pagination, HTTP redirects and 404s, and media uploads. Contact submission was tested in development against Mailpit, including the saved inquiry, rendered React Email, and thank-you screen. Desktop screenshots of the homepage and website case study were compared with `origin/main`; mobile drawer navigation was exercised in Chromium.
+The framework migration was originally checked with the production Node server and an isolated local MongoDB database; the current SQLite adapter has its own isolated production-schema fixture suite. Checks cover public routes and metadata, first-user setup and public login, published/draft access, authenticated previews, pagination, HTTP redirects and 404s, and media uploads. Contact submission was tested in development against Mailpit, including the saved inquiry, rendered React Email, and thank-you screen. Desktop screenshots of the homepage and website case study were compared with `origin/main`; mobile drawer navigation was exercised in Chromium.
 
 ## Migration guide review
 
@@ -43,22 +43,35 @@ Reviewed against the [v4 migration guide](https://payloadcms.com/docs/beta/migra
 | Versions and authorship   | V4 history is enabled for Blogs, Media, and Contacts. Authorship tracks creators and editors across all four collections. Users disable versions per the auth-collection guidance. |
 | Version access            | Blog and Media histories require authentication. Contact history inherits its staff-only read rule.                                                                                |
 | API keys                  | Removed the obsolete enable checkbox. Existing super-admin mutation permissions remain; v4 supplies last-four display and redaction.                                               |
-| Stored media              | Official predefined migration handles legacy `sizes`, historical variants, and indexes. S3 configuration and URLs are retained.                                                    |
+| Stored media              | Fresh SQLite schema uses v4 variants. S3 configuration is retained; old object files are not imported or deleted.                                                    |
 | Upload processing         | Sharp transformer owns resizing and variants; request-time transforms remain disabled.                                                                                             |
 | Lexical and types         | Existing editor features and blocks retained; strict generated types refreshed.                                                                                                    |
 | Other guide sections      | No custom jobs, globals, localization, schema generators, MCP, ecommerce, or affected plugin callbacks are configured.                                                             |
 
-The configured database currently has no Blog, Media, or Contact records and has two User accounts (checked October 11, 2026). V4 history and authorship defaults are the chosen behavior. Keep the existing user accounts. The media migration remains available if legacy uploads are added or another database is used.
+## SQLite deployment and nightly backups
 
-Before deployment, restore a database backup into a separate staging database and run `pnpm payload migrate:status`, then `pnpm payload migrate` using the beta checkout and that database's environment. Verify existing media, credentials, and content there. For the production cutover, back up MongoDB, pause application writes, run the same migration from a repository checkout with production environment variables, and then start the beta application. Run the media migration before v4 writes upload documents. The standalone runtime image does not contain the migration CLI/source checkout.
+Use one application replica on one Dokploy server. Set `DATABASE_URI=file:/app/data/payload.db` in the website application's **runtime** environment. The image runs as UID/GID 1001 and prepares `/app/data` with that ownership. Add a Docker **named volume** mounted at `/app/data` under Advanced → Volumes. Never store the live DB in the disposable container layer. Deploy with stop-first ordering rather than briefly starting a second replica during updates.
 
-Tokens without the v4 authentication header must be replaced by a new login. API keys created before v3.46.0 and never re-saved need regeneration. Keep the existing Payload secret so stored key indexes and encrypted values remain usable. API keys are now revoked with `apiKey: null`.
+Production startup runs the committed `prodMigrations` through Payload, applying the initial schema on an empty volume and recording completed migrations. Later startups reuse the existing schema and data. Development uses Payload's automatic schema push. For future collection changes, generate and commit a SQL migration and its JSON snapshot with `pnpm payload migrate:create <name>`; never generate migrations against the live database.
 
-The dedicated fixture check exercises variant metadata/URLs, historical records, index renaming, collision protection, idempotence, rollback, private history, v4 authorship and version tracking, first-user roles, JWT compatibility, and API-key authentication/redaction/revocation:
+Dokploy's [Volume Backups](https://docs.dokploy.com/docs/core/volume-backups) support application named volumes and existing S3 destinations. Recommended setup:
+
+1. Add a backup for the website's `/app/data` named volume.
+2. Choose the existing S3 backup destination and a prefix such as `mikecebul/website/sqlite`.
+3. Set a nightly schedule (for example `0 3 * * *`, 03:00 in the scheduler's timezone; confirm that timezone in Dokploy).
+4. Enable **Turn off Container**. Dokploy recommends this for SQLite consistency; the website is unavailable briefly while the backup runs.
+5. Test a backup and restore it to a new, unused volume before relying on the schedule. Keep the original volume while testing. Check the restored database with `sqlite3 /app/data/payload.db 'PRAGMA integrity_check;'`, expecting `ok`, then check admin login and submissions.
+
+Copying a live SQLite file directly is not a safe backup strategy, especially with WAL. If uninterrupted service becomes necessary, use SQLite's online backup API or `sqlite3 .backup` in a scheduled snapshot job, then upload the completed snapshot. [SQLite backup documentation](https://sqlite.org/backup.html)
+
+Database backups include users, forms, blog content and media metadata. Uploaded files stored in S3 require their own retention/versioning policy. When S3 is disabled, mount and back up `/app/public/media` separately. Database files and journals are excluded from Git and Docker build context.
+
+The fixture check runs only against a disposable local SQLite file and exercises the production migration, first-user roles, submissions/read status, private history, authorship/spoof protection, JWT compatibility and API-key authentication/redaction/revocation:
 
 ```sh
-DATABASE_URI=mongodb://127.0.0.1:27018/website_v4_migration_fixture \
-PAYLOAD_SECRET=local-migration-test-secret S3_ENABLED=false pnpm test:migration
+DATABASE_URI=file:/tmp/website-sqlite-fixture-local.db \
+NODE_ENV=production PAYLOAD_SECRET=isolated-fixture-secret \
+S3_ENABLED=false RESEND_API_KEY=local-test-only pnpm test:database
 ```
 
-This command only accepts the named fixture database on a local host, requires S3 to be disabled, and removes its fixture records afterwards. It does not validate a production database copy or contact external email/storage services.
+The file-path guard prevents this command from targeting the live database. Fixture records are removed afterwards. It does not contact external email/storage services.

@@ -1,5 +1,5 @@
 import type { TextFieldSingleValidation } from 'payload'
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { resendAdapter } from '@payloadcms/email-resend'
 
@@ -34,9 +34,17 @@ import { Media } from './collections/Media'
 import { baseUrl } from './lib/baseUrl'
 import { Blogs } from './collections/Blogs'
 import { Contacts } from './collections/Contacts'
+import { migrations } from './migrations'
+import { mkdirSync } from 'node:fs'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const databaseURL = process.env.DATABASE_URI || 'file:./data/payload.db'
+if (!databaseURL.startsWith('file:')) {
+  throw new Error('DATABASE_URI must be a local SQLite file URL, e.g. file:/app/data/payload.db.')
+}
+const databasePath = path.resolve(databaseURL.slice('file:'.length))
+mkdirSync(path.dirname(databasePath), { recursive: true })
 
 export default buildConfig({
   serverURL: baseUrl,
@@ -128,8 +136,12 @@ export default buildConfig({
   graphQL: {
     disable: true,
   },
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URI!,
+  db: sqliteAdapter({
+    client: { url: `file:${databasePath}` },
+    busyTimeout: 5000,
+    wal: true,
+    migrationDir: path.resolve(dirname, 'migrations'),
+    prodMigrations: migrations,
   }),
   collections: [Blogs, Media, Contacts, Users],
   cors: [baseUrl || ''].filter(Boolean),

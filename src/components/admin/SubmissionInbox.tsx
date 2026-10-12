@@ -71,8 +71,8 @@ export function SubmissionInbox({
     }
   }, [load])
 
-  async function markRead(id: string) {
-    setPending(id)
+  async function markRead(id: Contact['id'] | 'all') {
+    setPending(String(id))
     setError('')
     try {
       // Bulk actions only touch the loaded IDs, so new arrivals remain unread.

@@ -23,14 +23,14 @@
     "test:watch": "vitest",
     "preview": "vite preview",
     "generate-routes": "tsr generate",
-    "test:migration": "payload run scripts/verify-v4-migration.ts"
+    "test:database": "payload run scripts/verify-sqlite.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
     "@fontsource-variable/dm-sans": "5.3.0",
     "@fontsource-variable/geist": "^5.3.0",
     "@payloadcms/admin-bar": "4.0.0-beta.0",
-    "@payloadcms/db-mongodb": "4.0.0-beta.0",
+    "@payloadcms/db-sqlite": "4.0.0-beta.0",
     "@payloadcms/email-nodemailer": "4.0.0-beta.0",
     "@payloadcms/email-resend": "4.0.0-beta.0",
     "@payloadcms/live-preview-react": "4.0.0-beta.0",

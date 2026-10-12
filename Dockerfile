@@ -19,13 +19,14 @@ RUN \
   pnpm build
 
 FROM node:24-alpine AS runner
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat sqlite
 WORKDIR /app
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=3000
+ENV DATABASE_URI=file:/app/data/payload.db
 RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 website \
-  && mkdir -p /app/public/media && chown -R website:nodejs /app/public
+  && mkdir -p /app/public/media /app/data && chown -R website:nodejs /app/public /app/data
 COPY --from=builder --chown=website:nodejs /app/.output ./.output
 USER website
 EXPOSE 3000

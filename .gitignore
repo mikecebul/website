@@ -19,8 +19,11 @@ public/portraits
 public/avatars
 public/meta
 
-# sqlite db
-payload.db
+# SQLite database, journals and snapshots
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
 
 # mailpit
 /data
