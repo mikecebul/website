@@ -1,10 +1,10 @@
 import type { CollectionConfig } from 'payload'
 
 import { editorOrHigher } from '@/access/editorOrHigher'
-import { superAdmin } from '@/access/superAdmin'
 
 export const Contacts: CollectionConfig = {
   slug: 'contacts',
+  labels: { singular: 'Form submission', plural: 'Form submissions' },
   access: {
     create: () => false,
     delete: editorOrHigher,
@@ -12,12 +12,19 @@ export const Contacts: CollectionConfig = {
     update: editorOrHigher,
   },
   admin: {
-    defaultColumns: ['name', 'email', 'phone', 'inquiryType', 'createdAt'],
-    group: 'Admin',
-    hideAPIURL: !superAdmin,
+    defaultColumns: ['name', 'inquiryType', 'isRead', 'createdAt'],
+    group: 'Business',
     useAsTitle: 'name',
   },
   fields: [
+    {
+      name: 'isRead',
+      label: 'Read',
+      type: 'checkbox',
+      defaultValue: false,
+      index: true,
+      admin: { position: 'sidebar', description: 'Shared inbox status for your team.' },
+    },
     {
       name: 'name',
       type: 'text',

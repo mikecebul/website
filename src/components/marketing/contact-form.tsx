@@ -40,23 +40,27 @@ export function MarketingContactForm() {
       setSubmissionError(undefined)
       setSuccessMessage(undefined)
 
-      const response = await fetch('/api/contact', {
-        body: JSON.stringify(value),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+      try {
+        const response = await fetch('/api/contact', {
+          body: JSON.stringify(value),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+        })
 
-      const payload = (await response.json()) as { error?: string; message?: string }
+        const payload = (await response.json()) as { error?: string; message?: string }
 
-      if (!response.ok) {
-        setSubmissionError(payload.error || 'Something went wrong while sending the inquiry.')
-        return
+        if (!response.ok) {
+          setSubmissionError(payload.error || 'Something went wrong while sending the inquiry.')
+          return
+        }
+
+        formApi.reset()
+        setSuccessMessage("I'll be getting back with you shortly.")
+      } catch {
+        setSubmissionError('We could not send your inquiry right now. Please try again shortly.')
       }
-
-      formApi.reset()
-      setSuccessMessage("I'll be getting back with you shortly.")
     },
   })
 
@@ -276,9 +280,7 @@ function MarketingContactThankYou({ message }: { message: string }) {
       <h3 className="mt-6 font-heading text-4xl tracking-[-0.05em] text-(--marketing-heading)">
         Thank you
       </h3>
-      <p className="mt-4 text-base leading-8 text-(--marketing-copy)">
-        {message}
-      </p>
+      <p className="mt-4 text-base leading-8 text-(--marketing-copy)">{message}</p>
     </div>
   )
 }

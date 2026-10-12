@@ -1,6 +1,6 @@
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
+import Link from '@/components/router-link'
 import React from 'react'
 
 import type { Blog, Media } from '@/payload-types'

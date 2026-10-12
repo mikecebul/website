@@ -34,3 +34,9 @@ tsconfig.tsbuildinfo
 
 # Mailpit
 data/
+
+# TanStack Start / Nitro build output
+.output/
+.nitro/
+.tanstack/
+dist/

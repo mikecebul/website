@@ -1,8 +1,8 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import Image from '@/components/image'
+import Link from '@/components/router-link'
+import { useRouterState } from '@tanstack/react-router'
 import {
   ArrowRight,
   Check,
@@ -786,7 +786,7 @@ function MarketingCtaSection() {
 }
 
 function MarketingNav() {
-  const pathname = usePathname()
+  const pathname = useRouterState({ select: (state) => state.location.pathname })
   const [openMenu, setOpenMenu] = useState<string | null>(null)
   const isCaseStudyRoute = pathname.startsWith('/case-studies')
 
@@ -904,7 +904,7 @@ function MarketingNav() {
 }
 
 function MarketingMobileNav() {
-  const pathname = usePathname()
+  const pathname = useRouterState({ select: (state) => state.location.pathname })
 
   return (
     <Drawer direction="right">

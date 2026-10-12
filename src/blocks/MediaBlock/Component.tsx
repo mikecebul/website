@@ -1,4 +1,4 @@
-import type { StaticImageData } from 'next/image'
+import type { StaticImageData } from '@/components/image'
 
 import { cn } from '@/lib/utils'
 import React from 'react'

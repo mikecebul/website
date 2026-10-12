@@ -5,11 +5,15 @@ export const roleSelectMutate: FieldAccess = async ({ req, data }) => {
 
   const users = await payload.find({
     collection: 'users',
+    overrideAccess: true,
+    req,
     depth: 0,
     limit: 0,
   })
   const superAdmins = await payload.find({
     collection: 'users',
+    overrideAccess: true,
+    req,
     depth: 0,
     limit: 0,
     where: {

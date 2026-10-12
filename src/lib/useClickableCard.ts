@@ -1,7 +1,7 @@
 'use client'
 import type { RefObject } from 'react'
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@tanstack/react-router'
 import { useCallback, useEffect, useRef } from 'react'
 
 type UseClickableCardType<T extends HTMLElement> = {
@@ -65,7 +65,7 @@ function useClickableCard<T extends HTMLElement>({
               const target = newTab ? '_blank' : '_self'
               window.open(link.current.href, target)
             } else {
-              router.push(link.current.href, { scroll })
+              void router.navigate({ to: link.current.href, resetScroll: scroll })
             }
           }
         }

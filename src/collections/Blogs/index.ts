@@ -1,9 +1,8 @@
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { superAdmin } from '@/access/superAdmin'
-import { slugField, type CollectionConfig } from 'payload'
+import { authenticated } from '@/access/authenticated'
+import { type CollectionConfig } from 'payload'
 
-import { revalidateDelete } from './hooks/revalidateDelete'
-import { revalidateBlog } from './hooks/revalidateBlog'
 import { setFirstPublishedAt } from './hooks/setFirstPublishedAt'
 
 export const Blogs: CollectionConfig = {
@@ -13,11 +12,12 @@ export const Blogs: CollectionConfig = {
     create: superAdmin,
     delete: superAdmin,
     read: authenticatedOrPublished,
+    readVersions: authenticated,
     update: superAdmin,
   },
   admin: {
+    group: 'Content',
     defaultColumns: ['title', 'slug', 'firstPublishedAt', 'updatedAt'],
-    hideAPIURL: !superAdmin,
     useAsTitle: 'title',
   },
   fields: [
@@ -39,13 +39,9 @@ export const Blogs: CollectionConfig = {
         readOnly: true,
       },
     },
-    slugField({
-      useAsSlug: 'title',
-    }),
+    { name: 'slug', type: 'slug', useAsSlug: 'title', required: true, unique: true, index: true },
   ],
   hooks: {
-    afterChange: [revalidateBlog],
-    afterDelete: [revalidateDelete],
     beforeChange: [setFirstPublishedAt],
   },
   versions: {

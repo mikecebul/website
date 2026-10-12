@@ -12,20 +12,18 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
+import Link from '@/components/router-link'
+import { useId, type ReactNode } from 'react'
 import { addHTTPS } from '@/lib/addHTTPS'
-import { randomUUID } from 'crypto'
 
 type MediaBlockProps = {
-  blockType?: 'mediaBlock'
-  media?: unknown
+  blockType: 'mediaBlock'
+  media?: import('@/payload-types').Media | string | number | null
   position?: 'default' | 'fullscreen'
 }
 
 type NodeTypes =
-  | DefaultNodeTypes
-  | SerializedBlockNode<MediaBlockProps>
-  | SerializedBlockNode<CodeBlockProps>
+  DefaultNodeTypes | SerializedBlockNode<MediaBlockProps> | SerializedBlockNode<CodeBlockProps>
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
@@ -157,28 +155,10 @@ const jsxConverters = (paragraphClassName?: string): JSXConvertersFunction<NodeT
         })
 
         if ('listType' in parent && parent?.listType === 'check') {
-          const uuid = randomUUID()
-
           return (
-            <li
-              aria-checked={node.checked ? 'true' : 'false'}
-              className={`list-item-checkbox${node.checked ? 'list-item-checkbox-checked' : 'list-item-checkbox-unchecked'}${hasSubLists ? 'nestedListItem' : ''}`}
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-              role="checkbox"
-              style={{ listStyleType: 'inherit' }}
-              tabIndex={-1}
-              value={node?.value}
-            >
-              {hasSubLists ? (
-                children
-              ) : (
-                <>
-                  <input checked={node.checked} id={uuid} readOnly={true} type="checkbox" />
-                  <label htmlFor={uuid}>{children}</label>
-                  <br />
-                </>
-              )}
-            </li>
+            <ChecklistItem checked={node.checked} hasSubLists={hasSubLists} value={node.value}>
+              {children}
+            </ChecklistItem>
           )
         }
 
@@ -203,6 +183,40 @@ const jsxConverters = (paragraphClassName?: string): JSXConvertersFunction<NodeT
       },
     }
   }
+}
+
+function ChecklistItem({
+  checked,
+  children,
+  hasSubLists,
+  value,
+}: {
+  checked?: boolean
+  children: ReactNode
+  hasSubLists: boolean
+  value?: number
+}) {
+  const id = useId()
+  return (
+    <li
+      aria-checked={checked ? 'true' : 'false'}
+      className={`list-item-checkbox${checked ? 'list-item-checkbox-checked' : 'list-item-checkbox-unchecked'}${hasSubLists ? 'nestedListItem' : ''}`}
+      role="checkbox"
+      style={{ listStyleType: 'inherit' }}
+      tabIndex={-1}
+      value={value}
+    >
+      {hasSubLists ? (
+        children
+      ) : (
+        <>
+          <input checked={checked} id={id} readOnly type="checkbox" />
+          <label htmlFor={id}>{children}</label>
+          <br />
+        </>
+      )}
+    </li>
+  )
 }
 
 export type RichTextContent = DefaultTypedEditorState
