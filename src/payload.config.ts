@@ -55,7 +55,6 @@ export default buildConfig({
     },
     user: Users.slug,
     components: {
-      beforeNav: ['/components/admin/WorkspaceNavigation#StudioBrand'],
       sidebar: {
         tabs: [
           {

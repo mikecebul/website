@@ -16,7 +16,6 @@ import { LLMInstructionsMenuItem as LLMInstructionsMenuItem_3817bf644402e67bfe65
 import { LLMInstructionsDescription as LLMInstructionsDescription_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
 import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { LLMInstructionsCell as LLMInstructionsCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
-import { StudioBrand as StudioBrand_60fedaf4a43dcdd5bae0df2ca5afc6af } from '../../components/admin/WorkspaceNavigation'
 import { NotificationsIcon as NotificationsIcon_60fedaf4a43dcdd5bae0df2ca5afc6af } from '../../components/admin/WorkspaceNavigation'
 import { NotificationsTab as NotificationsTab_60fedaf4a43dcdd5bae0df2ca5afc6af } from '../../components/admin/WorkspaceNavigation'
 import { default as default_29e680beba5bbb6b1b483e38b61b66c6 } from '../../components/admin/StudioOverview'
@@ -50,7 +49,6 @@ export const importMap = {
   "@payloadcms/ui#LLMInstructionsDescription": LLMInstructionsDescription_3817bf644402e67bfe6577f60ef982de,
   "@payloadcms/richtext-lexical/client#StrikethroughFeatureClient": StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/ui/rsc#LLMInstructionsCell": LLMInstructionsCell_ab83ff7e88da8d3530831f296ec4756a,
-  "/components/admin/WorkspaceNavigation#StudioBrand": StudioBrand_60fedaf4a43dcdd5bae0df2ca5afc6af,
   "/components/admin/WorkspaceNavigation#NotificationsIcon": NotificationsIcon_60fedaf4a43dcdd5bae0df2ca5afc6af,
   "/components/admin/WorkspaceNavigation#NotificationsTab": NotificationsTab_60fedaf4a43dcdd5bae0df2ca5afc6af,
   "/components/admin/StudioOverview#default": default_29e680beba5bbb6b1b483e38b61b66c6,
