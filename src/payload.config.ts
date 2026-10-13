@@ -2,6 +2,7 @@ import type { TextFieldSingleValidation } from 'payload'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { resendAdapter } from '@payloadcms/email-resend'
+import { mcpPlugin } from '@payloadcms/plugin-mcp'
 
 import * as Sentry from '@sentry/node'
 import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
@@ -143,6 +144,8 @@ export default buildConfig({
     prodMigrations: migrations,
   }),
   collections: [Blogs, Media, Contacts, Users],
+  // V4 exposes standard MCP tools and enforces the connecting user's Payload access rules.
+  plugins: [mcpPlugin({})],
   cors: [baseUrl || ''].filter(Boolean),
   csrf: [baseUrl || ''].filter(Boolean),
   email:

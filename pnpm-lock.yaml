@@ -35,6 +35,9 @@ importers:
       '@payloadcms/plugin-form-builder':
         specifier: 4.0.0-beta.0
         version: 4.0.0-beta.0(@types/react@19.2.13)(monaco-editor@0.55.1)(payload@4.0.0-beta.0(graphql@16.14.2)(supports-color@8.1.1)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)
+      '@payloadcms/plugin-mcp':
+        specifier: 4.0.0-beta.0
+        version: 4.0.0-beta.0(payload@4.0.0-beta.0(graphql@16.14.2)(supports-color@8.1.1)(typescript@6.0.3))
       '@payloadcms/plugin-redirects':
         specifier: 4.0.0-beta.0
         version: 4.0.0-beta.0(payload@4.0.0-beta.0(graphql@16.14.2)(supports-color@8.1.1)(typescript@6.0.3))
@@ -2066,6 +2069,10 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@modelcontextprotocol/core@2.3.1':
+    resolution: {integrity: sha512-laVmIhPGpWi7rG9q+0UigblRN0Hws/Yjlb6qLFtVqryXVLkc4h+yN8z731POD2LnAGQlFe7/tXhUm7Bi0YB91g==}
+    engines: {node: '>=20'}
+
   '@modelcontextprotocol/sdk@1.27.1':
     resolution: {integrity: sha512-sr6GbP+4edBwFndLbM60gf07z0FQ79gaExpnsjMGePXqFcSSb7t6iscpjk9DhFhwd+mTEQrzNafGP8/iGGFYaA==}
     engines: {node: '>=18'}
@@ -2075,6 +2082,10 @@ packages:
     peerDependenciesMeta:
       '@cfworker/json-schema':
         optional: true
+
+  '@modelcontextprotocol/server@2.3.1':
+    resolution: {integrity: sha512-e59MfWuSssj6DoQ96JCTqdW1AXT5/XtnTl0WWd6MU1Ka434fFUGGosCLJbGNySDhHGvxQWoRWK137FXYFkYNWw==}
+    engines: {node: '>=20'}
 
   '@monaco-editor/loader@1.7.0':
     resolution: {integrity: sha512-gIwR1HrJrrx+vfyOhYmCZ0/JcWqG5kbfG7+d3f/C1LXk2EvzAbHSg3MQ5lO2sMlo9izoAZ04shohfKLVT6crVA==}
@@ -2386,6 +2397,12 @@ packages:
       payload: 4.0.0-beta.0
       react: ^19.0.1 || ^19.1.2 || ^19.2.1
       react-dom: ^19.0.1 || ^19.1.2 || ^19.2.1
+
+  '@payloadcms/plugin-mcp@4.0.0-beta.0':
+    resolution: {integrity: sha512-5zA/cZ6ktPUUceBKMrY/7VrrVC1pRjQZJaET7tjQqVNgIsXmw5ywxpNgz2C1M9SI6V34h2V166VjYCfkc1+gQg==}
+    hasBin: true
+    peerDependencies:
+      payload: 4.0.0-beta.0
 
   '@payloadcms/plugin-redirects@4.0.0-beta.0':
     resolution: {integrity: sha512-kse5eH3H85lC+xty34yZ8zQnZ74GnS2Jqg75JvROh0KBQhdh52yaHU+4WsoiqQ5UIKETGHBlRONz3eKNHljeUA==}
@@ -10108,6 +10125,10 @@ snapshots:
   '@libsql/win32-x64-msvc@0.4.7':
     optional: true
 
+  '@modelcontextprotocol/core@2.3.1':
+    dependencies:
+      zod: 4.4.3
+
   '@modelcontextprotocol/sdk@1.27.1(supports-color@8.1.1)(zod@3.25.76)':
     dependencies:
       '@hono/node-server': 1.19.11(hono@4.12.8)
@@ -10129,6 +10150,11 @@ snapshots:
       zod-to-json-schema: 3.25.1(zod@3.25.76)
     transitivePeerDependencies:
       - supports-color
+
+  '@modelcontextprotocol/server@2.3.1':
+    dependencies:
+      '@modelcontextprotocol/core': 2.3.1
+      zod: 4.4.3
 
   '@monaco-editor/loader@1.7.0':
     dependencies:
@@ -10422,6 +10448,12 @@ snapshots:
       - monaco-editor
       - supports-color
       - typescript
+
+  '@payloadcms/plugin-mcp@4.0.0-beta.0(payload@4.0.0-beta.0(graphql@16.14.2)(supports-color@8.1.1)(typescript@6.0.3))':
+    dependencies:
+      '@modelcontextprotocol/server': 2.3.1
+      payload: 4.0.0-beta.0(graphql@16.14.2)(supports-color@8.1.1)(typescript@6.0.3)
+      tsx: 4.23.15
 
   '@payloadcms/plugin-redirects@4.0.0-beta.0(payload@4.0.0-beta.0(graphql@16.14.2)(supports-color@8.1.1)(typescript@6.0.3))':
     dependencies:
