@@ -19,7 +19,7 @@
     "email": "me@mikecebul.com",
     "phone": "(231) 373-6341",
     "phoneHref": "12313736341",
-    "location": "201 State St, Lower Lever, Charlevoix, MI 49720",
+    "location": "201 State St, Lower Level, Charlevoix, MI 49720",
     "inquiryTypes": [
       "Marketing website",
       "Website redesign",
@@ -105,7 +105,7 @@
     "defaultOgImage": "/marketing/login-og.jpg",
     "home": {
       "title": "Charlevoix Web Design & Development | Mike Cebulski",
-      "description": "Fast, polished websites for Northern Michigan businesses. Simple marketing websites from $250 setup + $100/month with updates handled by Mike. Google Business Profile help available.",
+      "description": "Web design and website management for Charlevoix and Northern Michigan businesses. Marketing websites from $250 setup + $100/month, with personal support.",
       "keywords": [
         "charlevoix web design",
         "northern michigan website development",
@@ -115,7 +115,7 @@
       ]
     },
     "about": {
-      "title": "About | Mike Cebulski",
+      "title": "About Mike Cebulski | Charlevoix Website Developer",
       "description": "Meet Mike Cebulski, a Charlevoix-based website developer helping Northern Michigan businesses get a sharper online presence with personal ongoing support.",
       "keywords": [
         "mike cebulski website developer",
@@ -125,7 +125,7 @@
       ]
     },
     "contact": {
-      "title": "Contact | Mike Cebulski",
+      "title": "Contact Mike Cebulski | Websites & Technology Services",
       "description": "Talk with Mike about website development, Google Business Profile support, or hybrid meeting and Zoom Rooms solutions for your Northern Michigan business.",
       "keywords": [
         "contact charlevoix website developer",
@@ -135,7 +135,7 @@
       ]
     },
     "blogIndex": {
-      "title": "Blog | Mike Cebulski",
+      "title": "Websites, AI Workflows & Meeting Tips | Mike Cebulski",
       "description": "Insights on modern web systems, hybrid meeting spaces, and practical automation for small businesses and local teams.",
       "keywords": [
         "technical consulting blog",
@@ -146,8 +146,8 @@
       ]
     },
     "websites": {
-      "title": "Websites & Web Development | Mike Cebulski",
-      "description": "Website development for Northern Michigan businesses. Simple marketing websites for $250 setup + $100/month, personal updates, local project examples, and custom development.",
+      "title": "Northern Michigan Website Development | Mike Cebulski",
+      "description": "Websites for Charlevoix and Northern Michigan businesses, from $250 setup + $100/month. Explore local projects, ongoing updates, and custom development.",
       "keywords": [
         "charlevoix website development",
         "small business web design",
@@ -159,8 +159,8 @@
       ]
     },
     "hybridMeetingSolutions": {
-      "title": "Hybrid Meeting & Zoom Room Solutions | Mike Cebulski",
-      "description": "Hybrid meeting solutions, Zoom Rooms, AV integration, and meeting kiosks in Northern Michigan. Room planning, setup, device management, and personal support from Mike Cebulski.",
+      "title": "Northern Michigan Zoom Rooms & Hybrid Meetings | Mike Cebulski",
+      "description": "Hybrid meeting rooms, Zoom Rooms, and AV integration for Northern Michigan businesses. Get help with room planning, setup, device management, and support.",
       "keywords": [
         "hybrid meeting solutions northern michigan",
         "zoom rooms consultant",

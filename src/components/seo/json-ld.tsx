@@ -1,5 +1,7 @@
 import { baseUrl } from '@/lib/baseUrl'
 import { websiteContent } from '@/lib/website-content'
+import { getBlogImages, getBlogPostDescription } from '@/lib/blog-seo'
+import type { Blog } from '@/payload-types'
 
 type JsonLdValue = Record<string, unknown> | Record<string, unknown>[]
 
@@ -42,7 +44,7 @@ export const professionalServiceJsonLd = {
   priceRange: '$$',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '201 State St, Lower Lever',
+    streetAddress: '201 State St, Lower Level',
     addressLocality: 'Charlevoix',
     addressRegion: 'MI',
     postalCode: '49720',
@@ -163,3 +165,97 @@ export const hybridMeetingServiceJsonLd = createServiceJsonLd({
   price: String(websiteContent.hybridMeetingOffer.setupPrice),
   serviceType: 'Hybrid meeting room, Zoom Rooms, and audiovisual integration consulting',
 })
+
+export function createPageJsonLd({
+  title,
+  description,
+  pathname,
+}: {
+  title: string
+  description: string
+  pathname: string
+}) {
+  const url = new URL(pathname, baseUrl).toString()
+  const path = new URL(url).pathname
+  const pageType =
+    path === '/about'
+      ? 'AboutPage'
+      : path === '/contact'
+        ? 'ContactPage'
+        : path === '/blog'
+          ? 'CollectionPage'
+          : 'WebPage'
+  const labels: Record<string, string> = {
+    '/about': 'About',
+    '/contact': 'Contact',
+    '/websites': 'Websites',
+    '/blog': 'Blog',
+    '/hybrid-meeting-solutions': 'Hybrid Meeting Solutions',
+  }
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      '@id': `${baseUrl}/#website`,
+      url: baseUrl,
+      name: websiteContent.site.name,
+      publisher: { '@id': businessId },
+      inLanguage: 'en-US',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': pageType,
+      '@id': `${url}#webpage`,
+      url,
+      name: title,
+      description,
+      isPartOf: { '@id': `${baseUrl}/#website` },
+      about: { '@id': businessId },
+      inLanguage: 'en-US',
+    },
+    ...(path !== '/' && !path.startsWith('/blog/') && path !== '/hybrid-meeting-solutions'
+      ? [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+              { '@type': 'ListItem', position: 2, name: labels[path] || title, item: url },
+            ],
+          },
+        ]
+      : []),
+  ]
+}
+
+export function createBlogPostingJsonLd(post: Blog) {
+  const url = new URL(`/blog/${post.slug}`, baseUrl).toString()
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      '@id': `${url}#article`,
+      headline: post.title,
+      description: getBlogPostDescription(post),
+      url,
+      mainEntityOfPage: { '@id': `${url}#webpage` },
+      image: getBlogImages(post.content?.root).map((image) =>
+        new URL(image.url!, baseUrl).toString(),
+      ),
+      datePublished: post.firstPublishedAt || post.createdAt,
+      dateModified: post.updatedAt,
+      author: { '@type': 'Person', name: websiteContent.site.name, url: `${baseUrl}/about` },
+      publisher: { '@id': businessId },
+      inLanguage: 'en-US',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: `${baseUrl}/blog` },
+        { '@type': 'ListItem', position: 3, name: post.title, item: url },
+      ],
+    },
+  ]
+}

@@ -24,7 +24,7 @@ const config = defineConfig(
         resolve: { tsconfigPaths: true },
         define: {
           'import.meta.env.VITE_SERVER_URL': JSON.stringify(
-            vars.VITE_SERVER_URL || vars.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+            vars.VITE_SERVER_URL || vars.NEXT_PUBLIC_SERVER_URL || 'https://www.mikecebul.com',
           ),
           'import.meta.env.VITE_SENTRY_DSN': JSON.stringify(
             vars.VITE_SENTRY_DSN || vars.NEXT_PUBLIC_SENTRY_DSN || '',

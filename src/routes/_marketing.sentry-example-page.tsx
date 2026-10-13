@@ -219,6 +219,8 @@ export const Route = createFileRoute('/_marketing/sentry-example-page')({
     meta: [
       { title: 'sentry-example-page' },
       { name: 'description', content: 'Test Sentry for your TanStack Start app!' },
+      { name: 'robots', content: 'noindex, nofollow' },
+      { name: 'googlebot', content: 'noindex, nofollow' },
     ],
   }),
   component: Page,

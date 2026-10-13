@@ -4,6 +4,8 @@ import { MarketingJournalArticle } from '@/components/marketing/journal-article'
 import { createMarketingHead } from '@/lib/marketing-metadata'
 import { getBlogPost } from '@/server/blog.functions'
 import type { Blog } from '@/payload-types'
+import { getBlogImages, getBlogPostDescription } from '@/lib/blog-seo'
+import { JsonLd, createBlogPostingJsonLd } from '@/components/seo/json-ld'
 
 export const Route = createFileRoute('/_marketing/blog/$slug')({
   loader: async ({ params }) => {
@@ -12,6 +14,10 @@ export const Route = createFileRoute('/_marketing/blog/$slug')({
     return result
   },
   head: ({ loaderData }) => {
+    const post = loaderData?.post
+      ? ({ ...loaderData.post, content: JSON.parse(loaderData.post.content) } as Blog)
+      : null
+    const image = getBlogImages(post?.content?.root)[0]
     const head = createMarketingHead({
       title: loaderData?.post ? `${loaderData.post.title} | MIKECEBUL` : 'Blog | MIKECEBUL',
       description: getBlogPostDescription(
@@ -26,15 +32,19 @@ export const Route = createFileRoute('/_marketing/blog/$slug')({
         'Mike Cebulski',
       ],
       ogType: 'article',
+      image: image?.url
+        ? {
+            url: image.url,
+            alt: image.alt,
+            width: image.width ?? undefined,
+            height: image.height ?? undefined,
+          }
+        : undefined,
+      noindex: loaderData?.draft || !post,
+      publishedAt: post?.firstPublishedAt,
+      modifiedAt: post?.updatedAt,
       pathname: `/blog/${loaderData?.post?.slug ?? ''}`,
     })
-    if (loaderData?.draft) {
-      head.meta = head.meta.map((meta) =>
-        meta.name === 'robots' || meta.name === 'googlebot'
-          ? { ...meta, content: 'noindex, nofollow' }
-          : meta,
-      )
-    }
     return head
   },
   component: BlogPostPage,
@@ -42,56 +52,12 @@ export const Route = createFileRoute('/_marketing/blog/$slug')({
 function BlogPostPage() {
   const { post, draft } = Route.useLoaderData()
   if (!post) return null
+  const parsedPost = { ...post, content: JSON.parse(post.content) } as Blog
   return (
     <>
+      {!draft ? <JsonLd data={createBlogPostingJsonLd(parsedPost)} /> : null}
       {draft ? <LivePreviewListener /> : null}
-      <MarketingJournalArticle
-        post={{ ...post, content: JSON.parse(post.content) }}
-        draft={draft}
-      />
+      <MarketingJournalArticle post={parsedPost} draft={draft} />
     </>
   )
-}
-
-const collectLexicalText = (node: unknown): string[] => {
-  if (!node || typeof node !== 'object') {
-    return []
-  }
-
-  const segments: string[] = []
-
-  if ('text' in node && typeof node.text === 'string') {
-    const trimmedText = node.text.trim()
-
-    if (trimmedText) {
-      segments.push(trimmedText)
-    }
-  }
-
-  if ('children' in node && Array.isArray(node.children)) {
-    for (const child of node.children) {
-      segments.push(...collectLexicalText(child))
-    }
-  }
-
-  return segments
-}
-
-const getBlogPostDescription = (post: Blog | null) => {
-  if (!post) {
-    return 'Read the latest article from Mike Cebulski.'
-  }
-
-  const contentText = collectLexicalText(post.content?.root).join(' ').replace(/\s+/g, ' ').trim()
-
-  if (!contentText) {
-    return `Read ${post.title} on the MIKECEBUL blog.`
-  }
-
-  const maxLength = 160
-  if (contentText.length <= maxLength) {
-    return contentText
-  }
-
-  return `${contentText.slice(0, maxLength - 1).trimEnd()}…`
 }
