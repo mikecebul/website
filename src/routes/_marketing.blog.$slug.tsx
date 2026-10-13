@@ -11,8 +11,8 @@ export const Route = createFileRoute('/_marketing/blog/$slug')({
     if (!result.post) throw notFound()
     return result
   },
-  head: ({ loaderData }) =>
-    createMarketingHead({
+  head: ({ loaderData }) => {
+    const head = createMarketingHead({
       title: loaderData?.post ? `${loaderData.post.title} | MIKECEBUL` : 'Blog | MIKECEBUL',
       description: getBlogPostDescription(
         loaderData?.post
@@ -27,7 +27,16 @@ export const Route = createFileRoute('/_marketing/blog/$slug')({
       ],
       ogType: 'article',
       pathname: `/blog/${loaderData?.post?.slug ?? ''}`,
-    }),
+    })
+    if (loaderData?.draft) {
+      head.meta = head.meta.map((meta) =>
+        meta.name === 'robots' || meta.name === 'googlebot'
+          ? { ...meta, content: 'noindex, nofollow' }
+          : meta,
+      )
+    }
+    return head
+  },
   component: BlogPostPage,
 })
 function BlogPostPage() {
@@ -36,7 +45,10 @@ function BlogPostPage() {
   return (
     <>
       {draft ? <LivePreviewListener /> : null}
-      <MarketingJournalArticle post={{ ...post, content: JSON.parse(post.content) }} />
+      <MarketingJournalArticle
+        post={{ ...post, content: JSON.parse(post.content) }}
+        draft={draft}
+      />
     </>
   )
 }

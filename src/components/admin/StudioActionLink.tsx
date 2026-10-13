@@ -17,7 +17,12 @@ export function StudioActionLink({
   children: ReactNode
 }) {
   return (
-    <Link href={href} data-slot="button" className={cn(buttonVariants({ variant }), className)}>
+    <Link
+      href={href}
+      data-slot="button"
+      data-variant={variant}
+      className={cn(buttonVariants({ variant }), className)}
+    >
       {children}
     </Link>
   )

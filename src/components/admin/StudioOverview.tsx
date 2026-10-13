@@ -1,10 +1,17 @@
 import type { WidgetServerProps } from 'payload'
 import { formatAdminURL } from 'payload/shared'
 import { Link } from '@payloadcms/ui'
-import { ArrowRight, ArrowUpRight, Files, ImageIcon, Inbox, Plus } from 'lucide-react'
+import { ArrowUpRight, Files, ImageIcon, Inbox, Plus } from 'lucide-react'
 
 import { StudioActionLink } from './StudioActionLink'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 export default async function StudioOverview({ req, user, permissions }: WidgetServerProps) {
   const adminRoute = req.payload.config.routes.admin
@@ -73,55 +80,26 @@ export default async function StudioOverview({ req, user, permissions }: WidgetS
   return (
     <section className="studio-overview" aria-label="Site workspace">
       <Card className="studio-overview__card">
-        <div className="studio-overview__main">
-          <div className="studio-overview__copy">
-            <CardHeader className="studio-overview__header">
-              <p className="studio-overview__eyebrow">
-                {firstName ? `Welcome back, ${firstName}` : 'Welcome back'}
-              </p>
-              <CardTitle className="studio-overview__title">
-                <h1>Make room for your next opportunity.</h1>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="studio-overview__actions">
-              {canView('contacts') ? (
-                <StudioActionLink className="studio-overview__primary" href={href('contacts')}>
-                  <Inbox data-icon="inline-start" />
-                  Review inquiries
-                  <ArrowRight data-icon="inline-end" />
-                </StudioActionLink>
-              ) : null}
-              {canPublish ? (
-                <StudioActionLink
-                  variant="outline"
-                  className="studio-overview__secondary"
-                  href={href('blogs', true)}
-                >
-                  <Plus data-icon="inline-start" />
-                  Write a post
-                </StudioActionLink>
-              ) : null}
-            </CardContent>
-            <div className="studio-overview__footnote">
-              {canView('blogs') && draftCount > 0 ? (
-                <Link href={`${href('blogs')}?where[_status][equals]=draft`}>
-                  {`${draftCount} draft${draftCount === 1 ? '' : 's'}`}
-                  <ArrowUpRight aria-hidden="true" />
-                </Link>
-              ) : null}
-            </div>
-          </div>
-          <div className="studio-overview__art">
-            <img
-              src="/admin/harbor-workspace.webp"
-              alt="A sculptural lighthouse and a calm, sunlit harbor"
-              width={1536}
-              height={1024}
-              fetchPriority="high"
-            />
-          </div>
-        </div>
-        <CardFooter className="studio-overview__metrics">
+        <CardHeader className="studio-overview__header">
+          <CardTitle className="studio-overview__title">
+            <h2>{firstName ? `Welcome back, ${firstName}` : 'Welcome back'}</h2>
+          </CardTitle>
+          <CardAction className="studio-overview__actions">
+            {canView('contacts') ? (
+              <StudioActionLink variant="outline" href={href('contacts')}>
+                <Inbox data-icon="inline-start" />
+                Review inquiries
+              </StudioActionLink>
+            ) : null}
+            {canPublish ? (
+              <StudioActionLink href={href('blogs', true)}>
+                <Plus data-icon="inline-start" />
+                Write a post
+              </StudioActionLink>
+            ) : null}
+          </CardAction>
+        </CardHeader>
+        <CardContent className="studio-overview__metrics">
           {metrics.map(({ slug, label, Icon, count }) => (
             <Link key={slug} className="studio-overview__metric" href={href(slug)}>
               <span className="studio-overview__metric-top">
@@ -132,14 +110,25 @@ export default async function StudioOverview({ req, user, permissions }: WidgetS
               <span className="studio-overview__number">{count.toLocaleString('en-US')}</span>
             </Link>
           ))}
+        </CardContent>
+        <CardFooter className="studio-overview__footer">
+          {canView('blogs') && draftCount > 0 ? (
+            <Link href={`${href('blogs')}?where[_status][equals]=draft`}>
+              {`${draftCount} draft${draftCount === 1 ? '' : 's'}`}
+              <ArrowUpRight aria-hidden="true" />
+            </Link>
+          ) : null}
+          <Link
+            className="studio-overview__website"
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View website
+            <ArrowUpRight aria-hidden="true" />
+          </Link>
         </CardFooter>
       </Card>
-      <div className="studio-overview__below">
-        <Link href="/" target="_blank" rel="noopener noreferrer">
-          View website
-          <ArrowUpRight aria-hidden="true" />
-        </Link>
-      </div>
     </section>
   )
 }

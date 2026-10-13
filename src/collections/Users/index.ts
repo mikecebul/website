@@ -44,6 +44,8 @@ const Users: CollectionConfig = {
     useAsTitle: 'name',
   },
   auth: {
+    // Authorship can point back to this user; auth does not need populated relationships.
+    depth: 0,
     forgotPassword: {
       generateEmailHTML: async (args = {}) => {
         const { req, token, user } = args
@@ -76,6 +78,15 @@ const Users: CollectionConfig = {
       type: 'text',
     },
     {
+      name: 'headshot',
+      type: 'upload',
+      relationTo: 'media',
+      filterOptions: { mimeType: { contains: 'image/' } },
+      admin: {
+        description: 'Choose an image for your profile and account menu.',
+      },
+    },
+    {
       name: 'role',
       type: 'select',
       defaultValue: 'editor',
@@ -84,11 +95,10 @@ const Users: CollectionConfig = {
         create: roleSelectMutate,
         read: async ({ req }) => {
           const { payload } = req
-          const users = await payload.find({
+          const users = await payload.count({
             collection: 'users',
             overrideAccess: true,
             req,
-            limit: 0,
           })
           return users.totalDocs > 0
         },

@@ -1,9 +1,16 @@
 import assert from 'node:assert/strict'
 import { randomUUID } from 'node:crypto'
-import { createPayloadRequest, getPayload, JWT_AUTH_VERSION } from 'payload'
+import {
+  createPayloadRequest,
+  createPayloadRequestFromWebRequest,
+  getPayload,
+  JWT_AUTH_VERSION,
+} from 'payload'
 import jwt from 'jsonwebtoken'
+import sharp from 'sharp'
 
 import config from '../src/payload.config'
+import * as headshotMigration from '../src/migrations/20261013_050320_add_user_headshot'
 
 // Only an isolated temporary SQLite file may be used for this fixture suite.
 assert.match(
@@ -12,12 +19,38 @@ assert.match(
 )
 assert.notEqual(process.env.S3_ENABLED, 'true')
 const payload = await getPayload({ config })
-const req = await createPayloadRequest({ payload })
 const marker = `sqlite-fixture-${randomUUID()}`
 let userID: string | number | undefined
 let editorID: string | number | undefined
 let blogID: string | number | undefined
 let contactID: string | number | undefined
+let mcpBlogID: string | number | undefined
+let headshotID: string | number | undefined
+
+// Exercise the plugin's real HTTP handler using isolated fixture credentials.
+const mcpEndpoint = payload.config.endpoints.find(
+  (endpoint) => endpoint.path === '/mcp' && endpoint.method === 'post',
+)
+assert.ok(mcpEndpoint)
+async function mcpRequest(method: string, params: object, key?: string, query = '') {
+  const headers = new Headers({
+    'Content-Type': 'application/json',
+    Accept: 'application/json, text/event-stream',
+    'MCP-Protocol-Version': '2025-03-26',
+  })
+  if (key) headers.set('Authorization', `users API-Key ${key}`)
+  const request = await createPayloadRequestFromWebRequest({
+    config,
+    request: new Request(`http://localhost:3000/api/mcp${query}`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }),
+    }),
+  })
+  const response = await mcpEndpoint!.handler(request)
+  assert.equal(response.status, 200)
+  return response.json()
+}
 
 function assertAuthor(
   reference:
@@ -229,7 +262,7 @@ try {
     collection: 'users',
     id: user.id,
     overrideAccess: true,
-    user,
+    user: { ...user, collection: 'users' },
     data: { apiKey },
   })
   const authenticated = await payload.auth({
@@ -244,6 +277,206 @@ try {
   assert.equal(returned.apiKey, undefined)
   assert.equal(returned.apiKeyLast4, apiKey.slice(-4))
   assert.ok(!('enableAPIKey' in returned))
+  assertAuthor(returned.updatedBy, user.id)
+
+  // Rolling the additive migration down and back up must retain accounts and their relationships.
+  const migrationReq = await createPayloadRequest({ payload })
+  const authorsBefore = await payload.db.drizzle.$client.execute('SELECT * FROM users_rels')
+  await headshotMigration.down({ db: payload.db.drizzle, payload, req: migrationReq })
+  await headshotMigration.up({ db: payload.db.drizzle, payload, req: migrationReq })
+  assert.deepEqual(
+    (await payload.db.drizzle.$client.execute('SELECT * FROM users_rels')).rows,
+    authorsBefore.rows,
+  )
+  assert.equal(
+    (await payload.auth({ headers: new Headers({ Authorization: `JWT ${login.token}` }) })).user
+      ?.id,
+    user.id,
+  )
+  assert.equal(
+    (await payload.auth({ headers: new Headers({ Authorization: `users API-Key ${apiKey}` }) }))
+      .user?.id,
+    user.id,
+  )
+  const image = await sharp({
+    create: { width: 40, height: 40, channels: 3, background: '#172f40' },
+  })
+    .png()
+    .toBuffer()
+  const headshot = await payload.create({
+    collection: 'media',
+    overrideAccess: true,
+    user,
+    data: { alt: 'Isolated headshot fixture' },
+    file: { data: image, name: `${marker}.png`, mimetype: 'image/png', size: image.length },
+  })
+  headshotID = headshot.id
+  await payload.update({
+    collection: 'users',
+    id: user.id,
+    overrideAccess: true,
+    user,
+    data: { headshot: headshot.id },
+  })
+  const profile = await payload.findByID({
+    collection: 'users',
+    id: user.id,
+    depth: 1,
+    overrideAccess: false,
+    user,
+  })
+  assert.equal(
+    typeof profile.headshot === 'object' ? profile.headshot?.id : profile.headshot,
+    headshot.id,
+  )
+  assert.ok(
+    typeof profile.headshot === 'object' &&
+      (profile.headshot?.variants?.thumbnail?.url ||
+        profile.headshot?.thumbnailURL ||
+        profile.headshot?.url),
+  )
+  await payload.update({
+    collection: 'users',
+    id: user.id,
+    overrideAccess: true,
+    user,
+    data: { headshot: null },
+  })
+  assert.equal(
+    (await payload.db.drizzle.$client.execute('PRAGMA foreign_key_check')).rows.length,
+    0,
+  )
+  console.log(
+    'PASS headshot upload and profile population, migration rollback/reapply, preserved sessions, API keys and authorship',
+  )
+
+  const anonymousTools = await mcpRequest('tools/list', {})
+  assert.ok(
+    anonymousTools.error?.code === -32601 || anonymousTools.result?.tools.length === 0,
+    JSON.stringify(anonymousTools),
+  )
+  await assert.rejects(
+    mcpRequest('tools/list', {}, randomUUID()),
+    (error) => (error as { status?: number }).status === 401,
+  )
+  await assert.rejects(
+    mcpRequest('tools/list', {}, apiKey, '?overrideAccess=true'),
+    (error) => (error as { status?: number }).status === 400,
+  )
+  const toolList = await mcpRequest('tools/list', {}, apiKey)
+  assert.ok(toolList.result?.tools, JSON.stringify(toolList))
+  const toolNames = toolList.result.tools.map((tool: { name: string }) => tool.name)
+  for (const name of [
+    'getConfigInfo',
+    'getCollectionSchema',
+    'findDocuments',
+    'createDocuments',
+    'updateDocument',
+    'deleteDocuments',
+    'findVersions',
+    'restoreVersion',
+    'getUploadInstructions',
+  ])
+    assert.ok(toolNames.includes(name), `Missing MCP tool: ${name}`)
+  const schema = await mcpRequest(
+    'tools/call',
+    {
+      name: 'getCollectionSchema',
+      arguments: { slug: 'blogs' },
+    },
+    apiKey,
+  )
+  assert.ok(!schema.error && !schema.result.isError)
+  const created = await mcpRequest(
+    'tools/call',
+    {
+      name: 'createDocuments',
+      arguments: {
+        slug: 'blogs',
+        draft: true,
+        documents: [{ data: { title: `${marker}-mcp`, slug: `${marker}-mcp` } }],
+      },
+    },
+    apiKey,
+  )
+  assert.ok(!created.error && !created.result.isError, JSON.stringify(created))
+  const mcpBlog = await payload.find({
+    collection: 'blogs',
+    overrideAccess: true,
+    draft: true,
+    where: { slug: { equals: `${marker}-mcp` } },
+  })
+  assert.equal(mcpBlog.totalDocs, 1)
+  mcpBlogID = mcpBlog.docs[0].id
+  assertAuthor(mcpBlog.docs[0].createdBy, user.id)
+  const updated = await mcpRequest(
+    'tools/call',
+    {
+      name: 'updateDocument',
+      arguments: {
+        slug: 'blogs',
+        id: mcpBlogID,
+        draft: true,
+        data: { title: `${marker}-mcp-edited` },
+      },
+    },
+    apiKey,
+  )
+  assert.ok(!updated.error && !updated.result.isError)
+  const editedMcpBlog = await payload.findByID({
+    collection: 'blogs',
+    id: mcpBlogID,
+    overrideAccess: true,
+    draft: true,
+  })
+  assert.equal(editedMcpBlog.title, `${marker}-mcp-edited`)
+  assertAuthor(editedMcpBlog.updatedBy, user.id)
+  const editorKey = randomUUID()
+  await payload.update({
+    collection: 'users',
+    id: editorID!,
+    overrideAccess: true,
+    user,
+    data: { apiKey: editorKey },
+  })
+  const denied = await mcpRequest(
+    'tools/call',
+    {
+      name: 'updateDocument',
+      arguments: {
+        slug: 'blogs',
+        id: mcpBlogID,
+        draft: true,
+        data: { title: 'Unauthorized edit' },
+      },
+    },
+    editorKey,
+  )
+  assert.ok(denied.error || denied.result.isError)
+  assert.equal(
+    (
+      await payload.findByID({
+        collection: 'blogs',
+        id: mcpBlogID,
+        overrideAccess: true,
+        draft: true,
+      })
+    ).title,
+    `${marker}-mcp-edited`,
+  )
+  const deleted = await mcpRequest(
+    'tools/call',
+    {
+      name: 'deleteDocuments',
+      arguments: { slug: 'blogs', id: mcpBlogID },
+    },
+    apiKey,
+  )
+  assert.ok(!deleted.error && !deleted.result.isError)
+  mcpBlogID = undefined
+  console.log(
+    'PASS MCP schema discovery, draft creation/edit/deletion, authorship, anonymous denial, role enforcement and production override rejection',
+  )
   await payload.update({
     collection: 'users',
     id: user.id,
@@ -256,6 +489,10 @@ try {
       .user,
     null,
   )
+  await assert.rejects(
+    mcpRequest('tools/list', {}, apiKey),
+    (error) => (error as { status?: number }).status === 401,
+  )
   assert.equal(
     (await payload.db.drizzle.$client.execute('PRAGMA integrity_check')).rows[0].integrity_check,
     'ok',
@@ -264,6 +501,16 @@ try {
     'PASS private history, first-user role, disabled user versions, JWT compatibility, and API-key creation/redaction/revocation',
   )
 } finally {
+  if (headshotID && userID) {
+    await payload.update({
+      collection: 'users',
+      id: userID,
+      overrideAccess: true,
+      data: { headshot: null },
+    })
+    await payload.delete({ collection: 'media', id: headshotID, overrideAccess: true })
+  }
+  if (mcpBlogID) await payload.delete({ collection: 'blogs', id: mcpBlogID, overrideAccess: true })
   if (contactID)
     await payload.delete({ collection: 'contacts', id: contactID, overrideAccess: true })
   if (blogID) await payload.delete({ collection: 'blogs', id: blogID, overrideAccess: true })

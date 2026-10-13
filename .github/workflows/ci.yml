@@ -45,7 +45,7 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
-      - name: Verify SQLite schema, authentication and submissions
+      - name: Verify SQLite schema, authentication, submissions and MCP
         env:
           NODE_ENV: production
           DATABASE_URI: file:/tmp/website-sqlite-fixture-ci.db
