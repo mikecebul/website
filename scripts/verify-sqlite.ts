@@ -1,9 +1,16 @@
 import assert from 'node:assert/strict'
 import { randomUUID } from 'node:crypto'
-import { createPayloadRequestFromWebRequest, getPayload, JWT_AUTH_VERSION } from 'payload'
+import {
+  createPayloadRequest,
+  createPayloadRequestFromWebRequest,
+  getPayload,
+  JWT_AUTH_VERSION,
+} from 'payload'
 import jwt from 'jsonwebtoken'
+import sharp from 'sharp'
 
 import config from '../src/payload.config'
+import * as headshotMigration from '../src/migrations/20261013_050320_add_user_headshot'
 
 // Only an isolated temporary SQLite file may be used for this fixture suite.
 assert.match(
@@ -18,6 +25,7 @@ let editorID: string | number | undefined
 let blogID: string | number | undefined
 let contactID: string | number | undefined
 let mcpBlogID: string | number | undefined
+let headshotID: string | number | undefined
 
 // Exercise the plugin's real HTTP handler using isolated fixture credentials.
 const mcpEndpoint = payload.config.endpoints.find(
@@ -271,6 +279,77 @@ try {
   assert.ok(!('enableAPIKey' in returned))
   assertAuthor(returned.updatedBy, user.id)
 
+  // Rolling the additive migration down and back up must retain accounts and their relationships.
+  const migrationReq = await createPayloadRequest({ payload })
+  const authorsBefore = await payload.db.drizzle.$client.execute('SELECT * FROM users_rels')
+  await headshotMigration.down({ db: payload.db.drizzle, payload, req: migrationReq })
+  await headshotMigration.up({ db: payload.db.drizzle, payload, req: migrationReq })
+  assert.deepEqual(
+    (await payload.db.drizzle.$client.execute('SELECT * FROM users_rels')).rows,
+    authorsBefore.rows,
+  )
+  assert.equal(
+    (await payload.auth({ headers: new Headers({ Authorization: `JWT ${login.token}` }) })).user
+      ?.id,
+    user.id,
+  )
+  assert.equal(
+    (await payload.auth({ headers: new Headers({ Authorization: `users API-Key ${apiKey}` }) }))
+      .user?.id,
+    user.id,
+  )
+  const image = await sharp({
+    create: { width: 40, height: 40, channels: 3, background: '#172f40' },
+  })
+    .png()
+    .toBuffer()
+  const headshot = await payload.create({
+    collection: 'media',
+    overrideAccess: true,
+    user,
+    data: { alt: 'Isolated headshot fixture' },
+    file: { data: image, name: `${marker}.png`, mimetype: 'image/png', size: image.length },
+  })
+  headshotID = headshot.id
+  await payload.update({
+    collection: 'users',
+    id: user.id,
+    overrideAccess: true,
+    user,
+    data: { headshot: headshot.id },
+  })
+  const profile = await payload.findByID({
+    collection: 'users',
+    id: user.id,
+    depth: 1,
+    overrideAccess: false,
+    user,
+  })
+  assert.equal(
+    typeof profile.headshot === 'object' ? profile.headshot?.id : profile.headshot,
+    headshot.id,
+  )
+  assert.ok(
+    typeof profile.headshot === 'object' &&
+      (profile.headshot?.variants?.thumbnail?.url ||
+        profile.headshot?.thumbnailURL ||
+        profile.headshot?.url),
+  )
+  await payload.update({
+    collection: 'users',
+    id: user.id,
+    overrideAccess: true,
+    user,
+    data: { headshot: null },
+  })
+  assert.equal(
+    (await payload.db.drizzle.$client.execute('PRAGMA foreign_key_check')).rows.length,
+    0,
+  )
+  console.log(
+    'PASS headshot upload and profile population, migration rollback/reapply, preserved sessions, API keys and authorship',
+  )
+
   const anonymousTools = await mcpRequest('tools/list', {})
   assert.ok(
     anonymousTools.error?.code === -32601 || anonymousTools.result?.tools.length === 0,
@@ -422,6 +501,15 @@ try {
     'PASS private history, first-user role, disabled user versions, JWT compatibility, and API-key creation/redaction/revocation',
   )
 } finally {
+  if (headshotID && userID) {
+    await payload.update({
+      collection: 'users',
+      id: userID,
+      overrideAccess: true,
+      data: { headshot: null },
+    })
+    await payload.delete({ collection: 'media', id: headshotID, overrideAccess: true })
+  }
   if (mcpBlogID) await payload.delete({ collection: 'blogs', id: mcpBlogID, overrideAccess: true })
   if (contactID)
     await payload.delete({ collection: 'contacts', id: contactID, overrideAccess: true })

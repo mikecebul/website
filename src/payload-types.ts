@@ -184,6 +184,10 @@ export interface Blog {
 export interface User {
   id: number;
   name?: string | null;
+  /**
+   * Choose an image for your profile and account menu.
+   */
+  headshot?: (number | null) | Media;
   role?: ('user' | 'editor' | 'admin' | 'superAdmin') | null;
   createdBy?: {
     relationTo: 'users';
@@ -513,6 +517,7 @@ export interface ContactsSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  headshot?: T;
   role?: T;
   createdBy?: T;
   updatedBy?: T;

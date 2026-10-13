@@ -1,5 +1,28 @@
 @import '@fontsource-variable/dm-sans';
 
+.studio-profile-avatar[data-slot='avatar'] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+}
+.studio-profile-avatar [data-slot='avatar-image'] {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.studio-profile-avatar [data-slot='avatar-fallback'] {
+  font-size: 14px;
+  font-weight: 500;
+}
+
 /* Extend the dashboard widget while using Payload's native theme colors. */
 .studio-overview {
   --studio-ink: var(--color-text);

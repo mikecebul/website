@@ -55,6 +55,7 @@ export default buildConfig({
       importMapFile: path.resolve(dirname, 'routes/_payload/importMap.js'),
     },
     user: Users.slug,
+    avatar: { Component: '/components/admin/UserHeadshot' },
     components: {
       sidebar: {
         tabs: [

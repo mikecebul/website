@@ -14,6 +14,8 @@ Use `pnpm generate:types` and `pnpm generate:importmap` after modifying Payload 
 
 The studio dashboard keeps Payload’s native views, dashboard editor and sidebar tabs. Navigation is organized into Content, Business and Settings. A compact, theme-aware panel shows the greeting, actions and collection counts. Existing dashboard preferences can be updated with Dashboard → Reset Layout.
 
+Users have an optional **Headshot** upload field linked to Media. Choose or upload an image and save the profile; it is used in the account menu, with initials when no image is available. Media storage and image processing follow the existing S3 and Sharp configuration. The additive SQLite migration preserves existing accounts and credentials.
+
 The Business → Form submissions collection retains the existing `contacts` database collection and records. Valid public contact submissions are saved as unread before attempting React Email delivery. Delivery failures are logged without discarding the inquiry or asking the visitor to resubmit. Anonymous collection reads, writes and inbox actions are denied; editors and administrators can review submissions. The Notifications tab lists the newest 20 unread submissions, refreshes every 30 seconds and on window focus, and supports individual or displayed-batch read actions. Read status is shared across the staff team. Older records without a read flag count as unread. All submissions remain available in the collection, where the Read checkbox can also be cleared.
 
 ## Migration notes

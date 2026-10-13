@@ -78,6 +78,15 @@ const Users: CollectionConfig = {
       type: 'text',
     },
     {
+      name: 'headshot',
+      type: 'upload',
+      relationTo: 'media',
+      filterOptions: { mimeType: { contains: 'image/' } },
+      admin: {
+        description: 'Choose an image for your profile and account menu.',
+      },
+    },
+    {
       name: 'role',
       type: 'select',
       defaultValue: 'editor',
