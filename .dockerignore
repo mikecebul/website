@@ -11,3 +11,9 @@ README.md
 .playwright-cli
 output
 .env
+
+data
+*.db
+*.db-wal
+*.db-shm
+*.db-journal

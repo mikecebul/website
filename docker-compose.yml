@@ -1,17 +1,6 @@
 name: mikecebul-website
 
 services:
-  mongo:
-    image: mongo:latest
-    ports:
-      - '${MONGO_PORT:-27018}:27017'
-    command:
-      - --storageEngine=wiredTiger
-    volumes:
-      - mongo_data:/data/db
-    logging:
-      driver: none
-
   mailpit:
     image: axllent/mailpit
     restart: 'no'
@@ -27,5 +16,4 @@ services:
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
 volumes:
-  mongo_data:
   mailpit_data:

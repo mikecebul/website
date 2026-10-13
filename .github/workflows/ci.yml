@@ -36,11 +36,23 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install SQLite CLI for backup tests
+        run: sudo apt-get update && sudo apt-get install -y sqlite3
+
       - name: Run unit tests
         run: pnpm test
 
       - name: Typecheck
         run: pnpm typecheck
+
+      - name: Verify SQLite schema, authentication and submissions
+        env:
+          NODE_ENV: production
+          DATABASE_URI: file:/tmp/website-sqlite-fixture-ci.db
+          PAYLOAD_SECRET: isolated-ci-fixture-secret
+          S3_ENABLED: 'false'
+          RESEND_API_KEY: local-test-only
+        run: pnpm test:database
 
       - name: Build production server
         run: pnpm build
