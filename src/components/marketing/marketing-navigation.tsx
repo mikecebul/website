@@ -2,8 +2,7 @@
 
 import Link from '@/components/router-link'
 import { useLocation } from '@tanstack/react-router'
-import { ArrowRight, ArrowUpRight, Mail, MapPin, Menu, Phone, X } from 'lucide-react'
-import { AngularFrame } from '@/components/marketing/design-system'
+import { Menu, X } from 'lucide-react'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
   Drawer,
@@ -18,21 +17,55 @@ import { cn } from '@/lib/utils'
 import { websiteContent } from '@/lib/website-content'
 
 const mobileLinks = [
-  { href: '/', label: 'Home', description: 'Your next website, handled.' },
-  {
-    href: '/websites',
-    label: 'Websites',
-    description: 'Packages, projects, and personal support.',
-  },
-  {
-    href: '/hybrid-meeting-solutions',
-    label: 'Hybrid meetings',
-    description: 'Zoom Rooms, kiosks, and AV integration.',
-  },
-  { href: '/about', label: 'About', description: 'Meet your website developer.' },
-  { href: '/contact', label: 'Contact', description: 'Tell me about your project.' },
-  { href: '/blog', label: 'Journal', description: 'Notes on websites and technology.' },
+  { href: '/', label: 'Home' },
+  { href: '/websites', label: 'Websites' },
+  { href: '/hybrid-meeting-solutions', label: 'Hybrid meetings' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/blog', label: 'Journal' },
 ]
+
+function MenuCircuitPattern() {
+  return (
+    <svg
+      className="web-menu-circuit"
+      viewBox="0 0 400 840"
+      preserveAspectRatio="xMaxYMax slice"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <pattern id="menu-circuit-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+          <path d="M24 0H0V24" stroke="currentColor" strokeOpacity="0.07" />
+        </pattern>
+      </defs>
+      <path d="M0 0H400V840H0Z" fill="url(#menu-circuit-grid)" />
+      <g stroke="currentColor" strokeWidth="0.7" strokeOpacity="0.22">
+        <path d="M374 0V90L386 102V302L352 336V472" />
+        <path d="M350 0V166L326 190V310" />
+        <path d="M400 222L370 252V390L318 442V520L226 612H0" />
+        <path d="M400 418L280 538H210L130 618H42V732" />
+        <path d="M400 568H326L266 628H176L12 792" />
+        <path d="M400 742L352 694V612L318 578H284" />
+        <path d="M96 840V754L148 702H228L256 730V804" />
+        <path d="M0 582H108L168 522" />
+        <path d="M400 804L340 744H306" />
+      </g>
+      <g stroke="currentColor" strokeOpacity="0.3" strokeWidth="0.8">
+        <circle cx="352" cy="472" r="2.5" />
+        <circle cx="42" cy="732" r="2.5" />
+        <circle cx="284" cy="578" r="2.5" />
+        <circle cx="256" cy="804" r="2.5" />
+      </g>
+      <g fill="currentColor" fillOpacity="0.3">
+        <circle cx="326" cy="310" r="2.5" />
+        <circle cx="168" cy="522" r="2.5" />
+        <circle cx="306" cy="744" r="2.5" />
+      </g>
+    </svg>
+  )
+}
 
 function isCurrentRoute(pathname: string, href: string) {
   return pathname === href || (href !== '/' && pathname.startsWith(`${href}/`))
@@ -87,7 +120,7 @@ function MarketingMobileNav() {
         className="marketing-shell web-mobile-menu"
         overlayClassName="web-mobile-menu-overlay"
       >
-        <AngularFrame className="web-menu-frame" />
+        <MenuCircuitPattern />
         <div className="web-mobile-menu-header">
           <div>
             <p className="web-eyebrow">Websites. Handled.</p>
@@ -99,7 +132,7 @@ function MarketingMobileNav() {
           </DrawerDescription>
           <DrawerClose asChild>
             <Button
-              variant="outline"
+              variant="secondary"
               size="icon"
               className="web-menu-close"
               aria-label="Close navigation"
@@ -118,11 +151,7 @@ function MarketingMobileNav() {
                   className="web-mobile-link"
                   aria-current={isCurrentRoute(pathname, item.href) ? 'page' : undefined}
                 >
-                  <span>
-                    <span className="web-mobile-link-title">{item.label}</span>
-                    <span className="web-mobile-link-description">{item.description}</span>
-                  </span>
-                  <ArrowUpRight aria-hidden="true" />
+                  {item.label}
                 </Link>
               </DrawerClose>
             ))}
@@ -131,23 +160,9 @@ function MarketingMobileNav() {
             <DrawerClose asChild>
               <Link href="/contact" className={cn(buttonVariants({ size: 'lg' }), 'web-cta')}>
                 Start a project
-                <ArrowRight data-icon="inline-end" aria-hidden="true" />
               </Link>
             </DrawerClose>
-            <div className="web-mobile-menu-contact">
-              <a href={`mailto:${websiteContent.contact.email}`}>
-                <Mail aria-hidden="true" />
-                {websiteContent.contact.email}
-              </a>
-              <a href={`tel:${websiteContent.contact.phoneHref}`}>
-                <Phone aria-hidden="true" />
-                {websiteContent.contact.phone}
-              </a>
-              <p>
-                <MapPin aria-hidden="true" />
-                {websiteContent.contact.location}
-              </p>
-            </div>
+            <p className="web-mobile-menu-caption">Websites · Workflows · Meeting spaces</p>
           </div>
         </div>
       </DrawerContent>
