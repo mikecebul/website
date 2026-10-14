@@ -8,8 +8,7 @@ export const Route = createFileRoute('/sitemap.xml')({
     handlers: {
       GET: async () => {
         const { getCMS } = await import('@/server/cms')
-        const isLive =
-          process.env.VITE_IS_LIVE !== 'false' && process.env.NEXT_PUBLIC_IS_LIVE !== 'false'
+        const isLive = process.env.IS_LIVE !== 'false'
         const xmlEscape = (value: string) =>
           value.replace(
             /[<>&'"]/g,

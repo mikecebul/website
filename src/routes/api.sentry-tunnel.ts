@@ -4,10 +4,7 @@ export const Route = createFileRoute('/api/sentry-tunnel')({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const configured =
-          process.env.SENTRY_DSN ||
-          process.env.NEXT_PUBLIC_SENTRY_DSN ||
-          process.env.VITE_SENTRY_DSN
+        const configured = process.env.SENTRY_DSN
         if (!configured) return new Response(null, { status: 204 })
         const dsn = new URL(configured)
         const project = dsn.pathname.split('/').filter(Boolean).at(-1)

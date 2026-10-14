@@ -190,9 +190,9 @@ export default buildConfig({
           disableLocalStorage: true,
           generateFileURL: (args: any) => {
             if (typeof args.filename !== 'string') return null as unknown as string
-            return `https://${process.env.NEXT_PUBLIC_S3_HOSTNAME}/${args.prefix}/${args.filename}`
+            return `https://${process.env.S3_HOSTNAME}/${args.prefix}/${args.filename}`
           },
-          prefix: process.env.NEXT_PUBLIC_UPLOAD_PREFIX || 'media',
+          prefix: process.env.UPLOAD_PREFIX || 'media',
         },
       },
     }),
