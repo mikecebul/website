@@ -26,7 +26,15 @@ export default {
       return Response.redirect(new URL('/', url), 308)
     if (/^\/rdfk\.[^.]+$/.test(url.pathname)) return Response.redirect(new URL('/rdfk', url), 307)
     try {
-      return await handler(request)
+      const response = await handler(request)
+      if (
+        process.env.VITE_IS_LIVE === 'false' ||
+        process.env.NEXT_PUBLIC_IS_LIVE === 'false' ||
+        /^\/(admin|api|next)(\/|$)/.test(url.pathname)
+      ) {
+        response.headers.set('X-Robots-Tag', 'noindex, nofollow')
+      }
+      return response
     } catch (error) {
       Sentry.captureException(error)
       throw error

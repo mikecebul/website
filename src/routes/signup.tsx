@@ -1,4 +1,5 @@
 import appCss from '@/styles.css?url'
+import { createMarketingHead } from '@/lib/marketing-metadata'
 import { createFileRoute } from '@tanstack/react-router'
 import { MarketingShell } from '@/components/marketing/marketing-pages'
 import Link from '@/components/router-link'
@@ -32,7 +33,15 @@ function SignupPage() {
 }
 
 export const Route = createFileRoute('/signup')({
-  head: () => ({ links: [{ rel: 'stylesheet', href: appCss }] }),
+  head: () => {
+    const head = createMarketingHead({
+      title: 'Account access | Mike Cebulski',
+      description: 'Arrange account access for your project.',
+      pathname: '/signup',
+      noindex: true,
+    })
+    return { ...head, links: [...head.links, { rel: 'stylesheet', href: appCss }] }
+  },
   component: () => (
     <MarketingShell>
       <SignupPage />

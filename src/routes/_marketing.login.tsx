@@ -27,5 +27,12 @@ function LoginPage() {
 }
 
 export const Route = createFileRoute('/_marketing/login')({
+  head: () =>
+    createMarketingHead({
+      title: 'Sign in | Mike Cebulski',
+      description: 'Sign in to your project account.',
+      pathname: '/login',
+      noindex: true,
+    }),
   component: LoginPage,
 })
