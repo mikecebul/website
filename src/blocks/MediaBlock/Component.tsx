@@ -38,9 +38,9 @@ export const MediaBlock: React.FC<Props> = (props) => {
   if (media && typeof media === 'object') caption = media.caption
 
   return (
-    <div
+    <figure
       className={cn(
-        '',
+        'media-block m-0',
         {
           container: position === 'default' && enableGutter,
         },
@@ -56,9 +56,9 @@ export const MediaBlock: React.FC<Props> = (props) => {
         <Media imgClassName={cn('rounded', imgClassName)} resource={media} src={staticImage} />
       )}
       {caption && (
-        <div
+        <figcaption
           className={cn(
-            'mt-6',
+            'media-block-caption mt-3 text-sm leading-relaxed',
             {
               container: position === 'fullscreen' && !disableInnerContainer,
             },
@@ -70,8 +70,8 @@ export const MediaBlock: React.FC<Props> = (props) => {
           ) : (
             <RichText data={caption} enableGutter={false} />
           )}
-        </div>
+        </figcaption>
       )}
-    </div>
+    </figure>
   )
 }
