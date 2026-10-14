@@ -43,7 +43,7 @@ export const Media: CollectionConfig = {
       name: 'caption',
       type: 'text',
       admin: {
-        hidden: true,
+        description: 'Optional text displayed beneath this image in blog media blocks.',
       },
     },
     {
