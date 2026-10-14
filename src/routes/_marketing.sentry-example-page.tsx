@@ -3,7 +3,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import * as Sentry from '@sentry/react'
 import { useState, useEffect } from 'react'
-import { checkSentryConnectivity } from '@/server/sentry.functions'
+import { checkSentryConfigured } from '@/server/sentry.functions'
 
 class SentryExampleFrontendError extends Error {
   constructor(message: string | undefined) {
@@ -14,14 +14,14 @@ class SentryExampleFrontendError extends Error {
 
 function Page() {
   const [hasSentError, setHasSentError] = useState(false)
-  const [isConnected, setIsConnected] = useState(true)
+  const [isConfigured, setIsConfigured] = useState(false)
 
   useEffect(() => {
-    async function checkConnectivity() {
-      const isConnected = await checkSentryConnectivity()
-      setIsConnected(isConnected)
+    async function checkConfiguration() {
+      const serverConfigured = await checkSentryConfigured()
+      setIsConfigured(serverConfigured && Boolean(import.meta.env.VITE_SENTRY_DSN))
     }
-    checkConnectivity()
+    checkConfiguration().catch(() => setIsConfigured(false))
   }, [])
 
   return (
@@ -37,11 +37,8 @@ function Page() {
         <h1>sentry-example-page</h1>
 
         <p className="description">
-          Click the button below, and view the sample error on the Sentry{' '}
-          <a target="_blank" href="https://monitor.mikecebul.com/mikecebul/issues/?project=1">
-            Issues Page
-          </a>
-          . For more details about setting up Sentry,{' '}
+          Click the button below, and view the sample error on the Sentry Issues page for your
+          configured project. For more details about setting up Sentry,{' '}
           <a target="_blank" href="https://docs.sentry.io/platforms/javascript/guides/react/">
             read our docs
           </a>
@@ -67,18 +64,20 @@ function Page() {
               'This error is raised on the frontend of the example page.',
             )
           }}
-          disabled={!isConnected}
+          disabled={!isConfigured}
         >
           <span>Throw Sample Error</span>
         </button>
 
         {hasSentError ? (
-          <p className="success">Error sent to Sentry.</p>
-        ) : !isConnected ? (
+          <p className="success">
+            Sample errors triggered. Check your project's Issues page to confirm delivery.
+          </p>
+        ) : !isConfigured ? (
           <div className="connectivity-error">
             <p>
-              It looks like network requests to Sentry are being blocked, which will prevent errors
-              from being captured. Try disabling your ad-blocker to complete the test.
+              Configure the Sentry DSN for both the browser build and running server, then rebuild
+              and restart the app to enable this test.
             </p>
           </div>
         ) : (

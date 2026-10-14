@@ -2,8 +2,9 @@ import { createStartHandler, defaultStreamHandler } from '@tanstack/react-start/
 import * as Sentry from '@sentry/node'
 
 Sentry.init({
-  dsn: process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN,
-  enabled: Boolean(process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN),
+  dsn: process.env.SENTRY_DSN,
+  enabled: Boolean(process.env.SENTRY_DSN),
+  environment: process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV || 'development',
 })
 
 const handler = createStartHandler(defaultStreamHandler)
@@ -27,11 +28,7 @@ export default {
     if (/^\/rdfk\.[^.]+$/.test(url.pathname)) return Response.redirect(new URL('/rdfk', url), 307)
     try {
       const response = await handler(request)
-      if (
-        process.env.VITE_IS_LIVE === 'false' ||
-        process.env.NEXT_PUBLIC_IS_LIVE === 'false' ||
-        /^\/(admin|api|next)(\/|$)/.test(url.pathname)
-      ) {
+      if (process.env.IS_LIVE === 'false' || /^\/(admin|api|next)(\/|$)/.test(url.pathname)) {
         response.headers.set('X-Robots-Tag', 'noindex, nofollow')
       }
       return response

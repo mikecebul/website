@@ -14,6 +14,9 @@ const config = defineConfig(
   withPayload(
     ({ env, pluginOptions }) => {
       const vars = loadEnv(env.mode, process.cwd(), '')
+      if (process.env.CI && vars.SENTRY_AUTH_TOKEN && (!vars.SENTRY_ORG || !vars.SENTRY_PROJECT)) {
+        throw new Error('SENTRY_ORG and SENTRY_PROJECT are required for Sentry source-map uploads')
+      }
       return {
         server: {
           watch: {
@@ -24,10 +27,13 @@ const config = defineConfig(
         resolve: { tsconfigPaths: true },
         define: {
           'import.meta.env.VITE_SERVER_URL': JSON.stringify(
-            vars.VITE_SERVER_URL || vars.NEXT_PUBLIC_SERVER_URL || 'https://www.mikecebul.com',
+            vars.SERVER_URL || vars.VITE_SERVER_URL || 'https://www.mikecebul.com',
           ),
           'import.meta.env.VITE_SENTRY_DSN': JSON.stringify(
-            vars.VITE_SENTRY_DSN || vars.NEXT_PUBLIC_SENTRY_DSN || '',
+            vars.SENTRY_DSN || vars.VITE_SENTRY_DSN || '',
+          ),
+          'import.meta.env.VITE_SENTRY_ENVIRONMENT': JSON.stringify(
+            vars.SENTRY_ENVIRONMENT || env.mode,
           ),
         },
         plugins: [
@@ -40,13 +46,13 @@ const config = defineConfig(
             // file-type loads this package through a runtime import when serving uploaded files.
             traceDeps: [...(pluginOptions.nitro.traceDeps ?? []), 'strtok3*'],
           }),
-          ...(process.env.CI && process.env.SENTRY_AUTH_TOKEN
+          ...(process.env.CI && vars.SENTRY_AUTH_TOKEN
             ? [
                 sentryVitePlugin({
-                  org: 'mikecebul',
-                  project: 'website',
-                  url: 'https://monitor.mikecebul.com',
-                  authToken: process.env.SENTRY_AUTH_TOKEN,
+                  org: vars.SENTRY_ORG,
+                  project: vars.SENTRY_PROJECT,
+                  url: vars.SENTRY_URL || 'https://sentry.io',
+                  authToken: vars.SENTRY_AUTH_TOKEN,
                   sourcemaps: { filesToDeleteAfterUpload: ['.output/**/*.map'] },
                 }),
               ]

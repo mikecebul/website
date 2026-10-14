@@ -6,7 +6,7 @@ export const Route = createFileRoute('/robots.txt')({
     handlers: {
       GET: () => {
         const content =
-          process.env.VITE_IS_LIVE === 'false' || process.env.NEXT_PUBLIC_IS_LIVE === 'false'
+          process.env.IS_LIVE === 'false'
             ? 'User-agent: *\nDisallow: /\n'
             : `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\nDisallow: /next/\nSitemap: ${baseUrl}/sitemap.xml\n`
         return new Response(content, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } })

@@ -13,9 +13,12 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN \
   --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN \
-  --mount=type=secret,id=NEXT_PUBLIC_SERVER_URL,env=NEXT_PUBLIC_SERVER_URL \
-  --mount=type=secret,id=NEXT_PUBLIC_IS_LIVE,env=NEXT_PUBLIC_IS_LIVE \
-  --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN,env=NEXT_PUBLIC_SENTRY_DSN \
+  --mount=type=secret,id=SENTRY_ORG,env=SENTRY_ORG \
+  --mount=type=secret,id=SENTRY_PROJECT,env=SENTRY_PROJECT \
+  --mount=type=secret,id=SENTRY_URL,env=SENTRY_URL \
+  --mount=type=secret,id=SENTRY_ENVIRONMENT,env=SENTRY_ENVIRONMENT \
+  --mount=type=secret,id=SERVER_URL,env=SERVER_URL \
+  --mount=type=secret,id=SENTRY_DSN,env=SENTRY_DSN \
   pnpm build
 
 FROM node:24-alpine AS runner

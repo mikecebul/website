@@ -15,12 +15,14 @@ jobs:
 
       - name: Validate production build configuration
         env:
-          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
-          NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
-          NEXT_PUBLIC_IS_LIVE: ${{ secrets.NEXT_PUBLIC_IS_LIVE }}
+          SERVER_URL: ${{ secrets.SERVER_URL }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
         run: |
           set -eu
-          for required in PAYLOAD_SECRET NEXT_PUBLIC_SERVER_URL NEXT_PUBLIC_IS_LIVE; do
+          for required in SERVER_URL SENTRY_DSN SENTRY_AUTH_TOKEN SENTRY_ORG SENTRY_PROJECT; do
             if [ -z "${!required}" ]; then
               echo "::error::${required} is not configured in the Production environment"
               exit 1
@@ -43,8 +45,10 @@ jobs:
             mikecebul/website:latest
           platforms: linux/amd64
           secrets: |
-            NEXT_PUBLIC_SERVER_URL=${{ secrets.NEXT_PUBLIC_SERVER_URL }}
-            PAYLOAD_SECRET=${{ secrets.PAYLOAD_SECRET }}
+            SERVER_URL=${{ secrets.SERVER_URL }}
             SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
-            NEXT_PUBLIC_IS_LIVE=${{ secrets.NEXT_PUBLIC_IS_LIVE }}
-            NEXT_PUBLIC_SENTRY_DSN=${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
+            SENTRY_ORG=${{ vars.SENTRY_ORG }}
+            SENTRY_PROJECT=${{ vars.SENTRY_PROJECT }}
+            SENTRY_URL=${{ vars.SENTRY_URL }}
+            SENTRY_ENVIRONMENT=production
+            SENTRY_DSN=${{ secrets.SENTRY_DSN }}
