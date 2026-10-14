@@ -4,6 +4,7 @@ import { authenticated } from '@/access/authenticated'
 import { type CollectionConfig, type PayloadRequest } from 'payload'
 
 import { setFirstPublishedAt } from './hooks/setFirstPublishedAt'
+import { getPreviewOrigin } from '@/lib/preview-url'
 
 const previewURL = (data: Record<string, unknown>, req: PayloadRequest) => {
   if (typeof data.slug !== 'string' || !data.slug || !process.env.PREVIEW_SECRET) return null
@@ -13,7 +14,7 @@ const previewURL = (data: Record<string, unknown>, req: PayloadRequest) => {
     path: `/blog/${data.slug}`,
     previewSecret: process.env.PREVIEW_SECRET,
   })
-  const origin = new URL(req.url || req.payload.config.serverURL).origin
+  const origin = getPreviewOrigin(req, req.payload.config.serverURL)
   return `${origin}/next/preview?${params}`
 }
 

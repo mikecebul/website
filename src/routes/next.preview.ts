@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { setCookie } from '@tanstack/react-start/server'
+import { getPreviewOrigin } from '@/lib/preview-url'
 
 export const Route = createFileRoute('/next/preview')({
   server: {
@@ -23,7 +24,7 @@ export const Route = createFileRoute('/next/preview')({
           return new Response('You are not allowed to preview this page', { status: 403 })
         setCookie('payload-preview', 'true', {
           httpOnly: true,
-          secure: new URL(request.url).protocol === 'https:',
+          secure: getPreviewOrigin(request, payload.config.serverURL).startsWith('https:'),
           sameSite: 'lax',
           path: '/',
           maxAge: 3600,
