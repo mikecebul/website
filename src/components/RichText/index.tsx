@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils'
 import Link from '@/components/router-link'
 import { useId, type ReactNode, type ComponentProps } from 'react'
 import { addHTTPS } from '@/lib/addHTTPS'
+import { getBlogSections } from '@/lib/blog-sections'
 
 type MediaBlockProps = {
   blockType: 'mediaBlock'
@@ -38,7 +39,11 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   return `/${slug}`
 }
 
-const jsxConverters = (paragraphClassName?: string): JSXConvertersFunction<NodeTypes> => {
+const jsxConverters = (
+  paragraphClassName?: string,
+  headingIDs?: Map<object, string>,
+  sectionNumbers?: Map<object, string>,
+): JSXConvertersFunction<NodeTypes> => {
   return function converters({ defaultConverters }) {
     return {
       ...defaultConverters,
@@ -69,7 +74,15 @@ const jsxConverters = (paragraphClassName?: string): JSXConvertersFunction<NodeT
         }
         const textSizeClass = textSizeMap[Tag] || 'text-lg'
 
-        return <Tag className={cn('prose text-pretty', textSizeClass)}>{children}</Tag>
+        return (
+          <Tag
+            id={headingIDs?.get(node)}
+            data-section-number={sectionNumbers?.get(node)}
+            className={cn('prose text-pretty', textSizeClass)}
+          >
+            {children}
+          </Tag>
+        )
       },
       autolink: ({ node, nodesToJSX }) => {
         const children = nodesToJSX({
@@ -225,13 +238,31 @@ type Props = {
   enableGutter?: boolean
   enableProse?: boolean
   paragraphClassName?: string
+  enableHeadingAnchors?: boolean
 } & React.HTMLAttributes<HTMLDivElement>
 
 export function RichText(props: Props) {
-  const { className, enableProse = true, enableGutter = true, paragraphClassName, ...rest } = props
+  const {
+    className,
+    enableProse = true,
+    enableGutter = true,
+    paragraphClassName,
+    enableHeadingAnchors = false,
+    ...rest
+  } = props
+  const headingIDs = enableHeadingAnchors
+    ? new Map(getBlogSections(props.data?.root).map((section) => [section.node, section.id]))
+    : undefined
+  const sectionNumbers = enableHeadingAnchors
+    ? new Map(
+        getBlogSections(props.data?.root)
+          .filter((section) => section.level === 2)
+          .map((section) => [section.node, section.number]),
+      )
+    : undefined
   return (
     <ConvertRichText
-      converters={jsxConverters(paragraphClassName)}
+      converters={jsxConverters(paragraphClassName, headingIDs, sectionNumbers)}
       className={cn(
         '',
         {

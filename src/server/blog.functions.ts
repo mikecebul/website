@@ -1,4 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
+import { toJournalPost } from '@/lib/blog-presentation'
 
 export const getBlogIndex = createServerFn({ method: 'GET' })
   .validator((data: { page: number }) => ({ page: Math.max(1, Math.floor(data.page) || 1) }))
@@ -14,9 +15,21 @@ export const getBlogIndex = createServerFn({ method: 'GET' })
       page: data.page,
       sort: '-firstPublishedAt',
       where: { _status: { equals: 'published' } },
-      select: { title: true, slug: true, firstPublishedAt: true, createdAt: true },
+      select: {
+        title: true,
+        slug: true,
+        firstPublishedAt: true,
+        createdAt: true,
+        featuredImage: true,
+        content: true,
+        summary: true,
+        topic: true,
+      },
     })
-    return result
+    return {
+      ...result,
+      docs: result.docs.map(toJournalPost),
+    }
   })
 
 export const getBlogPost = createServerFn({ method: 'GET' })
@@ -40,5 +53,30 @@ export const getBlogPost = createServerFn({ method: 'GET' })
         : { and: [{ slug: { equals: data.slug } }, { _status: { equals: 'published' } }] },
     })
     const post = result.docs[0]
-    return { post: post ? { ...post, content: JSON.stringify(post.content) } : null, draft }
+    const related = post
+      ? await payload.find({
+          collection: 'blogs',
+          depth: 1,
+          draft: false,
+          limit: 2,
+          overrideAccess: false,
+          sort: '-firstPublishedAt',
+          where: { and: [{ _status: { equals: 'published' } }, { id: { not_equals: post.id } }] },
+          select: {
+            title: true,
+            slug: true,
+            featuredImage: true,
+            topic: true,
+            summary: true,
+            content: true,
+            firstPublishedAt: true,
+            createdAt: true,
+          },
+        })
+      : null
+    return {
+      post: post ? { ...post, content: JSON.stringify(post.content) } : null,
+      relatedPosts: related?.docs.map(toJournalPost) || [],
+      draft,
+    }
   })

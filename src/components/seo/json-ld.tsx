@@ -1,6 +1,6 @@
 import { baseUrl } from '@/lib/baseUrl'
 import { websiteContent } from '@/lib/website-content'
-import { getBlogImages, getBlogPostDescription } from '@/lib/blog-seo'
+import { getBlogImages, getBlogPostDescription, getBlogFeaturedImage } from '@/lib/blog-seo'
 import type { Blog } from '@/payload-types'
 
 type JsonLdValue = Record<string, unknown> | Record<string, unknown>[]
@@ -230,6 +230,11 @@ export function createPageJsonLd({
 
 export function createBlogPostingJsonLd(post: Blog) {
   const url = new URL(`/blog/${post.slug}`, baseUrl).toString()
+  const featuredImage = getBlogFeaturedImage(post)
+  const imageURLs = [
+    ...(featuredImage ? [featuredImage] : []),
+    ...getBlogImages(post.content?.root),
+  ].map((image) => new URL(image.url!, baseUrl).toString())
   return [
     {
       '@context': 'https://schema.org',
@@ -239,9 +244,7 @@ export function createBlogPostingJsonLd(post: Blog) {
       description: getBlogPostDescription(post),
       url,
       mainEntityOfPage: { '@id': `${url}#webpage` },
-      image: getBlogImages(post.content?.root).map((image) =>
-        new URL(image.url!, baseUrl).toString(),
-      ),
+      image: [...new Set(imageURLs)],
       datePublished: post.firstPublishedAt || post.createdAt,
       dateModified: post.updatedAt,
       author: { '@type': 'Person', name: websiteContent.site.name, url: `${baseUrl}/about` },

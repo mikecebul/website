@@ -11,6 +11,8 @@ import sharp from 'sharp'
 
 import config from '../src/payload.config'
 import * as headshotMigration from '../src/migrations/20261013_050320_add_user_headshot'
+import * as featuredImageMigration from '../src/migrations/20261015_001210_add_blog_featured_image'
+import { getBlogFeaturedImage } from '../src/lib/blog-seo'
 
 // Only an isolated temporary SQLite file may be used for this fixture suite.
 assert.match(
@@ -109,6 +111,8 @@ try {
     data: {
       title: marker,
       slug: marker,
+      topic: 'websites',
+      summary: 'A concise published introduction.',
       _status: 'published',
       content: {
         root: {
@@ -146,6 +150,8 @@ try {
   blogID = blog.id
   assertAuthor(blog.createdBy, user.id)
   assertAuthor(blog.updatedBy, user.id)
+  assert.equal(blog.topic, 'websites')
+  assert.equal(blog.summary, 'A concise published introduction.')
 
   const editor = await payload.create({
     collection: 'users',
@@ -282,6 +288,24 @@ try {
   // Rolling the additive migration down and back up must retain accounts and their relationships.
   const migrationReq = await createPayloadRequest({ payload })
   const authorsBefore = await payload.db.drizzle.$client.execute('SELECT * FROM users_rels')
+  const blogAuthorsBefore = await payload.db.drizzle.$client.execute('SELECT * FROM blogs_rels')
+  const blogVersionsBefore = await payload.db.drizzle.$client.execute(
+    'SELECT id, parent_id, version_content FROM _blogs_v',
+  )
+  await featuredImageMigration.down({ db: payload.db.drizzle, payload, req: migrationReq })
+  await featuredImageMigration.up({ db: payload.db.drizzle, payload, req: migrationReq })
+  assert.deepEqual(
+    (await payload.db.drizzle.$client.execute('SELECT * FROM blogs_rels')).rows,
+    blogAuthorsBefore.rows,
+  )
+  assert.deepEqual(
+    (
+      await payload.db.drizzle.$client.execute(
+        'SELECT id, parent_id, version_content FROM _blogs_v',
+      )
+    ).rows,
+    blogVersionsBefore.rows,
+  )
   await headshotMigration.down({ db: payload.db.drizzle, payload, req: migrationReq })
   await headshotMigration.up({ db: payload.db.drizzle, payload, req: migrationReq })
   assert.deepEqual(
@@ -311,6 +335,50 @@ try {
     file: { data: image, name: `${marker}.png`, mimetype: 'image/png', size: image.length },
   })
   headshotID = headshot.id
+  await payload.update({
+    collection: 'blogs',
+    id: blog.id,
+    overrideAccess: false,
+    user,
+    data: { featuredImage: headshot.id, _status: 'published' },
+  })
+  const publicBlog = await payload.findByID({
+    collection: 'blogs',
+    id: blog.id,
+    depth: 1,
+    overrideAccess: false,
+  })
+  assert.equal(getBlogFeaturedImage(publicBlog)?.id, headshot.id)
+  assert.ok(getBlogFeaturedImage(publicBlog)?.url)
+  await payload.update({
+    collection: 'blogs',
+    id: blog.id,
+    overrideAccess: false,
+    user,
+    draft: true,
+    data: { featuredImage: null, _status: 'draft' },
+  })
+  assert.equal(
+    getBlogFeaturedImage(
+      await payload.findByID({ collection: 'blogs', id: blog.id, depth: 1, overrideAccess: false }),
+    )?.id,
+    headshot.id,
+  )
+  assert.equal(
+    (
+      await payload.findByID({
+        collection: 'blogs',
+        id: blog.id,
+        draft: true,
+        overrideAccess: false,
+        user,
+      })
+    ).featuredImage,
+    null,
+  )
+  console.log(
+    'PASS featured image population, draft isolation, additive migration rollback and preserved blog versions',
+  )
   await payload.update({
     collection: 'users',
     id: user.id,
@@ -501,6 +569,10 @@ try {
     'PASS private history, first-user role, disabled user versions, JWT compatibility, and API-key creation/redaction/revocation',
   )
 } finally {
+  if (blogID) {
+    await payload.delete({ collection: 'blogs', id: blogID, overrideAccess: true })
+    blogID = undefined
+  }
   if (headshotID && userID) {
     await payload.update({
       collection: 'users',

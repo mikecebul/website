@@ -1,4 +1,4 @@
-import { NotebookPen, ArrowUpRight } from 'lucide-react'
+import { NotebookPen, ArrowUpRight, PanelsTopLeft, Workflow, Video } from 'lucide-react'
 import { AngularFrame, PageFrame, WebsiteAction } from '@/components/marketing/design-system'
 import {
   Empty,
@@ -23,7 +23,12 @@ import {
 } from '@/components/ui/pagination'
 import { MarketingBlogIntro } from '@/components/marketing/marketing-pages'
 import { websiteContent } from '@/lib/website-content'
-import { formatDateTime } from '@/lib/formatDateTime'
+import { formatBlogDate, getBlogTopicLabel } from '@/lib/blog-presentation'
+import { Fragment } from 'react'
+import { JournalContact } from '@/components/marketing/journal-contact'
+import { getBlogFeaturedImage } from '@/lib/blog-seo'
+import { Media } from '@/components/Media'
+import { cn } from '@/lib/utils'
 
 const BLOGS_PER_PAGE = 10
 type PageItem = number | 'ellipsis'
@@ -136,28 +141,79 @@ function BlogIndexPage() {
             result.docs.map((post, index) => {
               if (!post.slug) return null
               const publishedAt = post.firstPublishedAt || post.createdAt
+              const image = getBlogFeaturedImage(post)
+              const featured = requestedPage === 1 && index === 0
               return (
-                <article
-                  key={post.id}
-                  className={`web-panel web-journal-post${index === 0 ? ' web-journal-featured' : ''}`}
-                >
-                  <AngularFrame />
-                  <p className="web-eyebrow">{index === 0 ? 'Latest note' : 'From the journal'}</p>
-                  {publishedAt ? (
-                    <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
+                <Fragment key={post.id}>
+                  {index === (requestedPage === 1 ? 1 : 0) ? (
+                    <h2 className="web-eyebrow web-journal-section-label">More from the journal</h2>
                   ) : null}
-                  <h2>
-                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                  </h2>
-                  <Link
-                    className="web-text-link"
-                    href={`/blog/${post.slug}`}
-                    aria-label={`Read ${post.title}`}
+                  <article
+                    className={cn('web-journal-post', {
+                      'web-panel web-journal-featured': featured,
+                      'web-journal-post-with-image': Boolean(image) || !featured,
+                    })}
                   >
-                    Read the article
-                    <ArrowUpRight aria-hidden="true" />
-                  </Link>
-                </article>
+                    {featured ? <AngularFrame /> : null}
+                    {image ? (
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="web-journal-post-image"
+                        tabIndex={-1}
+                        aria-hidden="true"
+                      >
+                        <Media resource={image} priority={featured} />
+                      </Link>
+                    ) : !featured ? (
+                      <div
+                        className="web-journal-post-image web-journal-post-placeholder"
+                        aria-hidden="true"
+                      >
+                        {post.topic === 'websites' ? (
+                          <PanelsTopLeft />
+                        ) : post.topic === 'ai-workflows' ? (
+                          <Workflow />
+                        ) : post.topic === 'hybrid-meetings' ? (
+                          <Video />
+                        ) : (
+                          <NotebookPen />
+                        )}
+                      </div>
+                    ) : null}
+                    <div className="web-journal-post-copy">
+                      <p className="web-eyebrow">
+                        {featured ? 'Latest note' : getBlogTopicLabel(post.topic)}
+                      </p>
+                      <p className="web-journal-post-meta">
+                        {featured && post.topic ? (
+                          <>
+                            <span>{getBlogTopicLabel(post.topic)}</span>
+                            <span aria-hidden="true">·</span>
+                          </>
+                        ) : null}
+                        {publishedAt ? (
+                          <>
+                            <time dateTime={publishedAt}>{formatBlogDate(publishedAt)}</time>
+                            <span aria-hidden="true">·</span>
+                          </>
+                        ) : null}
+                        <span>{post.readingTime} min read</span>
+                      </p>
+                      <h2>
+                        <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                      </h2>
+                      <p className="web-copy web-journal-post-description">{post.description}</p>
+                      <Link
+                        className="web-text-link"
+                        href={`/blog/${post.slug}`}
+                        aria-label={`Read ${post.title}`}
+                      >
+                        <span className="web-journal-action-label">Read the article</span>
+                        <ArrowUpRight aria-hidden="true" />
+                      </Link>
+                    </div>
+                  </article>
+                </Fragment>
               )
             })
           )}
@@ -199,6 +255,7 @@ function BlogIndexPage() {
           ) : null}
         </div>
       </section>
+      <JournalContact />
     </PageFrame>
   )
 }

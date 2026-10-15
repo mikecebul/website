@@ -7,9 +7,13 @@ export function collectLexicalText(node: unknown): string[] {
   return [...text, ...children.flatMap(collectLexicalText)].filter(Boolean)
 }
 
-export function getBlogPostDescription(post: Pick<Blog, 'title' | 'content'> | null) {
+export function getBlogPostDescription(
+  post: (Pick<Blog, 'title' | 'content'> & Partial<Pick<Blog, 'summary'>>) | null,
+) {
   if (!post) return 'Read the latest article from Mike Cebulski.'
-  const text = collectLexicalText(post.content?.root).join(' ').replace(/\s+/g, ' ').trim()
+  const text = (post.summary?.trim() || collectLexicalText(post.content?.root).join(' '))
+    .replace(/\s+/g, ' ')
+    .trim()
   if (!text) return `Read ${post.title} on the Mike Cebulski blog.`
   if (text.length <= 160) return text
   const excerpt = text.slice(0, 159)
@@ -36,4 +40,9 @@ export function getBlogImages(node: unknown): Media[] {
   if ('children' in node && Array.isArray(node.children))
     images.push(...node.children.flatMap(getBlogImages))
   return images
+}
+
+export function getBlogFeaturedImage(post: Pick<Blog, 'featuredImage'> | null): Media | null {
+  const image = post?.featuredImage
+  return image && typeof image === 'object' && image.url ? image : null
 }
