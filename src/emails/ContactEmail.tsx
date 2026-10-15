@@ -1,4 +1,4 @@
-import { Hr, Link, Section, Text } from '@react-email/components'
+import { Hr, Link, Section, Text } from 'react-email'
 
 import EmailShell from './components/EmailShell'
 import { emailTheme } from './components/theme'

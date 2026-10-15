@@ -9,7 +9,7 @@ const cms = vi.hoisted(() => ({
 }))
 vi.mock('payload', () => ({ getPayload: vi.fn(async () => cms) }))
 vi.mock('@payload-config', () => ({ default: {} }))
-vi.mock('@react-email/components', () => ({ render: vi.fn(async () => '<p>Inquiry</p>') }))
+vi.mock('react-email', () => ({ render: vi.fn(async () => '<p>Inquiry</p>') }))
 vi.mock('@/emails/ContactEmail', () => ({ default: () => null }))
 import { POST } from './contact'
 
@@ -46,6 +46,9 @@ describe('form submission persistence', () => {
     expect(cms.create.mock.invocationCallOrder[0]).toBeLessThan(
       cms.sendEmail.mock.invocationCallOrder[0],
     )
+    expect(cms.sendEmail).toHaveBeenCalledWith(
+      expect.objectContaining({ to: 'staff@example.test' }),
+    )
   })
   it('retains a submission and reports success if notification delivery fails', async () => {
     cms.sendEmail.mockRejectedValueOnce(new Error('Mail unavailable'))
@@ -53,12 +56,22 @@ describe('form submission persistence', () => {
     expect(cms.create).toHaveBeenCalledTimes(1)
     expect(cms.logger.error).toHaveBeenCalled()
   })
-  it('still stores the submission when notification email is not configured', async () => {
-    vi.stubEnv('CONTACT_TO_EMAIL', '')
-    expect((await POST(request(data))).status).toBe(200)
-    expect(cms.create).toHaveBeenCalledTimes(1)
-    expect(cms.sendEmail).not.toHaveBeenCalled()
-  })
+  it.each(['', undefined, '   '])(
+    'preserves the inquiry when the recipient is missing (%s)',
+    async (to) => {
+      vi.stubEnv('CONTACT_TO_EMAIL', to)
+      expect((await POST(request(data))).status).toBe(200)
+      expect(cms.create).toHaveBeenCalledTimes(1)
+      expect(cms.sendEmail).not.toHaveBeenCalled()
+      expect(cms.logger.error).toHaveBeenCalledWith(
+        expect.objectContaining({
+          err: expect.objectContaining({
+            message: 'Missing CONTACT_TO_EMAIL for contact submission delivery.',
+          }),
+        }),
+      )
+    },
+  )
   it('rejects invalid form data before storage', async () => {
     expect((await POST(request({ ...data, email: 'invalid' }))).status).toBe(400)
     expect(cms.create).not.toHaveBeenCalled()

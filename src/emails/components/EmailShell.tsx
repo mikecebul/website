@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Body, Container, Head, Html, Preview, Section } from '@react-email/components'
+import { Body, Container, Head, Html, Preview, Section } from 'react-email'
 
 import { emailFontFamily, emailTheme } from './theme'
 
