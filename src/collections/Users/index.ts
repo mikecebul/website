@@ -1,6 +1,6 @@
 import React from 'react'
 import type { CollectionConfig } from 'payload'
-import { render } from '@react-email/components'
+import { render } from 'react-email'
 
 import { checkRole } from '@/access/checkRole'
 import { authenticated } from '../../access/authenticated'

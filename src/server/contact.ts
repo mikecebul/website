@@ -1,6 +1,6 @@
 import React from 'react'
 import { getPayload } from 'payload'
-import { render } from '@react-email/components'
+import { render } from 'react-email'
 
 import configPromise from '@payload-config'
 import { contactFormSchema } from '@/lib/contact'
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     })
 
     try {
-      const to = process.env.CONTACT_TO_EMAIL
+      const to = process.env.CONTACT_TO_EMAIL?.trim()
       if (!to) throw new Error('Missing CONTACT_TO_EMAIL for contact submission delivery.')
       if (process.env.NODE_ENV === 'production' && !process.env.RESEND_API_KEY) {
         throw new Error('Missing RESEND_API_KEY for production contact submission delivery.')

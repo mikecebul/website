@@ -10,62 +10,74 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const config = defineConfig(
-  withPayload(
-    ({ env, pluginOptions }) => {
-      const vars = loadEnv(env.mode, process.cwd(), '')
-      if (process.env.CI && vars.SENTRY_AUTH_TOKEN && (!vars.SENTRY_ORG || !vars.SENTRY_PROJECT)) {
-        throw new Error('SENTRY_ORG and SENTRY_PROJECT are required for Sentry source-map uploads')
-      }
-      return {
-        server: {
-          watch: {
-            ignored: ['**/.output/**', '**/.nitro/**', '**/output/**', '**/.playwright-cli/**'],
-          },
+const payloadViteConfig = withPayload(
+  ({ env, pluginOptions }) => {
+    const vars = loadEnv(env.mode, process.cwd(), '')
+    if (process.env.CI && vars.SENTRY_AUTH_TOKEN && (!vars.SENTRY_ORG || !vars.SENTRY_PROJECT)) {
+      throw new Error('SENTRY_ORG and SENTRY_PROJECT are required for Sentry source-map uploads')
+    }
+    return {
+      server: {
+        port: Number(vars.DEV_PORT || 3000),
+        strictPort: true,
+        watch: {
+          ignored: ['**/.output/**', '**/.nitro/**', '**/output/**', '**/.playwright-cli/**'],
         },
-        build: { sourcemap: 'hidden' },
-        resolve: { tsconfigPaths: true },
-        define: {
-          'import.meta.env.VITE_SERVER_URL': JSON.stringify(
-            vars.SERVER_URL || vars.VITE_SERVER_URL || 'https://www.mikecebul.com',
-          ),
-          'import.meta.env.VITE_SENTRY_DSN': JSON.stringify(
-            vars.SENTRY_DSN || vars.VITE_SENTRY_DSN || '',
-          ),
-          'import.meta.env.VITE_SENTRY_ENVIRONMENT': JSON.stringify(
-            vars.SENTRY_ENVIRONMENT || env.mode,
-          ),
-        },
-        plugins: [
-          tailwindcss(),
-          rsc(pluginOptions.rsc),
-          tanstackStart(pluginOptions.tanstackStart),
-          viteReact(pluginOptions.react),
-          nitro({
-            ...pluginOptions.nitro,
-            // file-type loads this package through a runtime import when serving uploaded files.
-            traceDeps: [...(pluginOptions.nitro.traceDeps ?? []), 'strtok3*'],
-          }),
-          ...(process.env.CI && vars.SENTRY_AUTH_TOKEN
-            ? [
-                sentryVitePlugin({
-                  org: vars.SENTRY_ORG,
-                  project: vars.SENTRY_PROJECT,
-                  url: vars.SENTRY_URL || 'https://sentry.io',
-                  authToken: vars.SENTRY_AUTH_TOKEN,
-                  sourcemaps: { filesToDeleteAfterUpload: ['.output/**/*.map'] },
-                }),
-              ]
-            : []),
-        ],
-      }
-    },
-    {
-      payloadConfigPath: path.resolve(__dirname, 'src', 'payload.config.ts'),
-      routesDirectory: 'routes',
-      devServerExternalPackages: ['@sentry/node', '@react-email/components', 'plaiceholder'],
-    },
-  ),
+      },
+      build: { sourcemap: 'hidden' },
+      resolve: { tsconfigPaths: true },
+      // Preserve Lucide's client boundaries in the Payload RSC graph.
+      optimizeDeps: { exclude: ['lucide-react'] },
+      define: {
+        'import.meta.env.VITE_SERVER_URL': JSON.stringify(
+          vars.SERVER_URL || vars.VITE_SERVER_URL || 'https://www.mikecebul.com',
+        ),
+        'import.meta.env.VITE_SENTRY_DSN': JSON.stringify(
+          vars.SENTRY_DSN || vars.VITE_SENTRY_DSN || '',
+        ),
+        'import.meta.env.VITE_SENTRY_ENVIRONMENT': JSON.stringify(
+          vars.SENTRY_ENVIRONMENT || env.mode,
+        ),
+      },
+      plugins: [
+        tailwindcss(),
+        rsc(pluginOptions.rsc),
+        tanstackStart(pluginOptions.tanstackStart),
+        viteReact(pluginOptions.react),
+        nitro({
+          ...pluginOptions.nitro,
+          // file-type hides this import from static tracing; standalone media serving needs it.
+          traceDeps: [...(pluginOptions.nitro.traceDeps ?? []), 'strtok3*'],
+        }),
+        ...(process.env.CI && vars.SENTRY_AUTH_TOKEN
+          ? [
+              sentryVitePlugin({
+                org: vars.SENTRY_ORG,
+                project: vars.SENTRY_PROJECT,
+                url: vars.SENTRY_URL || 'https://sentry.io',
+                authToken: vars.SENTRY_AUTH_TOKEN,
+                sourcemaps: { filesToDeleteAfterUpload: ['.output/**/*.map'] },
+              }),
+            ]
+          : []),
+      ],
+    }
+  },
+  {
+    payloadConfigPath: path.resolve(__dirname, 'src', 'payload.config.ts'),
+    routesDirectory: 'routes',
+    devServerExternalPackages: ['@sentry/node', 'react-email', 'plaiceholder'],
+  },
 )
 
-export default config
+export default defineConfig((env) => {
+  const config = payloadViteConfig(env)
+  // Payload includes this for Azure uploads; this app only uses S3 storage.
+  // Filter after withPayload merges its defaults because Vite concatenates arrays.
+  if (config.optimizeDeps?.include) {
+    config.optimizeDeps.include = config.optimizeDeps.include.filter(
+      (dependency) => dependency !== '@azure/storage-blob > events',
+    )
+  }
+  return config
+})
