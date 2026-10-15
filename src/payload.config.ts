@@ -9,6 +9,7 @@ import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
 import { S3_PLUGIN_CONFIG } from './plugins/s3'
 import {
   BlocksFeature,
+  BlockquoteFeature,
   ParagraphFeature,
   BoldFeature,
   FixedToolbarFeature,
@@ -37,6 +38,7 @@ import { Blogs } from './collections/Blogs'
 import { Contacts } from './collections/Contacts'
 import { migrations } from './migrations'
 import { mkdirSync } from 'node:fs'
+import { devAdmin, isDevSeedEnabled, seedDevelopment } from './server/dev-seed'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -50,6 +52,7 @@ mkdirSync(path.dirname(databasePath), { recursive: true })
 export default buildConfig({
   serverURL: baseUrl,
   admin: {
+    autoLogin: isDevSeedEnabled() ? { email: devAdmin.email, prefillOnly: false } : false,
     importMap: {
       baseDir: path.resolve(dirname),
       importMapFile: path.resolve(dirname, 'routes/_payload/importMap.js'),
@@ -94,7 +97,8 @@ export default buildConfig({
         FixedToolbarFeature(),
         InlineToolbarFeature(),
         ParagraphFeature(),
-        HeadingFeature({ enabledHeadingSizes: ['h1', 'h2'] }),
+        BlockquoteFeature(),
+        HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3'] }),
         UnderlineFeature(),
         BoldFeature(),
         ItalicFeature(),
@@ -145,6 +149,7 @@ export default buildConfig({
     prodMigrations: migrations,
   }),
   collections: [Blogs, Media, Contacts, Users],
+  onInit: seedDevelopment,
   // V4 exposes standard MCP tools and enforces the connecting user's Payload access rules.
   plugins: [mcpPlugin({})],
   cors: [baseUrl || ''].filter(Boolean),

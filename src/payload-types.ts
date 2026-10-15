@@ -62,19 +62,20 @@ export type SupportedTimezones =
   | 'Pacific/Fiji';
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LexicalNodes_26205D5E".
+ * via the `definition` "LexicalNodes_25642F27".
  */
-export type LexicalNodes_26205D5E =
+export type LexicalNodes_25642F27 =
   | SerializedTextNode
   | SerializedTabNode
   | SerializedLineBreakNode
-  | SerializedParagraphNode<LexicalNodes_26205D5E>
-  | SerializedAutoLinkNode<LexicalNodes_26205D5E, LexicalLinkFields>
-  | SerializedLinkNode<LexicalNodes_26205D5E, LexicalLinkFields>
+  | SerializedParagraphNode<LexicalNodes_25642F27>
+  | SerializedAutoLinkNode<LexicalNodes_25642F27, LexicalLinkFields>
+  | SerializedLinkNode<LexicalNodes_25642F27, LexicalLinkFields>
   | SerializedBlockNode<MediaBlock | CodeBlock>
-  | SerializedListNode<LexicalNodes_26205D5E>
-  | SerializedListItemNode<LexicalNodes_26205D5E>
-  | SerializedHeadingNode<LexicalNodes_26205D5E, 'h1' | 'h2'>;
+  | SerializedListNode<LexicalNodes_25642F27>
+  | SerializedListItemNode<LexicalNodes_25642F27>
+  | SerializedHeadingNode<LexicalNodes_25642F27, 'h1' | 'h2' | 'h3'>
+  | SerializedQuoteNode<LexicalNodes_25642F27>;
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "LexicalNodes_3DE324E4".
@@ -162,7 +163,22 @@ export interface UserAuthOperations {
 export interface Blog {
   id: number;
   title: string;
-  content: LexicalRichText<LexicalNodes_26205D5E>;
+  /**
+   * Short introduction shown below the article title and in journal previews. Leave blank to use the first paragraph.
+   */
+  summary?: string | null;
+  /**
+   * Displayed above the article title and in the journal.
+   */
+  topic?: ('websites' | 'ai-workflows' | 'hybrid-meetings') | null;
+  /**
+   * Use Heading 2 for sections and Heading 3 for subsections. They appear automatically in the article table of contents.
+   */
+  content: LexicalRichText<LexicalNodes_25642F27>;
+  /**
+   * Choose the image shown with this article in the journal and link previews.
+   */
+  featuredImage?: (number | null) | Media;
   firstPublishedAt?: string | null;
   slug: string;
   createdBy?: {
@@ -179,49 +195,6 @@ export interface Blog {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: number;
-  name?: string | null;
-  /**
-   * Choose an image for your profile and account menu.
-   */
-  headshot?: (number | null) | Media;
-  role?: ('user' | 'editor' | 'admin' | 'superAdmin') | null;
-  createdBy?: {
-    relationTo: 'users';
-    value: number | User;
-  } | null;
-  updatedBy?: {
-    relationTo: 'users';
-    value: number | User;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
-  apiKey?: string | null;
-  apiKeyLast4?: string | null;
-  apiKeyIndex?: string | null;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -230,6 +203,9 @@ export interface Media {
    * Alternative text for SEO and accessibility
    */
   alt: string;
+  /**
+   * Optional text displayed beneath this image in blog media blocks.
+   */
   caption?: string | null;
   blurhash?: string | null;
   prefix?: string | null;
@@ -285,6 +261,49 @@ export interface Media {
       _objectKey?: string | null;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  name?: string | null;
+  /**
+   * Choose an image for your profile and account menu.
+   */
+  headshot?: (number | null) | Media;
+  role?: ('user' | 'editor' | 'admin' | 'superAdmin') | null;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+  apiKey?: string | null;
+  apiKeyLast4?: string | null;
+  apiKeyIndex?: string | null;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -422,7 +441,10 @@ export interface PayloadLlmInstruction {
  */
 export interface BlogsSelect<T extends boolean = true> {
   title?: T;
+  summary?: T;
+  topic?: T;
   content?: T;
+  featuredImage?: T;
   firstPublishedAt?: T;
   slug?: T;
   createdBy?: T;
@@ -806,6 +828,10 @@ export interface SerializedHeadingNode<
 > extends SerializedLexicalElementBase<TChildren> {
   type: 'heading';
   tag: TTag;
+}
+
+export interface SerializedQuoteNode<TChildren> extends SerializedLexicalElementBase<TChildren> {
+  type: 'quote';
 }
 
 /** Shape of a Lexical `richText` field. */

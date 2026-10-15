@@ -49,9 +49,45 @@ export const Blogs: CollectionConfig = {
       required: true,
     },
     {
+      name: 'summary',
+      type: 'textarea',
+      maxLength: 240,
+      admin: {
+        description:
+          'Short introduction shown below the article title and in journal previews. Leave blank to use the first paragraph.',
+      },
+    },
+    {
+      name: 'topic',
+      type: 'select',
+      options: [
+        { label: 'Websites', value: 'websites' },
+        { label: 'AI workflows', value: 'ai-workflows' },
+        { label: 'Hybrid meetings', value: 'hybrid-meetings' },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: 'Displayed above the article title and in the journal.',
+      },
+    },
+    {
       name: 'content',
       type: 'richText',
       required: true,
+      admin: {
+        description:
+          'Use Heading 2 for sections and Heading 3 for subsections. They appear automatically in the article table of contents.',
+      },
+    },
+    {
+      name: 'featuredImage',
+      type: 'upload',
+      relationTo: 'media',
+      filterOptions: { mimeType: { contains: 'image/' } },
+      admin: {
+        position: 'sidebar',
+        description: 'Choose the image shown with this article in the journal and link previews.',
+      },
     },
     {
       name: 'firstPublishedAt',

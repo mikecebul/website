@@ -6,11 +6,27 @@ The public consulting website runs on TanStack Start, with shadcn components, Ta
 
 Use Node 24.15.0 or newer and pnpm 11 or newer. Run `pnpm install`, copy `.env.example` to `.env`, and configure email delivery. SQLite defaults to `file:./data/payload.db`; no separate database service is needed. `docker compose up -d` starts Mailpit. Run `pnpm dev` and open http://localhost:3000; the CMS is at `/admin`.
 
+On CMS initialization in development, the app creates or restores `mikecebul@gmail.com` as a Super Admin with password `password` and automatically authenticates as that account using [Payload auto-login](https://payloadcms.com/docs/authentication/overview). It creates three published sample blogs for websites, AI workflows, and hybrid meetings. Restarting preserves edits and does not duplicate posts; only missing sample slugs are added. The development account's password and role are reset on initialization. Set `DEV_SEED=false` in `.env` and restart to disable both seeding and auto-login when testing normal authentication. Neither feature runs in production or tests. Keep `DATABASE_URI` pointed at the same file to retain your other local data across servers; a new checkout needs its own database or an explicit shared absolute path.
+
+Verify development seeding and auto-login against a fresh disposable SQLite file:
+
+```sh
+dev_seed_db=$(mktemp /tmp/website-dev-seed-XXXXXXXX.db)
+DATABASE_URI="file:$dev_seed_db" NODE_ENV=development DEV_SEED=true \
+PAYLOAD_SECRET=isolated-dev-fixture-secret S3_ENABLED=false \
+pnpm payload run scripts/verify-dev-seed.ts
+rm -f "$dev_seed_db" "$dev_seed_db-wal" "$dev_seed_db-shm"
+```
+
 `pnpm typecheck`, `pnpm lint`, and `pnpm test` verify the app. `pnpm build` produces a Nitro Node server; `pnpm start` runs `.output/server/index.mjs`. Builds do not open the SQLite database or run migrations. Database, email, and S3 credentials are supplied at runtime.
 
 Use `pnpm generate:types` and `pnpm generate:importmap` after modifying Payload collections or editor components.
 
 ## Admin workspace
+
+The journal uses one featured story followed by open article rows. Blog **Topic** and **Summary** fields supply the category and introduction in these layouts; when Summary is blank, the first paragraph is used. The article header includes a byline, publication date, and calculated reading time. Section numbers, gold pull quotes (use the editor's Blockquote control), published related-reading links, and compact contact links follow the journal design. Portraits and other body images preserve their proportions and fit within a 440px maximum height. These presentation changes do not replace existing post content or images.
+
+In a blog's sidebar, choose **Featured image** from Media to use it in the journal card and link previews. It is optional; articles without an image use the text layout. A draft change to the image stays private until the post is published. In Content, format section titles as **Heading 2** and subsections as **Heading 3** using the editor's heading menu. These generate the **In this note** navigation automatically, in document order, with unique anchor links and the current section highlighted while scrolling. Normal paragraphs and headings inside media captions are excluded. The navigation appears beside the reading column on desktop and above it on mobile; articles without section headings show no empty navigation. Existing posts and draft/version history are retained by the additive featured-image migration.
 
 The studio dashboard keeps Payload’s native views, dashboard editor and sidebar tabs. Navigation is organized into Content, Business and Settings. A compact, theme-aware panel shows the greeting, actions and collection counts. Existing dashboard preferences can be updated with Dashboard → Reset Layout.
 
